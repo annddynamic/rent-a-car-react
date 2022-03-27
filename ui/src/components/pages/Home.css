@@ -1,0 +1,13 @@
+.cover {
+    background: url("../../images/pexels-taryn-elliott-7046771.jpg") no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    /* -o-background-size: cover; */
+    background-size: cover;
+}
+
+@media (min-width: 992px) {
+    .cover {
+        height: 100vh;
+    }
+}
