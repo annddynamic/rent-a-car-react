@@ -1,12 +1,31 @@
 import {Navbar, Container, Nav } from 'react-bootstrap'
 import { Link, NavLink } from "react-router-dom";
 import { FaCar } from 'react-icons/fa';
-
+import React, { useState, useEffect } from "react"
+import "./NavigationBar.css"
 const NavigationBar = () => {
+  const [navbar, setNavbar] = useState(false)
+
+  const changeBackground = () => {
+    console.log(window.scrollY)
+    if (window.scrollY >= 66) {
+      setNavbar(true)
+    } else {
+      setNavbar(false)
+    }
+  }
+
+  useEffect(() => {
+    changeBackground()
+    // adding the event when scroll change background
+    window.addEventListener("scroll", changeBackground)
+  })
+
+
   return (
-    <Navbar bg="light" variant="light">
+    <Navbar className={navbar ? 'nav-scroll': 'navb'} variant="light"  collapseOnSelect  sticky="top">
     <Container>
-    <Navbar.Brand  > <FaCar /></Navbar.Brand>
+    <Navbar.Brand  > <FaCar color='#232d2f' /></Navbar.Brand>
     <Nav className="me-auto">
       <Nav.Link as={Link} to="/">Home</Nav.Link>
       <Nav.Link as={Link} to="/log-in">Log in</Nav.Link>

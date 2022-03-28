@@ -1,24 +1,42 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
+import shtoperica from '../../images/jeep.jpg'
 import "./Home.css";
 
 const Home = () => {
   return (
-    <div>
+    <div className='home-wrapper'>
         <div className="cover">
         <Container>
-          {/* <Row className="align">
-            <Col md={9}>
-              <h1> Health is Wealth! </h1>
+          <Row className="align">
+            <Col md={8}>
+              <h1> Need a ride? </h1>
               <p>
-                LSI Pharm is a new company that offers premium quality, naturally sourced health products from the world’s finest ingredient suppliers.<br />
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore dolores similique ex asperiores consectetur? Eveniet velit recusandae odio sed explicabo!
               </p>
-              <p>We aim to be the difference while providing innovative solutions and new formulas to the market, which improve and boost 
-                 life quality. We are determined to provide the best solution for you and our success story has just started!
+              <p>
+                Lorem ipsum dolor sit, amet consectetur adipisicing elit. Perferendis quis voluptatum earum, sit quos necessitatibus accusantium, exercitationem perspiciatis mollitia possimus facere aperiam totam dolor doloremque quo magni? Voluptatibus obcaecati, quo architecto, aut tenetur, enim alias fuga recusandae consectetur ex veniam?
               </p>
             </Col>
-          </Row> */}
+          </Row>
         </Container>
+      </div>
+      <div  className='second'>
+      <Container>
+        <Row>
+          <Col md ={6}>
+            <img src={shtoperica} style={{width:"100%", height:"100%"}} />
+          </Col>
+          <Col md={6}>
+            <h2>Lorem ipsum dolor sit amet.</h2>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores dicta, a nemo suscipit repellendus, similique deleniti earum facilis sed dolor accusantium aliquam. Ab hic laudantium earum laboriosam magni ex dignissimos corporis ipsum maiores sed? Odio porro quasi quibusdam illo dicta!</p>
+          </Col>
+        </Row>
+      </Container>
+
+      </div>
+      <div style={{height:"120px"}}>
+
       </div>
     </div>
    
