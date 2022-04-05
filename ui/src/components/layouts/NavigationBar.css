@@ -1,19 +1,17 @@
 .navb {
-    background-color: #e1e9eb !important;
+    background-color: black !important;
     font-family: 'Poppins', 'sans-serif';
     font-size: 16px;
 }
 
 .navb, a {
-    color:#232d2f !important
+    color:white 
 }
 
 .nav-scroll {
-    background-color: #f4f4f4 !important;
+    background-color: white !important;
     font-family: 'Poppins', 'sans-serif';
     font-size: 16px;   
 }
 
-/* .nav-scroll, a{
-    color: green !important;
-} */
+

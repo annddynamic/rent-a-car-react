@@ -1,12 +1,15 @@
 .login-wrapper {
     font-family: "Poppins", "sans-serif";
+    margin-top: 10vh;
 
 }
 
 .left-wrapper{
-    margin-top: 10vh;
 }
 
+
+
 .right-wrapper{
-    background-color: #e1e9eb;
+    background-color: #f4f4f4;
+    border-radius: 15px;
 }

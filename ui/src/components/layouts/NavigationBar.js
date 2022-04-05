@@ -7,7 +7,7 @@ const NavigationBar = () => {
   const [navbar, setNavbar] = useState(false)
 
   const changeBackground = () => {
-    console.log(window.scrollY)
+    console.log(window.scrollY )
     if (window.scrollY >= 66) {
       setNavbar(true)
     } else {
@@ -23,13 +23,13 @@ const NavigationBar = () => {
 
 
   return (
-    <Navbar className={navbar ? 'nav-scroll': 'navb'} variant="light"  collapseOnSelect  sticky="top">
+    <Navbar className={(navbar) ? 'nav-scroll': 'navb'} variant="light"  collapseOnSelect  sticky="top">
     <Container>
-    <Navbar.Brand  > <FaCar color='#232d2f' /></Navbar.Brand>
+    <Navbar.Brand  > <FaCar color={navbar ? 'black': 'white'} /></Navbar.Brand>
     <Nav className="me-auto">
-      <Nav.Link as={Link} to="/">Home</Nav.Link>
-      <Nav.Link as={Link} to="/log-in">Log in</Nav.Link>
-      <Nav.Link as={Link} to="/register">Register</Nav.Link>
+      <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/">Home</Nav.Link>
+      <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/log-in">Log in</Nav.Link>
+      <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/register">Register</Nav.Link>
     </Nav>
     </Container>
   </Navbar>

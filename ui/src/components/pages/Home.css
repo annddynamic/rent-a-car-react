@@ -3,7 +3,7 @@
 }
 
 .cover {
-    background: url("../../images/pexels-taryn-elliott-7046771.jpg") no-repeat center center fixed;
+    background: url("../../images/shtoperica.jpg") no-repeat ;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     background-size: cover;
@@ -23,6 +23,7 @@
 
 .align {
     padding-top: 22vh;
+    color:  white;
 }
 
 .second {
