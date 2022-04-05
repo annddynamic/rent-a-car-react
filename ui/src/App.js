@@ -5,6 +5,7 @@ import Register from "./components/pages/Register"
 import { Routes, Route, Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import Dashboard from "./components/pages/Dashboard";
+import ProtectedRoute from "./components/utils/ProtectedRoutes";
 
 function App() {
   const[loggedIn, setLoggedIn] = useState(false)
@@ -13,7 +14,6 @@ function App() {
     setLoggedIn(JSON.parse(window.localStorage.getItem('loggedIn')));
   }, []);
 
- 
   const login =()=>{
     setLoggedIn(true)
   }
@@ -27,7 +27,11 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/log-in" element={<Login login={login} />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element= {
+          <ProtectedRoute loggedIn={loggedIn}>
+            <Dashboard />
+          </ProtectedRoute > 
+        } />
      </Routes>
    </Layout>
   );

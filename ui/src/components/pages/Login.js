@@ -16,15 +16,18 @@ const Login = ({login}) => {
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
+
 			const url = "http://localhost:8080/api/login";
 			const { data: res } = await axios.post(url, data);
       console.log(res.user)
+  
       localStorage.setItem("token", res.token)
       localStorage.setItem("loggedIn", true)
+      localStorage.setItem("user", JSON.stringify(res.user))
+
 			navigate("/dashboard");
       login()
      
-			console.log(res.message);
 		} catch (error) {
 			if (
 				error.response &&

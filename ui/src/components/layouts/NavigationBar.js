@@ -20,9 +20,11 @@ const NavigationBar = ({loggedIn, logout}) => {
     window.addEventListener("scroll", changeBackground)
   })
 
-  const log =()=>{
+  const logOut =()=>{
     logout()
     localStorage.setItem("loggedIn", false)
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
   }
 
   return (
@@ -37,7 +39,7 @@ const NavigationBar = ({loggedIn, logout}) => {
       </Nav>: 
       <Nav className="me-auto">
        <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/dashboard">My profile</Nav.Link>
-       <Nav.Link onClick={log} as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/">Log out</Nav.Link>
+       <Nav.Link onClick={logOut} as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/">Log out</Nav.Link>
      </Nav>
     }
     </Container>
