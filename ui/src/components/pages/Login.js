@@ -1,8 +1,15 @@
-import React from 'react'
+import { useState } from "react";
 import { Container, Form, Button, Row, Col } from 'react-bootstrap'
 import "./Login.css"
 
 const Login = () => {
+  const [data, setData] = useState({ email: "", password: "" });
+	const [error, setError] = useState("");
+
+  const handleChange = ({ currentTarget: input }) => {
+		setData({ ...data, [input.name]: input.value });
+	};
+
   return (
     <Container className='login-wrapper'>
       <Row>
