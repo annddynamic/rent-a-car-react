@@ -18,6 +18,9 @@ const Login = ({login}) => {
 		try {
 			const url = "http://localhost:8080/api/login";
 			const { data: res } = await axios.post(url, data);
+      console.log(res.user)
+      localStorage.setItem("token", res.token)
+      localStorage.setItem("loggedIn", true)
 			navigate("/dashboard");
       login()
      

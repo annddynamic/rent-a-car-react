@@ -3,12 +3,16 @@ import Home from "./components/pages/Home"
 import Login from "./components/pages/Login"
 import Register from "./components/pages/Register"
 import { Routes, Route, Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Dashboard from "./components/pages/Dashboard";
 
 function App() {
+  const[loggedIn, setLoggedIn] = useState(false)
 
-  const[loggedIn, setLoggedIn] = useState(true)
+  useEffect(() => {
+    setLoggedIn(JSON.parse(window.localStorage.getItem('loggedIn')));
+  }, []);
+
  
   const login =()=>{
     setLoggedIn(true)

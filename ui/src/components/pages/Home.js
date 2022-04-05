@@ -20,7 +20,7 @@ const Home = () => {
             </Col>
           </Row>
         </Container>
-      </div>
+        </div>
       <div  className='second'>
       <Container>
         <Row>
