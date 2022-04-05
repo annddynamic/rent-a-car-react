@@ -3,7 +3,6 @@ import { Container, Form, Button, Row, Col, Alert, } from 'react-bootstrap'
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
-
 const Register = () => {
 
   const [data, setData] = useState({
@@ -22,9 +21,9 @@ const Register = () => {
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/users";
+			const url = "http://localhost:8080/api/register";
 			const { data: res } = await axios.post(url, data);
-			navigate("/login");
+			navigate("/log-in");
 			console.log(res.message);
 		} catch (error) {
 			if (

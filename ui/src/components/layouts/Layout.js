@@ -1,10 +1,10 @@
 import React from 'react'
 import NavigationBar from './NavigationBar'
 
-const Layout = ({children}) => {
+const Layout = ({children, loggedIn, logout}) => {
   return (
     <div>
-        <NavigationBar/>
+        <NavigationBar loggedIn={loggedIn} logout={logout}/>
         <main>
             {children}
         </main>
