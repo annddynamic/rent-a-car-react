@@ -5,7 +5,6 @@ import React, { useState, useEffect } from "react"
 import "./NavigationBar.css"
 const NavigationBar = ({loggedIn, logout}) => {
   const [navbar, setNavbar] = useState(false)
-
   const changeBackground = () => {
     if (window.scrollY >= 66) {
       setNavbar(true)
