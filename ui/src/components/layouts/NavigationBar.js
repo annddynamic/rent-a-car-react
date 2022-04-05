@@ -6,7 +6,7 @@ import "./NavigationBar.css"
 const NavigationBar = ({loggedIn, logout}) => {
   const [navbar, setNavbar] = useState(false)
   const changeBackground = () => {
-    if (window.scrollY >= 66) {
+    if (window.scrollY >= 64) {
       setNavbar(true)
     } else {
       setNavbar(false)
