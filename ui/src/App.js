@@ -28,7 +28,7 @@ function App() {
         <Route path="/log-in" element={<Login login={login} />} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element= {
-          <ProtectedRoute loggedIn={loggedIn}>
+          <ProtectedRoute loggedIn={JSON.parse(window.localStorage.getItem('loggedIn'))}>
             <Dashboard />
           </ProtectedRoute > 
         } />
