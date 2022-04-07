@@ -27,7 +27,6 @@ const NavigationBar = ({loggedIn}) => {
   })
 
   const isLogged = useSelector(state => state.isLogged)
-  console.log(isLogged)
 
   const logOut =()=>{
     dispatch(logout())

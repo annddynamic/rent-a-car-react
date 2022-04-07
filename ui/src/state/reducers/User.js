@@ -1,9 +1,9 @@
-const UserReducer = (state =0, action)=>{
+const UserReducer = (state ={}, action)=>{
     switch(action.type){
         case 'SETUSER':
-            return state+1
+            return state = action.payload
         case 'UNSETUSER':
-            return state-1
+            return state={}
         default:
             return state
     }

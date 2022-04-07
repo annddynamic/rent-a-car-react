@@ -3,6 +3,7 @@ import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
 import { login } from "../../state/actions/loginActions";
+import { setUser } from "../../state/actions/userActions";
 import axios from "axios";
 import "./Login.css"
 
@@ -28,6 +29,7 @@ const Login = () => {
       localStorage.setItem("loggedIn", true)
       localStorage.setItem("user", JSON.stringify(res.user))
       dispatch(login())
+      dispatch(setUser(res.user))
 			navigate("/dashboard");
      
 		} catch (error) {
