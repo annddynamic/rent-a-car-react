@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from "react-router-dom";
 import {useSelector, useDispatch} from 'react-redux'
-import { login } from "../../state/actions";
+import { login } from "../../state/actions/loginActions";
 import axios from "axios";
 import "./Login.css"
 

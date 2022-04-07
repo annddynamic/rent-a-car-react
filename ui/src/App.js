@@ -3,17 +3,18 @@ import Home from "./components/pages/Home"
 import Login from "./components/pages/Login"
 import Register from "./components/pages/Register"
 import { Routes, Route, Link } from "react-router-dom";
-import { useState, useEffect } from "react";
+import {useEffect } from "react";
+import {useSelector,useDispatch} from 'react-redux'
+import { setLogin } from "./state/actions/loginActions";
 import Dashboard from "./components/pages/Dashboard";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 
 function App() {
 
-  // useEffect(() => {
-  //   setLoggedIn(JSON.parse(window.localStorage.getItem('loggedIn')));
-  // }, []);
-
- 
+  const dispatch = useDispatch();
+  
+  dispatch(setLogin(JSON.parse(window.localStorage.getItem('loggedIn'))))
+  const isLogged = useSelector(state => state.isLogged)
   
   return (
    <Layout>
@@ -22,7 +23,7 @@ function App() {
         <Route path="/log-in" element={<Login/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element= {
-          <ProtectedRoute loggedIn={JSON.parse(window.localStorage.getItem('loggedIn'))}>
+          <ProtectedRoute loggedIn={isLogged}>
             <Dashboard />
           </ProtectedRoute > 
         } />
