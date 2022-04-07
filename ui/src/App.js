@@ -8,24 +8,18 @@ import Dashboard from "./components/pages/Dashboard";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 
 function App() {
-  const[loggedIn, setLoggedIn] = useState(false)
 
-  useEffect(() => {
-    setLoggedIn(JSON.parse(window.localStorage.getItem('loggedIn')));
-  }, []);
+  // useEffect(() => {
+  //   setLoggedIn(JSON.parse(window.localStorage.getItem('loggedIn')));
+  // }, []);
 
-  const login =()=>{
-    setLoggedIn(true)
-  }
-  const logout =()=>{
-    setLoggedIn(false)
-  }
+ 
   
   return (
-   <Layout loggedIn = {loggedIn} logout={logout}>
+   <Layout>
      <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/log-in" element={<Login login={login} />} />
+        <Route path="/log-in" element={<Login/>} />
         <Route path="/register" element={<Register />} />
         <Route path="/dashboard" element= {
           <ProtectedRoute loggedIn={JSON.parse(window.localStorage.getItem('loggedIn'))}>

@@ -4,7 +4,7 @@ import NavigationBar from './NavigationBar'
 const Layout = ({children, loggedIn, logout}) => {
   return (
     <div>
-        <NavigationBar loggedIn={loggedIn} logout={logout}/>
+        <NavigationBar/>
         <main>
             {children}
         </main>

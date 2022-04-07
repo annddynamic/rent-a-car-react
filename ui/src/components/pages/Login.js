@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { Container, Form, Button, Row, Col, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from "react-router-dom";
+import {useSelector, useDispatch} from 'react-redux'
+import { login } from "../../state/actions";
 import axios from "axios";
 import "./Login.css"
 
-const Login = ({login}) => {
+const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 
@@ -12,6 +14,8 @@ const Login = ({login}) => {
 		setData({ ...data, [input.name]: input.value });
 	};
 	const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e) => {
 		e.preventDefault();
@@ -23,7 +27,7 @@ const Login = ({login}) => {
       localStorage.setItem("token", res.token)
       localStorage.setItem("loggedIn", true)
       localStorage.setItem("user", JSON.stringify(res.user))
-      login()
+      dispatch(login())
 			navigate("/dashboard");
      
 		} catch (error) {
