@@ -4,8 +4,8 @@
     font-size: 16px;
 }
 
-.navb, a {
-    color:white 
+.navItems .active{
+    border-bottom: 2px solid white !important; 
 }
 
 .nav-scroll {

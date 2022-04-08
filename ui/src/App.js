@@ -2,14 +2,14 @@ import Layout from "./components/layouts/Layout";
 import Home from "./components/pages/Home"
 import Login from "./components/pages/Login"
 import Register from "./components/pages/Register"
-import { Routes, Route, Link } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 import {useSelector,useDispatch} from 'react-redux'
 import { setLogin } from "./state/actions/loginActions";
 import Dashboard from "./components/pages/Dashboard";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 import { setUser } from "./state/actions/userActions";
 
-function App() {
+const App =() => {
 
   const dispatch = useDispatch();
   
@@ -34,5 +34,5 @@ function App() {
    </Layout>
   );
 }
-{/* <Link to="/about">About</Link> */}
+
 export default App;
