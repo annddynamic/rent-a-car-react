@@ -3,19 +3,21 @@ import Home from "./components/pages/Home"
 import Login from "./components/pages/Login"
 import Register from "./components/pages/Register"
 import { Routes, Route, Link } from "react-router-dom";
-import {useEffect } from "react";
 import {useSelector,useDispatch} from 'react-redux'
 import { setLogin } from "./state/actions/loginActions";
 import Dashboard from "./components/pages/Dashboard";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
+import { setUser } from "./state/actions/userActions";
 
 function App() {
 
   const dispatch = useDispatch();
   
   dispatch(setLogin(JSON.parse(window.localStorage.getItem('loggedIn'))))
+  dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+
   const isLogged = useSelector(state => state.isLogged)
-  
+
   return (
    <Layout>
      <Routes>

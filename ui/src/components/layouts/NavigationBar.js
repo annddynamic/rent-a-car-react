@@ -36,9 +36,9 @@ const NavigationBar = ({loggedIn}) => {
   }
 
   return (
-    <Navbar className={(navbar) ? 'nav-scroll': 'navb'} variant="light"  collapseOnSelect  sticky="top">
+    <Navbar className={(navbar || isLogged) ? 'nav-scroll': 'navb'} variant="light"  collapseOnSelect  sticky="top">
     <Container>
-    <Navbar.Brand  > <FaCar color={navbar ? 'black': 'white'} /></Navbar.Brand>
+    <Navbar.Brand><h3 style={{color:(navbar || isLogged) ? 'black': 'white' }}>OTR <FaCar /></h3></Navbar.Brand>
     {!isLogged ?
       <Nav className="me-auto">
         <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/">Home</Nav.Link>
@@ -46,8 +46,8 @@ const NavigationBar = ({loggedIn}) => {
         <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/register">Register</Nav.Link>
       </Nav>: 
       <Nav className="me-auto">
-       <Nav.Link as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/dashboard">My profile</Nav.Link>
-       <Nav.Link onClick={logOut} as={Link} style={{color: navbar ? 'black': '#f4f4f4'}} to="/">Log out</Nav.Link>
+       <Nav.Link as={Link} style={{color: 'black'}} to="/dashboard">My profile</Nav.Link>
+       <Nav.Link onClick={logOut} as={Link} style={{color:'black'}} to="/">Log out</Nav.Link>
      </Nav>
     }
     </Container>
