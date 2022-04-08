@@ -1,5 +1,5 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
-import { Link, NavLink } from "react-router-dom";
+import {  NavLink, Link } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -36,7 +36,7 @@ const NavigationBar = () => {
 
   return (
     <Navbar
-      className={navbar || isLogged ? "nav-scroll" : "navb"}
+      className={navbar || isLogged ? "nav-white" : "nav-black"}
       variant="light"
       collapseOnSelect
       sticky="top"
@@ -54,21 +54,21 @@ const NavigationBar = () => {
         {!isLogged ? (
           <Nav className="me-auto">
             <Nav.Link
-              as={Link}
-              style={{ color: navbar ? "black" : "#f4f4f4"}}
+              as={NavLink}
+              style={{ color: navbar ? "black" : "#f4f4f4" }}
               to="/"
             >
               Home
             </Nav.Link>
             <Nav.Link
-              as={Link}
+              as={NavLink}
               style={{ color: navbar ? "black" : "#f4f4f4" }}
-              to="/log-in"
+              to="/login"
             >
               Log in
             </Nav.Link>
             <Nav.Link
-              as={Link}
+              as={NavLink}
               style={{ color: navbar ? "black" : "#f4f4f4" }}
               to="/register"
             >
@@ -77,7 +77,7 @@ const NavigationBar = () => {
           </Nav>
         ) : (
           <Nav className="me-auto">
-            <Nav.Link as={Link} style={{ color: "black" }} to="/dashboard">
+            <Nav.Link as={NavLink} style={{ color: "black" }} to="/dashboard">
               My profile
             </Nav.Link>
             <Nav.Link
