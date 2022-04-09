@@ -1,7 +1,7 @@
 import { Navbar, Container, Nav } from "react-bootstrap";
 import { NavLink, Link } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout, setLogin } from "../../state/actions/loginActions";
 import "./NavigationBar.css";

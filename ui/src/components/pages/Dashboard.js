@@ -1,8 +1,11 @@
-import  { useEffect, useState } from 'react'
+import  { useState } from 'react'
 import {Container, Col, Row} from 'react-bootstrap'
+import { useSelector } from 'react-redux'
 
 const Dashboard = () => {
-  const[user, setUser] = useState(JSON.parse(localStorage.getItem("user")))
+  
+  const user = useSelector(state => state.user)
+
   return (
     <div>
         <Container className='text-center'>

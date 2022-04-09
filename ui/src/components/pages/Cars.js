@@ -19,6 +19,7 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import { useState } from "react";
+import cars from "./Cars.json";
 import sample1 from "../../images/sample1.jpeg";
 import sample2 from "../../images/sample2.jpeg";
 import sample3 from "../../images/sample3.jpeg";
@@ -45,6 +46,7 @@ const Cars = () => {
     setuserReviewTypeShown(!userReviewTypeShown);
   };
 
+  console.log(cars);
   return (
     <div className="cars-layout">
       <Container
@@ -94,9 +96,9 @@ const Cars = () => {
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
-                Car type 
+                Car type
                 <span className="text-right">
-                  {carsTypeShown ?  <FaAngleDown /> :<FaAngleLeft /> } 
+                  {carsTypeShown ? <FaAngleDown /> : <FaAngleLeft />}
                 </span>
               </p>
               {carsTypeShown ? (
@@ -118,13 +120,9 @@ const Cars = () => {
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
-                Transmition 
+                Transmition
                 <span>
-                  {transmitionTypeShown ? (
-                    <FaAngleDown />
-                  ) : (
-                    <FaAngleLeft />
-                  )} 
+                  {transmitionTypeShown ? <FaAngleDown /> : <FaAngleLeft />}
                 </span>
               </p>
               {transmitionTypeShown ? (
@@ -142,9 +140,9 @@ const Cars = () => {
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
-                User reviews 
+                User reviews
                 <span>
-                  {userReviewTypeShown ? <FaAngleDown /> : <FaAngleLeft />} 
+                  {userReviewTypeShown ? <FaAngleDown /> : <FaAngleLeft />}
                 </span>
               </p>
               {userReviewTypeShown ? (
@@ -163,38 +161,35 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              <Col className="mt-2" md={4} >
-                <Card style={{cursor:"pointer"}}> 
+              <Col className="mt-2" md={4}>
+                <Card style={{ cursor: "pointer" }}>
                   <Card.Img variant="top" src={sample1} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                      <div className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </div>
+                    <Card.Text className="icons">
+                      <FaUserAlt />
+                      <span>
+                        <FaShoppingBag />
+                      </span>
+                      <span>
+                        <FaCity />
+                      </span>
+                      <span>
+                        <FaTools />
+                      </span>
+                      <span>
+                        <FaSnowflake />
+                      </span>
                     </Card.Text>
                     <Card.Text>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        5.0 <FaStar/> Excellent <span style={{color:"grey"}}> (250 reviews)</span>
-                      </p>
+                      Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" />
+                    </Card.Text>
+                    <Card.Text>
+                      Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" />
+                    </Card.Text>
+                    <Card.Text>
+                      5.0 <FaStar /> Excellent{" "}
+                      <span style={{ color: "grey" }}> (250 reviews)</span>
                     </Card.Text>
                   </Card.Body>
                   <ListGroup className="list-group-flush">
@@ -205,7 +200,7 @@ const Cars = () => {
                             <h3>$400</h3>
                           </Col>
                           <Col className="float-right">
-                            <Button>Buy now!</Button>
+                            <Button>Book now!</Button>
                           </Col>
                         </Row>
                       </Container>
@@ -213,7 +208,7 @@ const Cars = () => {
                   </ListGroup>
                 </Card>
               </Col>
-              <Col className="mt-2" md={4} >
+              {/* <Col className="mt-2" md={4} >
                 <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample2} />
                   <Card.Body>
@@ -255,7 +250,7 @@ const Cars = () => {
                             <h3>$400</h3>
                           </Col>
                           <Col className="float-right">
-                            <Button>Buy now!</Button>
+                            <Button>Book now!</Button>
                           </Col>
                         </Row>
                       </Container>
@@ -305,7 +300,7 @@ const Cars = () => {
                             <h3>$400</h3>
                           </Col>
                           <Col className="float-right">
-                            <Button>Buy now!</Button>
+                            <Button>Book now!</Button>
                           </Col>
                         </Row>
                       </Container>
@@ -355,7 +350,7 @@ const Cars = () => {
                             <h3>$400</h3>
                           </Col>
                           <Col className="float-right">
-                            <Button>Buy now!</Button>
+                            <Button>Book now!</Button>
                           </Col>
                         </Row>
                       </Container>
@@ -405,7 +400,7 @@ const Cars = () => {
                             <h3>$400</h3>
                           </Col>
                           <Col className="float-right">
-                            <Button>Buy now!</Button>
+                            <Button>Book now!</Button>
                           </Col>
                         </Row>
                       </Container>
@@ -455,14 +450,14 @@ const Cars = () => {
                             <h3>$400</h3>
                           </Col>
                           <Col className="float-right">
-                            <Button>Buy now!</Button>
+                            <Button>Book now!</Button>
                           </Col>
                         </Row>
                       </Container>
                     </Card.Body>
                   </ListGroup>
                 </Card>
-              </Col>
+              </Col> */}
             </Row>
           </Col>
         </Row>
