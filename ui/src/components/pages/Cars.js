@@ -164,7 +164,7 @@ const Cars = () => {
           <Col md={10}>
             <Row>
               <Col className="mt-2" md={4} >
-                <Card style={{width:"100%"}}> 
+                <Card style={{cursor:"pointer"}}> 
                   <Card.Img variant="top" src={sample1} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
@@ -214,7 +214,7 @@ const Cars = () => {
                 </Card>
               </Col>
               <Col className="mt-2" md={4} >
-                <Card>
+                <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample2} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
@@ -264,7 +264,7 @@ const Cars = () => {
                 </Card>
               </Col>
               <Col className="mt-2" md={4} >
-                <Card>
+                <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample1} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
@@ -314,7 +314,7 @@ const Cars = () => {
                 </Card>
               </Col>
               <Col className="mt-2" md={4} >
-                <Card>
+                <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample3} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
@@ -364,7 +364,7 @@ const Cars = () => {
                 </Card>
               </Col>
               <Col className="mt-2" md={4} >
-                <Card>
+                <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample4} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
@@ -414,7 +414,7 @@ const Cars = () => {
                 </Card>
               </Col>
               <Col className="mt-2" md={4} >
-                <Card>
+                <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample5} />
                   <Card.Body>
                     <Card.Title>Card Title</Card.Title>
