@@ -21,7 +21,7 @@ import {
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCars } from "../../state/actions/carsActions";
-import cars from "./Cars.json";
+import carsJson from "./Cars.json";
 import sample1 from "../../images/sample1.jpeg";
 import sample2 from "../../images/sample2.jpeg";
 import sample3 from "../../images/sample3.jpeg";
@@ -32,13 +32,11 @@ import sample6 from "../../images/sample6.jpeg";
 import "./Cars.css";
 
 const Cars = () => {
-
   const dispatch = useDispatch();
 
   useEffect(() => {
-    console.log(cars)
-    dispatch(setCars(cars))
-  },[]);
+    dispatch(setCars(carsJson));
+  }, []);
 
   const [carsTypeShown, setCarsTypeShown] = useState(true);
   const [transmitionTypeShown, settransmitionTypeShown] = useState(true);
@@ -56,6 +54,7 @@ const Cars = () => {
     setuserReviewTypeShown(!userReviewTypeShown);
   };
 
+  const cars = useSelector((state) => state.cars);
 
   return (
     <div className="cars-layout">
@@ -171,53 +170,57 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              <Col className="mt-2" md={4}>
-                <Card style={{ cursor: "pointer" }}>
-                  <Card.Img variant="top" src={sample1} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text className="icons">
-                      <FaUserAlt />
-                      <span>
-                        <FaShoppingBag />
-                      </span>
-                      <span>
-                        <FaCity />
-                      </span>
-                      <span>
-                        <FaTools />
-                      </span>
-                      <span>
-                        <FaSnowflake />
-                      </span>
-                    </Card.Text>
-                    <Card.Text>
-                      Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" />
-                    </Card.Text>
-                    <Card.Text>
-                      Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" />
-                    </Card.Text>
-                    <Card.Text>
-                      5.0 <FaStar /> Excellent{" "}
-                      <span style={{ color: "grey" }}> (250 reviews)</span>
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup className="list-group-flush">
+              {cars.map((car, index) => (
+                <Col key={index} className="mt-2" md={4}>
+                  <Card style={{ cursor: "pointer" }}>
+                    <Card.Img variant="top" src={require("../../images/"+car.picture+'.jpeg')} />
                     <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h3>$400</h3>
-                          </Col>
-                          <Col className="float-right">
-                            <Button>Book now!</Button>
-                          </Col>
-                        </Row>
-                      </Container>
+                      <Card.Title>{car.brand} {car.series}</Card.Title>
+                      <Card.Text className="icons">
+                        <FaUserAlt />
+                        <span>
+                          <FaShoppingBag />
+                        </span>
+                        <span>
+                          <FaCity />
+                        </span>
+                        <span>
+                          <FaTools />
+                        </span>
+                        <span>
+                          <FaSnowflake />
+                        </span>
+                      </Card.Text>
+                      <Card.Text>
+                        Transsmision: {car.transsmision}  
+                        <FaCheckCircle color="royalblue" />
+                      </Card.Text>
+                      <Card.Text>
+                        Lorem ipsum dolor sit.  
+                        <FaCheckCircle color="royalblue" />
+                      </Card.Text>
+                      <Card.Text>
+                        {car.rating}.0 <FaStar /> Excellent  
+                        <span style={{ color: "grey" }}> ({car.reviews} reviews)</span>
+                      </Card.Text>
                     </Card.Body>
-                  </ListGroup>
-                </Card>
-              </Col>
+                    <ListGroup className="list-group-flush">
+                      <Card.Body>
+                        <Container>
+                          <Row>
+                            <Col>
+                              <h3>${car.price}</h3>
+                            </Col>
+                            <Col className="float-right">
+                              <Button>Book now!</Button>
+                            </Col>
+                          </Row>
+                        </Container>
+                      </Card.Body>
+                    </ListGroup>
+                  </Card>
+                </Col>
+              ))}
               {/* <Col className="mt-2" md={4} >
                 <Card style={{cursor:"pointer"}}>
                   <Card.Img variant="top" src={sample2} />
