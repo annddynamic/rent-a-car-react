@@ -6,6 +6,7 @@ import {
   Button,
   Card,
   ListGroup,
+  Pagination,
 } from "react-bootstrap";
 import {
   FaAngleDown,
@@ -22,12 +23,6 @@ import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { setCars } from "../../state/actions/carsActions";
 import carsJson from "./Cars.json";
-import sample1 from "../../images/sample1.jpeg";
-import sample2 from "../../images/sample2.jpeg";
-import sample3 from "../../images/sample3.jpeg";
-import sample4 from "../../images/sample4.jpeg";
-import sample5 from "../../images/sample5.jpeg";
-import sample6 from "../../images/sample6.jpeg";
 
 import "./Cars.css";
 
@@ -38,6 +33,8 @@ const Cars = () => {
     dispatch(setCars(carsJson));
   }, []);
 
+  const cars = useSelector((state) => state.cars);
+  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
   const [carsTypeShown, setCarsTypeShown] = useState(true);
   const [transmitionTypeShown, settransmitionTypeShown] = useState(true);
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
@@ -53,8 +50,18 @@ const Cars = () => {
   const toggleUserReview = () => {
     setuserReviewTypeShown(!userReviewTypeShown);
   };
+  
+  const [active, setActivePage] = useState(1);
+  let items = [];
 
-  const cars = useSelector((state) => state.cars);
+  for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
+    items.push(number);
+  }
+
+  const setActive = (item) => {
+    setActivePage(item)
+    setItemsPerPage(cars.slice(item*6-6, item*6))
+  };
 
   return (
     <div className="cars-layout">
@@ -170,12 +177,17 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.map((car, index) => (
+              {itemsPerPage.map((car, index) => (
                 <Col key={index} className="mt-2" md={4}>
                   <Card style={{ cursor: "pointer" }}>
-                    <Card.Img variant="top" src={require("../../images/"+car.picture+'.jpeg')} />
+                    <Card.Img
+                      variant="top"
+                      src={require("../../images/" + car.picture + ".jpeg")}
+                    />
                     <Card.Body>
-                      <Card.Title>{car.brand} {car.series}</Card.Title>
+                      <Card.Title>
+                        {car.brand} {car.series}
+                      </Card.Title>
                       <Card.Text className="icons">
                         <FaUserAlt />
                         <span>
@@ -192,16 +204,19 @@ const Cars = () => {
                         </span>
                       </Card.Text>
                       <Card.Text>
-                        Transsmision: {car.transsmision}  
+                        Transsmision: {car.transsmision}
                         <FaCheckCircle color="royalblue" />
                       </Card.Text>
                       <Card.Text>
-                        Lorem ipsum dolor sit.  
+                        Lorem ipsum dolor sit.
                         <FaCheckCircle color="royalblue" />
                       </Card.Text>
                       <Card.Text>
-                        {car.rating}.0 <FaStar /> Excellent  
-                        <span style={{ color: "grey" }}> ({car.reviews} reviews)</span>
+                        {car.rating}.0 <FaStar /> Excellent
+                        <span style={{ color: "grey" }}>
+                          {" "}
+                          ({car.reviews} reviews)
+                        </span>
                       </Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
@@ -221,256 +236,17 @@ const Cars = () => {
                   </Card>
                 </Col>
               ))}
-              {/* <Col className="mt-2" md={4} >
-                <Card style={{cursor:"pointer"}}>
-                  <Card.Img variant="top" src={sample2} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                      <div className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </div>
-                    </Card.Text>
-                    <Card.Text>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        5.0 <FaStar/> Excellent <span style={{color:"grey"}}> (250 reviews)</span>
-                      </p>
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup className="list-group-flush">
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h3>$400</h3>
-                          </Col>
-                          <Col className="float-right">
-                            <Button>Book now!</Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Card.Body>
-                  </ListGroup>
-                </Card>
-              </Col>
-              <Col className="mt-2" md={4} >
-                <Card style={{cursor:"pointer"}}>
-                  <Card.Img variant="top" src={sample1} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                      <div className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </div>
-                    </Card.Text>
-                    <Card.Text>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        5.0 <FaStar/> Excellent <span style={{color:"grey"}}> (250 reviews)</span>
-                      </p>
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup className="list-group-flush">
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h3>$400</h3>
-                          </Col>
-                          <Col className="float-right">
-                            <Button>Book now!</Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Card.Body>
-                  </ListGroup>
-                </Card>
-              </Col>
-              <Col className="mt-2" md={4} >
-                <Card style={{cursor:"pointer"}}>
-                  <Card.Img variant="top" src={sample3} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                      <div className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </div>
-                    </Card.Text>
-                    <Card.Text>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        5.0 <FaStar/> Excellent <span style={{color:"grey"}}> (250 reviews)</span>
-                      </p>
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup className="list-group-flush">
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h3>$400</h3>
-                          </Col>
-                          <Col className="float-right">
-                            <Button>Book now!</Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Card.Body>
-                  </ListGroup>
-                </Card>
-              </Col>
-              <Col className="mt-2" md={4} >
-                <Card style={{cursor:"pointer"}}>
-                  <Card.Img variant="top" src={sample4} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                      <div className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </div>
-                    </Card.Text>
-                    <Card.Text>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        5.0 <FaStar/> Excellent <span style={{color:"grey"}}> (250 reviews)</span>
-                      </p>
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup className="list-group-flush">
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h3>$400</h3>
-                          </Col>
-                          <Col className="float-right">
-                            <Button>Book now!</Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Card.Body>
-                  </ListGroup>
-                </Card>
-              </Col>
-              <Col className="mt-2" md={4} >
-                <Card style={{cursor:"pointer"}}>
-                  <Card.Img variant="top" src={sample5} />
-                  <Card.Body>
-                    <Card.Title>Card Title</Card.Title>
-                    <Card.Text>
-                      <div className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </div>
-                    </Card.Text>
-                    <Card.Text>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        Lorem ipsum dolor sit. <FaCheckCircle color="royalblue" /> 
-                      </p>
-                      <p>
-                        5.0 <FaStar/> Excellent <span style={{color:"grey"}}> (250 reviews)</span>
-                      </p>
-                    </Card.Text>
-                  </Card.Body>
-                  <ListGroup className="list-group-flush">
-                    <Card.Body>
-                      <Container>
-                        <Row>
-                          <Col>
-                            <h3>$400</h3>
-                          </Col>
-                          <Col className="float-right">
-                            <Button>Book now!</Button>
-                          </Col>
-                        </Row>
-                      </Container>
-                    </Card.Body>
-                  </ListGroup>
-                </Card>
-              </Col> */}
+              <Pagination>
+                {items.map((item) => (
+                  <Pagination.Item
+                    onClick={() => setActive(item)}
+                    active={item === active}
+                    key={item}
+                  >
+                    {item}
+                  </Pagination.Item>
+                ))}
+              </Pagination>
             </Row>
           </Col>
         </Row>

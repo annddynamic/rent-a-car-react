@@ -23,7 +23,7 @@ const Register = () => {
 		try {
 			const url = "http://localhost:8080/api/register";
 			const { data: res } = await axios.post(url, data);
-			navigate("/log-in");
+			navigate("/login");
 			console.log(res.message);
 		} catch (error) {
 			if (
