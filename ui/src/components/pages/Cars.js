@@ -18,7 +18,9 @@ import {
   FaTools,
   FaUserAlt,
 } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCars } from "../../state/actions/carsActions";
 import cars from "./Cars.json";
 import sample1 from "../../images/sample1.jpeg";
 import sample2 from "../../images/sample2.jpeg";
@@ -30,6 +32,14 @@ import sample6 from "../../images/sample6.jpeg";
 import "./Cars.css";
 
 const Cars = () => {
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    console.log(cars)
+    dispatch(setCars(cars))
+  },[]);
+
   const [carsTypeShown, setCarsTypeShown] = useState(true);
   const [transmitionTypeShown, settransmitionTypeShown] = useState(true);
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
@@ -46,7 +56,7 @@ const Cars = () => {
     setuserReviewTypeShown(!userReviewTypeShown);
   };
 
-  console.log(cars);
+
   return (
     <div className="cars-layout">
       <Container

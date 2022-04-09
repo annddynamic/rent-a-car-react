@@ -22,7 +22,6 @@ const NavigationBar = () => {
     changeBackground();
     // adding the event when scroll change background
     window.addEventListener("scroll", changeBackground);
-    dispatch(setLogin(JSON.parse(window.localStorage.getItem("loggedIn"))));
   });
 
   const isLogged = useSelector((state) => state.isLogged);
