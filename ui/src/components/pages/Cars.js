@@ -26,39 +26,74 @@ import carsJson from "./Cars.json";
 import "./Cars.css";
 
 const Cars = () => {
+  // set cars on localstorage
 
   useEffect(() => {
-    localStorage.setItem("cars", JSON.stringify(carsJson))
+    localStorage.setItem("cars", JSON.stringify(carsJson));
   }, []);
 
+  // get cars from state (redux)
   const cars = useSelector((state) => state.cars);
-  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
-  const [carsTypeShown, setCarsTypeShown] = useState(true);
-  const [transmitionTypeShown, settransmitionTypeShown] = useState(true);
-  const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
 
+  // set the first initial items displayed per page
+  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
+
+  // toggle car types
+  const [carsTypeShown, setCarsTypeShown] = useState(true);
   const toggleCars = () => {
     setCarsTypeShown(!carsTypeShown);
   };
 
+  // toggle car transmission types
+  const [transmitionTypeShown, settransmitionTypeShown] = useState(true);
   const toggleTransmition = () => {
     settransmitionTypeShown(!transmitionTypeShown);
   };
 
+  // toggle car reviews
+  const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
   const toggleUserReview = () => {
     setuserReviewTypeShown(!userReviewTypeShown);
   };
-  
+
+  // pagination
   const [active, setActivePage] = useState(1);
   let items = [];
 
+  // formula for calculating number of pages based on the cars in array
   for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
     items.push(number);
   }
 
-  const setActive = (item) => {
-    setActivePage(item)
-    setItemsPerPage(cars.slice(item*6-6, item*6))
+  // sets particular Items per page based on the nu,ber clicked
+  const setActive = (page) => {
+    setActivePage(page);
+    setItemsPerPage(cars.slice(page * 6 - 6, page * 6));
+  };
+
+  // Get unique car types
+  const types = [...new Set(cars.map((car) => car.type))];
+
+  // Fill all car type checkboxes with false
+  const [checkedState, setCheckedState] = useState(
+    new Array(types.length).fill(false)
+  );
+
+  const handleOnChange = (position) => {
+
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+
+    setCheckedState(updatedCheckedState)
+
+    
+    const filteredCars = cars.filter((car, index) => {
+      if(updatedCheckedState[index]){
+        return car.type == types[index]
+      }
+    });
+    console.log(filteredCars)
   };
 
   return (
@@ -118,12 +153,16 @@ const Cars = () => {
               {carsTypeShown ? (
                 <div className="car-type">
                   <div className="car-checkbox">
-                    <Form.Check type="checkbox" label="Economy" />
-                    <Form.Check type="checkbox" label="Compact" />
-                    <Form.Check type="checkbox" label="Check me out" />
-                    <Form.Check type="checkbox" label="Check me out" />
-                    <Form.Check type="checkbox" label="Check me out" />
-                    <Form.Check type="checkbox" label="Check me out" />
+                    {types.map((type, index) => (
+                      <Form.Check
+                        key={index}
+                        value={type}
+                        checked={checkedState[index]}
+                        onChange={() => handleOnChange(index)}
+                        type="checkbox"
+                        label={type}
+                      />
+                    ))}
                   </div>
                 </div>
               ) : (
@@ -142,8 +181,8 @@ const Cars = () => {
               {transmitionTypeShown ? (
                 <div className="car-type">
                   <div className="car-checkbox">
-                    <Form.Check type="checkbox" label="Economy" />
-                    <Form.Check type="checkbox" label="Compact" />
+                    <Form.Check type="checkbox" label="Transmission" />
+                    <Form.Check type="checkbox" label="Manual" />
                   </div>
                 </div>
               ) : (
@@ -162,10 +201,11 @@ const Cars = () => {
               {userReviewTypeShown ? (
                 <div className="car-type">
                   <div className="car-checkbox">
-                    <Form.Check type="checkbox" label="Economy" />
-                    <Form.Check type="checkbox" label="Compact" />
-                    <Form.Check type="checkbox" label="Check me out" />
-                    <Form.Check type="checkbox" label="Check me out" />
+                    <Form.Check type="checkbox" label="Good" />
+                    <Form.Check type="checkbox" label="Bad" />
+                    <Form.Check type="checkbox" label="Excellent" />
+                    <Form.Check type="checkbox" label="Fair" />
+                    <Form.Check type="checkbox" label="Poor" />
                   </div>
                 </div>
               ) : (
