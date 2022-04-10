@@ -55,9 +55,12 @@ router.post("/", async (req, res) => {
 	// console.log(req.body)
 	const car = new Car({
 		car_model: req.body.car_model,
-		car_model_type:req.body.car_model_type,
+		car_series :req.body.car_series,
+		car_type:req.body.car_type,
 		prod_year: req.body.prod_year,
 		price_for_24h: req.body.price_for_24h,
+		country: req.body.country,
+		seats:req.body.seats,
 		transmission: req.body.transmission,
 		max_speed: req.body.max_speed,
 		doors: req.body.doors,
