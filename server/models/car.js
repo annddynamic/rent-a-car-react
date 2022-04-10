@@ -11,11 +11,19 @@ const carSchema = new mongoose.Schema({
     transmission: { type: String, required: true },
     max_speed: { type: Number, required: true },
     doors: { type: Number, required: true },
-    air_conditioning: { type: String, required: true },
-    start_day_booking: { type: Date, required: true },
-    finish_day_booking: { type: Date, required: true },
-    miles: { type: Number, required: true }
-    
+    air_conditioning: { type: Boolean, required: true },
+    start_day_booking: { type: Date, default: null},
+    finish_day_booking: { type: Date, default: null},
+    miles: { type: Number, required: true },
+    image:{
+        name: String,
+        desc: String,
+        img:
+        {
+            data: Buffer,
+            contentType: String
+        }
+    }
 });
 
 
