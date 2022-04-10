@@ -16,12 +16,15 @@ import {
   FaShoppingBag,
   FaSnowflake,
   FaStar,
+  FaTimesCircle,
   FaTools,
   FaUserAlt,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
+import axios from "axios";
 import carsJson from "./Cars.json";
+import sample1 from "../../images/sample1.jpeg";
 
 import "./Cars.css";
 
@@ -29,7 +32,16 @@ const Cars = () => {
   // set cars on localstorage
 
   useEffect(() => {
-    localStorage.setItem("cars", JSON.stringify(carsJson));
+    try {
+      const url = "http://localhost:8080/api/cars";
+      axios.get(url).then((res) => {
+        const cars = res.data;
+        localStorage.setItem("cars", JSON.stringify(cars));
+        // console.log(cars)
+      });
+    } catch (error) {
+      console.log(error);
+    }
   }, []);
 
   // get cars from state (redux)
@@ -80,20 +92,18 @@ const Cars = () => {
   );
 
   const handleOnChange = (position) => {
-
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
 
-    setCheckedState(updatedCheckedState)
+    setCheckedState(updatedCheckedState);
 
-    
     const filteredCars = cars.filter((car, index) => {
-      if(updatedCheckedState[index]){
-        return car.type == types[index]
+      if (updatedCheckedState[index]) {
+        return car.type == types[index];
       }
     });
-    console.log(filteredCars)
+    console.log(filteredCars);
   };
 
   return (
@@ -218,10 +228,7 @@ const Cars = () => {
               {itemsPerPage.map((car, index) => (
                 <Col key={index} className="mt-2" md={4}>
                   <Card style={{ cursor: "pointer" }}>
-                    <Card.Img
-                      variant="top"
-                      src={require("../../images/" + car.picture + ".jpeg")}
-                    />
+                    <Card.Img variant="top" src={sample1} />
                     <Card.Body>
                       <Card.Title>
                         {car.brand} {car.series}
@@ -242,19 +249,22 @@ const Cars = () => {
                         </span>
                       </Card.Text>
                       <Card.Text>
-                        Transsmision: {car.transsmision}
+                        Transsmision: {car.transmission}
                         <FaCheckCircle color="royalblue" />
                       </Card.Text>
                       <Card.Text>
-                        Lorem ipsum dolor sit.
-                        <FaCheckCircle color="royalblue" />
+                        Air conditioning:
+                        {car.air_conditioning ? (
+                          <FaCheckCircle color="royalblue" />
+                        ) : (
+                          <FaTimesCircle color="royalblue" />
+                        )}
                       </Card.Text>
                       <Card.Text>
-                        {car.rating}.0 <FaStar /> Excellent
-                        <span style={{ color: "grey" }}>
+                        {/* <span style={{ color: "grey" }}>
                           {" "}
                           ({car.reviews} reviews)
-                        </span>
+                        </span> */}
                       </Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
@@ -262,7 +272,7 @@ const Cars = () => {
                         <Container>
                           <Row>
                             <Col>
-                              <h3>${car.price}</h3>
+                              <h3>${car.price_for_24h}</h3>
                             </Col>
                             <Col className="float-right">
                               <Button>Book now!</Button>
