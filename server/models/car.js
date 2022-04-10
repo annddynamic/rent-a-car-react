@@ -23,20 +23,12 @@ const carSchema = new mongoose.Schema({
             data: Buffer,
             contentType: String
         }
-    }
+    },
+    
 });
 
 
 const Car = mongoose.model("car", carSchema);
 
-// const validate = (data) => {
-// 	const schema = Joi.object({
-// 		firstName: Joi.string().required().label("Name"),
-// 		lastName: Joi.string().required().label("Last Name"),
-// 		email: Joi.string().email().required().label("Email"),
-// 		password: passwordComplexity().required().label("Password"),
-// 	});
-// 	return schema.validate(data);
-// };
 
 module.exports = Car;

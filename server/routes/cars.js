@@ -1,7 +1,5 @@
 const router = require("express").Router();
 const Car = require("../models/car");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
 
 //GET ALL CARS
 router.get("/" , async (req, res) => {

@@ -7,6 +7,7 @@ const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const carsRoutes = require("./routes/cars");
 const middleware = require("./utils/validate")
+
 var bodyParser = require('body-parser')
 
 // database connection
@@ -22,6 +23,7 @@ app.use(cors());
 // routes
 app.use("/api/register", userRoutes);
 app.use("/api/login", authRoutes);
+app.use("/api/cars", carsRoutes);
 
 // protected routes
 app.use("/api/cars", middleware, carsRoutes);
