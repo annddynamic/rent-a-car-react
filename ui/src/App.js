@@ -9,6 +9,7 @@ import {useSelector,useDispatch} from 'react-redux'
 import { setLogin } from "./state/actions/loginActions";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 import { setUser } from "./state/actions/userActions";
+import { setCars } from "./state/actions/carsActions";
 
 const App =() => {
 
@@ -16,6 +17,8 @@ const App =() => {
   
   dispatch(setLogin(JSON.parse(window.localStorage.getItem('loggedIn'))))
   dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+  dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+  dispatch(setCars(JSON.parse(localStorage.getItem("cars"))));
 
   const isLogged = useSelector(state => state.isLogged)
 

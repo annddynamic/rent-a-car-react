@@ -20,17 +20,15 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { setCars } from "../../state/actions/carsActions";
+import { useSelector } from "react-redux";
 import carsJson from "./Cars.json";
 
 import "./Cars.css";
 
 const Cars = () => {
-  const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(setCars(carsJson));
+    localStorage.setItem("cars", JSON.stringify(carsJson))
   }, []);
 
   const cars = useSelector((state) => state.cars);
