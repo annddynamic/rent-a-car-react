@@ -29,15 +29,13 @@ import sample1 from "../../images/sample1.jpeg";
 import "./Cars.css";
 
 const Cars = () => {
-  // set cars on localstorage
-
+  // fetch cars
   useEffect(() => {
     try {
       const url = "http://localhost:8080/api/cars";
       axios.get(url).then((res) => {
         const cars = res.data;
         localStorage.setItem("cars", JSON.stringify(cars));
-        // console.log(cars)
       });
     } catch (error) {
       console.log(error);
@@ -84,8 +82,7 @@ const Cars = () => {
   };
 
   // Get unique car types
-  const types = [...new Set(cars.map((car) => car.type))];
-
+  const types = [...new Set(cars.map((car) => car.car_type))];
   // Fill all car type checkboxes with false
   const [checkedState, setCheckedState] = useState(
     new Array(types.length).fill(false)
@@ -97,13 +94,13 @@ const Cars = () => {
     );
 
     setCheckedState(updatedCheckedState);
+    console.log(updatedCheckedState);
 
     const filteredCars = cars.filter((car, index) => {
       if (updatedCheckedState[index]) {
         return car.type == types[index];
       }
     });
-    console.log(filteredCars);
   };
 
   return (
