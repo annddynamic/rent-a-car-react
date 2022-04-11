@@ -94,13 +94,19 @@ const Cars = () => {
     );
 
     setCheckedState(updatedCheckedState);
-    console.log(updatedCheckedState);
 
-    const filteredCars = cars.filter((car, index) => {
-      if (updatedCheckedState[index]) {
-        return car.type == types[index];
-      }
-    });
+    let filteredCars=[]
+    for (let i = 0; i < updatedCheckedState.length; i++) {
+        if(updatedCheckedState[i]){
+          for(let j=0; j<cars.length; j++){
+            if(cars[j].car_type==types[i]){
+              filteredCars.push(cars[j])
+            }
+          }
+        }
+    }
+
+    setItemsPerPage(filteredCars)
   };
 
   return (
