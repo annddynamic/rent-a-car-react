@@ -45,44 +45,35 @@ const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars);
 
-  // set the first initial items displayed per page
+  // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
 
-  // toggle car types
   const [carsTypeShown, setCarsTypeShown] = useState(true);
-  const toggleCars = () => {
-    setCarsTypeShown(!carsTypeShown);
-  };
-
-  // toggle car transmission types
-  const [transmitionTypeShown, settransmitionTypeShown] = useState(true);
-  const toggleTransmition = () => {
-    settransmitionTypeShown(!transmitionTypeShown);
-  };
-
-  // toggle car reviews
+  
+  const [transmitionTypeShown, setTransmitionTypeShown] = useState(true);
+ 
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
-  const toggleUserReview = () => {
-    setuserReviewTypeShown(!userReviewTypeShown);
-  };
-
-  // pagination
+ 
+  // active page, page 1
   const [active, setActivePage] = useState(1);
-  let items = [];
-  const[pageNumber, setPageNumber]= useState([])
-
-  const sPageNumber = (size)=>{
-    for(let number = 1; number <=Math.ceil(size/6); number++){
-      
-    }
-  }
-
+  
   // formula for calculating number of pages based on the cars in array
+  let items = [];
   for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
     items.push(number);
   }
 
-  // sets particular Items per page based on the nu,ber clicked
+  const[pageNumber, setPageNumber]= useState(items)
+
+  const setPagination = (size)=>{
+    let items = [];
+    for(let number = 1; number <=Math.ceil(size/6); number++){
+      items.push(number)
+    }
+    setPageNumber(items)
+  }
+
+  // sets particular Items per page based on the number clicked
   const setActive = (page) => {
     setActivePage(page);
     setItemsPerPage(cars.slice(page * 6 - 6, page * 6));
@@ -90,6 +81,7 @@ const Cars = () => {
 
   // Get unique car types
   const types = [...new Set(cars.map((car) => car.car_type))];
+
   // Fill all car type checkboxes with false
   const [checkedState, setCheckedState] = useState(
     new Array(types.length).fill(false)
@@ -112,7 +104,8 @@ const Cars = () => {
         })
       }
     })
-    setItemsPerPage(filteredCars)
+    setItemsPerPage(filteredCars.slice(0,6))
+    setPagination(filteredCars.length)
   };
 
   return (
@@ -160,7 +153,7 @@ const Cars = () => {
             <Container className="mt-4">
               <h3>Filters</h3>
               <p
-                onClick={toggleCars}
+                onClick={()=>setCarsTypeShown(!carsTypeShown)}
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
@@ -188,7 +181,7 @@ const Cars = () => {
                 ""
               )}
               <p
-                onClick={toggleTransmition}
+                onClick={()=>setTransmitionTypeShown(!transmitionTypeShown)}
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
@@ -208,7 +201,7 @@ const Cars = () => {
                 ""
               )}
               <p
-                onClick={toggleUserReview}
+                onClick={()=>setuserReviewTypeShown(!userReviewTypeShown)}
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
@@ -270,10 +263,9 @@ const Cars = () => {
                         )}
                       </Card.Text>
                       <Card.Text>
-                        {/* <span style={{ color: "grey" }}>
-                          {" "}
-                          ({car.reviews} reviews)
-                        </span> */}
+                        <span style={{ color: "grey" }}>
+                          {car.car_type }
+                        </span>
                       </Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">
@@ -294,7 +286,7 @@ const Cars = () => {
                 </Col>
               ))}
               <Pagination>
-                {items.map((item) => (
+                {pageNumber.map((item) => (
                   <Pagination.Item
                     onClick={() => setActive(item)}
                     active={item === active}
