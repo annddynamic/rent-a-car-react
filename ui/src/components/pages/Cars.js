@@ -69,6 +69,13 @@ const Cars = () => {
   // pagination
   const [active, setActivePage] = useState(1);
   let items = [];
+  const[pageNumber, setPageNumber]= useState([])
+
+  const sPageNumber = (size)=>{
+    for(let number = 1; number <=Math.ceil(size/6); number++){
+      
+    }
+  }
 
   // formula for calculating number of pages based on the cars in array
   for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
@@ -96,16 +103,15 @@ const Cars = () => {
     setCheckedState(updatedCheckedState);
 
     let filteredCars=[]
-    for (let i = 0; i < updatedCheckedState.length; i++) {
-        if(updatedCheckedState[i]){
-          for(let j=0; j<cars.length; j++){
-            if(cars[j].car_type==types[i]){
-              filteredCars.push(cars[j])
-            }
+    updatedCheckedState.forEach((checked, index)=>{
+      if (checked){
+        cars.forEach(car=>{
+          if(car.car_type == types[index]){
+            filteredCars.push(car)
           }
-        }
-    }
-
+        })
+      }
+    })
     setItemsPerPage(filteredCars)
   };
 
