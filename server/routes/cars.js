@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const Car = require("../models/car");
-
+	
 //GET ALL CARS
 router.get("/" , async (req, res) => {
 	try {
