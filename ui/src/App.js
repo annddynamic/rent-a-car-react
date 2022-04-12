@@ -10,17 +10,21 @@ import { setLogin } from "./state/actions/loginActions";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 import { setUser } from "./state/actions/userActions";
 import { setCars } from "./state/actions/carsActions";
+import { useEffect } from "react";
 
 const App =() => {
 
   const dispatch = useDispatch();
   
-  dispatch(setLogin(JSON.parse(window.localStorage.getItem('loggedIn'))))
-  dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-  dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-  dispatch(setCars(JSON.parse(localStorage.getItem("cars"))));
+  useEffect(() => {
+    dispatch(setLogin(JSON.parse(localStorage.getItem("loggedIn")),localStorage.getItem("token")))
+    dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+    dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
+    dispatch(setCars(JSON.parse(localStorage.getItem("cars"))))
 
-  const isLogged = useSelector(state => state.isLogged)
+  }, []);
+
+  const isLogged = useSelector(state => state.isLogged.loggedIn)
 
   return (
    <Layout>

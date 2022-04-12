@@ -1,6 +1,9 @@
-export const login = ()=>{
+export const login = (token)=>{
     return {
-        type:'LOGIN'
+        type:'LOGIN',
+        payload:{
+            token
+        }
     }
 }
 
@@ -10,9 +13,12 @@ export const logout = ()=>{
     }
 }
 
-export const setLogin = (ls) =>{
+export const setLogin = (ls, token) =>{
     return {
         type:'SETLOGIN',
-        payload: ls
+        payload: {
+            ls,
+            token
+        }
     }
 }

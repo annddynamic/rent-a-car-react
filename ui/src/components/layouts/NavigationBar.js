@@ -24,13 +24,14 @@ const NavigationBar = () => {
     window.addEventListener("scroll", changeBackground);
   });
 
-  const isLogged = useSelector((state) => state.isLogged);
-
+  const isLogged = useSelector((state) => state.isLogged.loggedIn);
+  console.log(isLogged)
   const logOut = () => {
-    dispatch(logout());
-    localStorage.setItem("loggedIn", false);
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
+    dispatch(logout())
+    localStorage.setItem("loggedIn", false)
+    localStorage.removeItem("token")
+    localStorage.removeItem("user")
+    localStorage.removeItem("cars")
   };
 
   return (

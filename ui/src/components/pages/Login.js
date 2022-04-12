@@ -28,7 +28,7 @@ const Login = () => {
       localStorage.setItem("token", res.token)
       localStorage.setItem("loggedIn", true)
       localStorage.setItem("user", JSON.stringify(res.user))
-      dispatch(login())
+      dispatch(login(res.token))
       dispatch(setUser(res.user))
 			navigate("/dashboard");
      
