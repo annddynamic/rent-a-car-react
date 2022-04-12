@@ -1,7 +1,7 @@
 const CarsReducer = (state =[], action)=>{
     switch(action.type){
         case 'SETCARS':
-            return state = action.payload
+            return state=action.payload
         case 'UNSETCARS':
             return state=[]
         default:

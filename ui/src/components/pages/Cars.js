@@ -21,65 +21,64 @@ import {
   FaUserAlt,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import sample1 from "../../images/sample1.jpeg";
-
+import { setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
+import CarsReducer from "../../state/reducers/Cars";
 
 const Cars = () => {
-
-  // const access_token = useSelector((state)=>state.isLogged.token)
-  // fetch cars
-  useEffect(() => {
-    // if(access_token){
-      try {
-        const url = "http://localhost:8080/api/cars";
-        axios.get(url, {
-          headers: {
-            'Authorization': `Bearer ${localStorage.getItem("token")}`
-          }
-        }).then((res) => {
-          const cars = res.data;
-          console.log(cars)
-          localStorage.setItem("cars", JSON.stringify(cars));
-        });
-      } catch (error) {
-        console.log("a",error);
-      }
-    // }
-  } );
-
   // get cars from state (redux)
-  const cars = useSelector((state) => state.cars) || []
+  const cars = useSelector((state) => state.cars) ||[];
+  const dispatch = useDispatch();
+
+  const fetchCars = async () => {
+    const url = "http://localhost:8080/api/cars";
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      })
+      .then((res) => {
+        const cars = res.data;
+        dispatch(setCars(cars))
+        localStorage.setItem("cars", JSON.stringify(cars));
+      });
+  };
+
+  useEffect(() => {
+    fetchCars()
+  },[]);
 
   // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
 
   const [carsTypeShown, setCarsTypeShown] = useState(true);
-  
+
   const [transmitionTypeShown, setTransmitionTypeShown] = useState(true);
- 
+
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
- 
+
   // active page, page 1
   const [active, setActivePage] = useState(1);
-  
+
   // formula for calculating number of pages based on the cars in array
   let items = [];
   for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
     items.push(number);
   }
 
-  const[pageNumber, setPageNumber]= useState(items)
+  const [pageNumber, setPageNumber] = useState(items);
 
-  const setPagination = (size)=>{
+  const setPagination = (size) => {
     let items = [];
-    for(let number = 1; number <=Math.ceil(size/6); number++){
-      items.push(number)
+    for (let number = 1; number <= Math.ceil(size / 6); number++) {
+      items.push(number);
     }
-    setPageNumber(items)
-  }
+    setPageNumber(items);
+  };
 
   // sets particular Items per page based on the number clicked
   const setActive = (page) => {
@@ -99,21 +98,21 @@ const Cars = () => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
-    console.log(updatedCheckedState)
+    console.log(updatedCheckedState);
     setCheckedState(updatedCheckedState);
 
-    let filteredCars=[]
-    updatedCheckedState.forEach((checked, index)=>{
-      if (checked){
-        cars.forEach(car=>{
-          if(car.car_type == types[index]){
-            filteredCars.push(car)
+    let filteredCars = [];
+    updatedCheckedState.forEach((checked, index) => {
+      if (checked) {
+        cars.forEach((car) => {
+          if (car.car_type == types[index]) {
+            filteredCars.push(car);
           }
-        })
+        });
       }
-    })
-    setItemsPerPage(filteredCars.slice(0,6))
-    setPagination(filteredCars.length)
+    });
+    setItemsPerPage(filteredCars.slice(0, 6));
+    setPagination(filteredCars.length);
   };
 
   return (
@@ -161,7 +160,7 @@ const Cars = () => {
             <Container className="mt-4">
               <h3>Filters</h3>
               <p
-                onClick={()=>setCarsTypeShown(!carsTypeShown)}
+                onClick={() => setCarsTypeShown(!carsTypeShown)}
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
@@ -189,7 +188,7 @@ const Cars = () => {
                 ""
               )}
               <p
-                onClick={()=>setTransmitionTypeShown(!transmitionTypeShown)}
+                onClick={() => setTransmitionTypeShown(!transmitionTypeShown)}
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
@@ -209,7 +208,7 @@ const Cars = () => {
                 ""
               )}
               <p
-                onClick={()=>setuserReviewTypeShown(!userReviewTypeShown)}
+                onClick={() => setuserReviewTypeShown(!userReviewTypeShown)}
                 className="mt-4 text-primary"
                 style={{ cursor: "pointer" }}
               >
@@ -235,7 +234,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {itemsPerPage.map((car, index) => (
+              {cars.map((car, index) => (
                 <Col key={index} className="mt-2" md={4}>
                   <Card style={{ cursor: "pointer" }}>
                     <Card.Img variant="top" src={sample1} />
@@ -271,9 +270,7 @@ const Cars = () => {
                         )}
                       </Card.Text>
                       <Card.Text>
-                        <span style={{ color: "grey" }}>
-                          {car.car_type }
-                        </span>
+                        <span style={{ color: "grey" }}>{car.car_type}</span>
                       </Card.Text>
                     </Card.Body>
                     <ListGroup className="list-group-flush">

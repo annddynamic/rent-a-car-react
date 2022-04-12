@@ -25,7 +25,7 @@ const NavigationBar = () => {
   });
 
   const isLogged = useSelector((state) => state.isLogged.loggedIn);
-  console.log(isLogged)
+  
   const logOut = () => {
     dispatch(logout())
     localStorage.setItem("loggedIn", false)
