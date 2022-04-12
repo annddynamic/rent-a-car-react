@@ -28,21 +28,30 @@ import sample1 from "../../images/sample1.jpeg";
 import "./Cars.css";
 
 const Cars = () => {
+
+  // const access_token = useSelector((state)=>state.isLogged.token)
   // fetch cars
   useEffect(() => {
-    try {
-      const url = "http://localhost:8080/api/cars";
-      axios.get(url).then((res) => {
-        const cars = res.data;
-        localStorage.setItem("cars", JSON.stringify(cars));
-      });
-    } catch (error) {
-      console.log(error);
-    }
-  }, []);
+    // if(access_token){
+      try {
+        const url = "http://localhost:8080/api/cars";
+        axios.get(url, {
+          headers: {
+            'Authorization': `Bearer ${localStorage.getItem("token")}`
+          }
+        }).then((res) => {
+          const cars = res.data;
+          console.log(cars)
+          localStorage.setItem("cars", JSON.stringify(cars));
+        });
+      } catch (error) {
+        console.log("a",error);
+      }
+    // }
+  } );
 
   // get cars from state (redux)
-  const cars = useSelector((state) => state.cars);
+  const cars = useSelector((state) => state.cars) || []
 
   // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
@@ -90,7 +99,7 @@ const Cars = () => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
-
+    console.log(updatedCheckedState)
     setCheckedState(updatedCheckedState);
 
     let filteredCars=[]

@@ -16,13 +16,10 @@ const App =() => {
 
   const dispatch = useDispatch();
   
-  useEffect(() => {
-    dispatch(setLogin(JSON.parse(localStorage.getItem("loggedIn")),localStorage.getItem("token")))
-    dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-    dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-    dispatch(setCars(JSON.parse(localStorage.getItem("cars"))))
+  dispatch(setLogin(JSON.parse(localStorage.getItem("loggedIn")),localStorage.getItem("token")))
+  dispatch(setCars(JSON.parse(localStorage.getItem("cars"))))
+  dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
 
-  }, []);
 
   const isLogged = useSelector(state => state.isLogged.loggedIn)
 
