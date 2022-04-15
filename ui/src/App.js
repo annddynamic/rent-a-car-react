@@ -13,15 +13,9 @@ import { setCars } from "./state/actions/carsActions";
 import { useEffect } from "react";
 
 const App =() => {
-
-  const dispatch = useDispatch();
-    dispatch(setLogin(JSON.parse(localStorage.getItem("loggedIn")),localStorage.getItem("token")))
-    dispatch(setCars(JSON.parse(localStorage.getItem("cars"))))
-    dispatch(setUser(JSON.parse(localStorage.getItem("user"))))
-
-
+  
   const isLogged = useSelector(state => state.isLogged.loggedIn)
-
+  
   return (
    <Layout>
      <Routes>

@@ -27,11 +27,8 @@ const NavigationBar = () => {
   const isLogged = useSelector((state) => state.isLogged.loggedIn);
   
   const logOut = () => {
+  
     dispatch(logout())
-    localStorage.setItem("loggedIn", false)
-    localStorage.removeItem("token")
-    localStorage.removeItem("user")
-    localStorage.removeItem("cars")
   };
 
   return (

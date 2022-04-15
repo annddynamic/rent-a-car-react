@@ -24,10 +24,6 @@ const Login = () => {
 
 			const url = "http://localhost:8080/api/login";
 			const { data: res } = await axios.post(url, data);
-  
-      localStorage.setItem("token", res.token)
-      localStorage.setItem("loggedIn", true)
-      localStorage.setItem("user", JSON.stringify(res.user))
       dispatch(login(res.token))
       dispatch(setUser(res.user))
 			navigate("/dashboard");
