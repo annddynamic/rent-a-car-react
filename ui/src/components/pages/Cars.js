@@ -26,11 +26,11 @@ import axios from "axios";
 import sample1 from "../../images/sample1.jpeg";
 import { setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
-import CarsReducer from "../../state/reducers/Cars";
 
 const Cars = () => {
   // get cars from state (redux)
-  const cars = useSelector((state) => state.cars) ||[];
+  const cars = useSelector((state) => state.cars)
+  const token = useSelector((state)=>state.isLogged.token)
   const dispatch = useDispatch();
 
   const fetchCars = async () => {
@@ -38,7 +38,7 @@ const Cars = () => {
     axios
       .get(url, {
         headers: {
-          Authorization: `Bearer ${localStorage.getItem("token")}`,
+          Authorization: `Bearer ${token}`,
         },
       })
       .then((res) => {
@@ -234,7 +234,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.map((car, index) => (
+              {itemsPerPage.map((car, index) => (
                 <Col key={index} className="mt-2" md={4}>
                   <Card style={{ cursor: "pointer" }}>
                     <Card.Img variant="top" src={sample1} />
