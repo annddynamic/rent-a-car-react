@@ -4,28 +4,18 @@ import {
   Col,
   Form,
   Button,
-  Card,
-  ListGroup,
   Pagination,
 } from "react-bootstrap";
 import {
   FaAngleDown,
   FaAngleLeft,
-  FaCheckCircle,
-  FaCity,
-  FaShoppingBag,
-  FaSnowflake,
-  FaStar,
-  FaTimesCircle,
-  FaTools,
-  FaUserAlt,
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import sample1 from "../../images/sample1.jpeg";
 import { setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
+import Car from "../Car";
 
 const Cars = () => {
   // get cars from state (redux)
@@ -34,22 +24,24 @@ const Cars = () => {
   const dispatch = useDispatch();
 
   const fetchCars = async () => {
-    const url = "http://localhost:8080/api/cars";
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((res) => {
-        const cars = res.data;
-        dispatch(setCars(cars))
-        localStorage.setItem("cars", JSON.stringify(cars));
-      });
+    if(!cars){
+      const url = "http://localhost:8080/api/cars";
+      axios
+        .get(url, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+        .then((res) => {
+          const cars = res.data;
+          dispatch(setCars(cars))
+          console.log("ANDI")
+        });
+    }
   };
 
   useEffect(() => {
-    fetchCars()
+      fetchCars()
   },[]);
 
   // set the first initial items displayed per page (6)
@@ -241,60 +233,7 @@ const Cars = () => {
           <Col md={10}>
             <Row>
               {itemsPerPage.map((car, index) => (
-                <Col key={index} className="mt-2" md={4}>
-                  <Card style={{ cursor: "pointer" }}>
-                    <Card.Img variant="top" src={sample1} />
-                    <Card.Body>
-                      <Card.Title>
-                        {car.brand} {car.series}
-                      </Card.Title>
-                      <Card.Text className="icons">
-                        <FaUserAlt />
-                        <span>
-                          <FaShoppingBag />
-                        </span>
-                        <span>
-                          <FaCity />
-                        </span>
-                        <span>
-                          <FaTools />
-                        </span>
-                        <span>
-                          <FaSnowflake />
-                        </span>
-                      </Card.Text>
-                      <Card.Text>
-                        Transsmision: {car.transmission}
-                        <FaCheckCircle color="royalblue" />
-                      </Card.Text>
-                      <Card.Text>
-                        Air conditioning:
-                        {car.air_conditioning ? (
-                          <FaCheckCircle color="royalblue" />
-                        ) : (
-                          <FaTimesCircle color="royalblue" />
-                        )}
-                      </Card.Text>
-                      <Card.Text>
-                        <span style={{ color: "grey" }}>{car.car_type}</span>
-                      </Card.Text>
-                    </Card.Body>
-                    <ListGroup className="list-group-flush">
-                      <Card.Body>
-                        <Container>
-                          <Row>
-                            <Col>
-                              <h3>${car.price_for_24h}</h3>
-                            </Col>
-                            <Col className="float-right">
-                              <Button>Book now!</Button>
-                            </Col>
-                          </Row>
-                        </Container>
-                      </Card.Body>
-                    </ListGroup>
-                  </Card>
-                </Col>
+                <Car car={car} key={index} />
               ))}
               <Pagination>
                 {pageNumber.map((item) => (

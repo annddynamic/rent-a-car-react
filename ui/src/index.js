@@ -5,10 +5,6 @@ import { BrowserRouter } from "react-router-dom";
 import {Provider} from 'react-redux'
 import store,{Persistor} from './state/store'
 import {PersistGate} from 'redux-persist/integration/react'
-// const store = createStore(
-//   AllReducers,
-//   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-// )
 
 ReactDOM.render(
     <Provider store={store}>
