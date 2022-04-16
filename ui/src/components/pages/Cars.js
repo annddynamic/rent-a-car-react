@@ -98,21 +98,27 @@ const Cars = () => {
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
-    console.log(updatedCheckedState);
     setCheckedState(updatedCheckedState);
+    let checker = arr => arr.every(v => v === false);
 
-    let filteredCars = [];
-    updatedCheckedState.forEach((checked, index) => {
-      if (checked) {
-        cars.forEach((car) => {
-          if (car.car_type == types[index]) {
-            filteredCars.push(car);
-          }
-        });
-      }
-    });
-    setItemsPerPage(filteredCars.slice(0, 6));
-    setPagination(filteredCars.length);
+    if(checker(updatedCheckedState)){
+      setItemsPerPage(cars.slice(0,6))
+      setPagination(cars.length);
+    } else{
+      let filteredCars = [];
+      updatedCheckedState.forEach((checked, index) => {
+        if (checked) {
+          cars.forEach((car) => {
+            if (car.car_type == types[index]) {
+              filteredCars.push(car);
+            }
+          });
+        }
+      });
+      setItemsPerPage(filteredCars.slice(0, 6));
+      setPagination(filteredCars.length);
+
+    }
   };
 
   return (
