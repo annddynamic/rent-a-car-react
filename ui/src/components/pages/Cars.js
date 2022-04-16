@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
-import Car from "../Car";
+import CarCard from "../CarCard";
 
 const Cars = () => {
   // get cars from state (redux)
@@ -35,7 +35,6 @@ const Cars = () => {
         .then((res) => {
           const cars = res.data;
           dispatch(setCars(cars))
-          console.log("ANDI")
         });
     }
   };
@@ -233,7 +232,7 @@ const Cars = () => {
           <Col md={10}>
             <Row>
               {itemsPerPage.map((car, index) => (
-                <Car car={car} key={index} />
+                <CarCard car={car} key={index} />
               ))}
               <Pagination>
                 {pageNumber.map((item) => (

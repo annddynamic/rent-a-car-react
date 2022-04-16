@@ -3,7 +3,7 @@ import { NavLink, Link } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { logout, setLogin } from "../../state/actions/loginActions";
+import { logout } from "../../state/actions/loginActions";
 import "./NavigationBar.css";
 
 const NavigationBar = () => {
@@ -27,7 +27,6 @@ const NavigationBar = () => {
   const isLogged = useSelector((state) => state.isLogged.loggedIn);
   
   const logOut = () => {
-  
     dispatch(logout())
   };
 
