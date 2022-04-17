@@ -24,7 +24,6 @@ const Cars = () => {
   const dispatch = useDispatch();
 
   const fetchCars = async () => {
-    if(!cars){
       const url = "http://localhost:8080/api/cars";
       axios
         .get(url, {
@@ -36,7 +35,6 @@ const Cars = () => {
           const cars = res.data;
           dispatch(setCars(cars))
         });
-    }
   };
 
   useEffect(() => {
@@ -115,10 +113,10 @@ const Cars = () => {
   return (
     <div className="cars-layout">
       <Container
-        style={{ height: "90px", borderRadius: "10px" }}
+        style={{ borderRadius: "10px" }}
         className="mt-4 bg-primary"
       >
-        <Form style={{ paddingTop: "30px" }}>
+        <Form style={{padding:"20px"}}>
           <Row>
             <Col>
               <Form.Control placeholder="Enter City" />
