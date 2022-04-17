@@ -1,7 +1,7 @@
 import React from 'react'
 import NavigationBar from './NavigationBar'
 
-const Layout = ({children, loggedIn, logout}) => {
+const Layout = ({children}) => {
   return (
     <div>
         <NavigationBar/>

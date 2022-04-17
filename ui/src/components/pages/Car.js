@@ -1,17 +1,14 @@
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Container } from "react-bootstrap";
-import { Link } from "react-router-dom";
 import { FaArrowCircleLeft } from "react-icons/fa";
 
 const Car = () => {
   let { id } = useParams();
   const cars = useSelector((state) => state.cars);
 
-  const [car, setCar] = useState(cars.filter((car) => car._id === id));
-
-  console.log(car);
+  const [car, setCar] = useState(cars.filter(car => car._id === id));
 
   return (
     <Container className="text-center">
