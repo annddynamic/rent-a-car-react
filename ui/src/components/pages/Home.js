@@ -1,9 +1,25 @@
 import React from "react";
 import { Container, Row, Col, Button } from "react-bootstrap";
 import shtoperica from "../../images/jeep.jpg";
+import {logout} from '../../state/actions/loginActions'
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import "./Home.css";
 
 const Home = () => {
+  
+  const islogged = useSelector((state)=>state.isLogged.loggedIn)
+  const dispatch = useDispatch();
+
+  const logOutIfLoggedIn = ()=>{
+    if(islogged){
+      dispatch(logout())
+    }
+  }
+  useEffect(() => {
+    logOutIfLoggedIn()
+  });
+
   return (
     <div className="home-wrapper">
       <div className="cover">
