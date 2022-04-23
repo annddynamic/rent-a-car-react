@@ -4,3 +4,9 @@ export const setCars = (cars) =>{
         payload: cars
     }
 }
+
+export const unsetCars = () =>{
+    return {
+        type:'UNSETCARS',
+    }
+}

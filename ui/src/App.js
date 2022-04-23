@@ -6,11 +6,7 @@ import Dashboard from "./components/pages/Dashboard";
 import Cars from "./components/pages/Cars";
 import { Routes, Route } from "react-router-dom";
 import {useSelector,useDispatch} from 'react-redux'
-import { setLogin } from "./state/actions/loginActions";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
-import { setUser } from "./state/actions/userActions";
-import { setCars } from "./state/actions/carsActions";
-import { useEffect } from "react";
 import Car from "./components/pages/Car";
 
 const App =() => {

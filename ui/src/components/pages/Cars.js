@@ -22,25 +22,26 @@ const Cars = () => {
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
   const dispatch = useDispatch();
-
+  
   const fetchCars = async () => {
-      const url = "http://localhost:8080/api/cars";
-      axios
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          const cars = res.data;
-          dispatch(setCars(cars))
-        });
+    const url = "http://localhost:8080/api/cars";
+    axios
+    .get(url, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      const cars = res.data;
+      console.log(cars)
+      dispatch(setCars(cars))
+    });
   };
-
+  
   useEffect(() => {
-      fetchCars()
+    fetchCars()
   },[]);
-
+  
   // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
 
@@ -229,7 +230,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {itemsPerPage.map((car, index) => (
+              {cars.slice(0, 6).map((car, index) => (
                 <CarCard car={car} key={index} />
               ))}
               <Pagination>
