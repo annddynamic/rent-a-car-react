@@ -33,8 +33,8 @@ const Cars = () => {
     })
     .then((res) => {
       const cars = res.data;
-      console.log(cars)
       dispatch(setCars(cars))
+      setItemsPerPage(cars.slice(0,6))
     });
   };
   
@@ -79,36 +79,20 @@ const Cars = () => {
   // Get unique car types
   const types = [...new Set(cars.map((car) => car.car_type))];
 
-  // Fill all car type checkboxes with false
-  const [checkedState, setCheckedState] = useState(
-    new Array(types.length).fill(false)
-  );
 
-  const handleOnChange = (position) => {
-    const updatedCheckedState = checkedState.map((item, index) =>
-      index === position ? !item : item
-    );
-    setCheckedState(updatedCheckedState);
-    let checker = arr => arr.every(v => v === false);
+  const [checked, setChecked] = useState([]);
 
-    if(checker(updatedCheckedState)){
-      setItemsPerPage(cars.slice(0,6))
-      setPagination(cars.length);
-    } else{
-      let filteredCars = [];
-      updatedCheckedState.forEach((checked, index) => {
-        if (checked) {
-          cars.forEach((car) => {
-            if (car.car_type == types[index]) {
-              filteredCars.push(car);
-            }
-          });
-        }
-      });
-      setItemsPerPage(filteredCars.slice(0, 6));
-      setPagination(filteredCars.length);
-
+  const handleOnChange = (event) => {
+    var updatedList = [...checked];
+    if (event.target.checked) {
+      updatedList = [...checked, event.target.value];
+    } else {
+      updatedList.splice(checked.indexOf(event.target.value), 1);
     }
+    setChecked(updatedList);
+
+    var res = cars.filter(car => updatedList.includes(car.car_type));
+    setItemsPerPage(res.slice(0,6))
   };
 
   return (
@@ -172,8 +156,7 @@ const Cars = () => {
                       <Form.Check
                         key={index}
                         value={type}
-                        checked={checkedState[index]}
-                        onChange={() => handleOnChange(index)}
+                        onChange={handleOnChange}
                         type="checkbox"
                         label={type}
                       />
@@ -230,7 +213,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.slice(0, 6).map((car, index) => (
+              {itemsPerPage.map((car, index) => (
                 <CarCard car={car} key={index} />
               ))}
               <Pagination>

@@ -19,7 +19,7 @@ const CarCard = ({ car }) => {
         <Card.Img variant="top" src={sample1} />
         <Card.Body>
           <Card.Title>
-            {car.brand} {car.series}
+            {car.car_model} {car.car_series}
           </Card.Title>
           <Card.Text className="icons">
             <FaUserAlt />
