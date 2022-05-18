@@ -34,7 +34,7 @@ const Cars = () => {
     .then((res) => {
       const cars = res.data;
       dispatch(setCars(cars))
-      setItemsPerPage(cars.slice(0,6))
+      setItemsPerPage(cars)
     });
   };
   
@@ -43,7 +43,7 @@ const Cars = () => {
   },[]);
   
   // set the first initial items displayed per page (6)
-  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
+  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
 
   const [carsTypeShown, setCarsTypeShown] = useState(true);
 
@@ -92,7 +92,9 @@ const Cars = () => {
     setChecked(updatedList);
 
     var res = cars.filter(car => updatedList.includes(car.car_type));
+    cars = res
     setItemsPerPage(res.slice(0,6))
+    setPagination(res.length)
   };
 
   return (
