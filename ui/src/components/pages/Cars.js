@@ -1,15 +1,5 @@
-import {
-  Container,
-  Row,
-  Col,
-  Form,
-  Button,
-  Pagination,
-} from "react-bootstrap";
-import {
-  FaAngleDown,
-  FaAngleLeft,
-} from "react-icons/fa";
+import { Container, Row, Col, Form, Button, Pagination } from "react-bootstrap";
+import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
@@ -19,27 +9,27 @@ import CarCard from "../CarCard";
 
 const Cars = () => {
   // get cars from state (redux)
-  const cars = useSelector((state) => state.cars)
-  const token = useSelector((state)=>state.isLogged.token)
+  const cars = useSelector((state) => state.cars);
+  const token = useSelector((state) => state.isLogged.token);
   const dispatch = useDispatch();
 
   const fetchCars = async () => {
-      const url = "http://localhost:8080/api/cars";
-      axios
-        .get(url, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((res) => {
-          const cars = res.data;
-          dispatch(setCars(cars))
-        });
+    const url = "http://localhost:8080/api/cars";
+    axios
+      .get(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        const cars = res.data;
+        dispatch(setCars(cars));
+      });
   };
 
   useEffect(() => {
-      fetchCars()
-  },[]);
+    fetchCars();
+  }, []);
 
   // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
@@ -49,6 +39,13 @@ const Cars = () => {
   const [transmitionTypeShown, setTransmitionTypeShown] = useState(true);
 
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
+
+  const [allFilteredCars, setAllFilteredCars] = useState([]);
+
+  const [transmissionType, setTransmissionType] = useState({
+    manual: true,
+    automatic: true,
+  });
 
   // active page, page 1
   const [active, setActivePage] = useState(1);
@@ -72,7 +69,7 @@ const Cars = () => {
   // sets particular Items per page based on the number clicked
   const setActive = (page) => {
     setActivePage(page);
-    setItemsPerPage(cars.slice(page * 6 - 6, page * 6));
+    setItemsPerPage(allFilteredCars.slice(page * 6 - 6, page * 6));
   };
 
   // Get unique car types
@@ -84,39 +81,61 @@ const Cars = () => {
   );
 
   const handleOnChange = (position) => {
+    console.log(position);
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
     setCheckedState(updatedCheckedState);
-    let checker = arr => arr.every(v => v === false);
+    let checker = (arr) => arr.every((v) => v === false);
 
-    if(checker(updatedCheckedState)){
-      setItemsPerPage(cars.slice(0,6))
+    if (checker(updatedCheckedState)) {
+      setItemsPerPage(cars.slice(0, 6));
       setPagination(cars.length);
-    } else{
+    } else {
       let filteredCars = [];
-      updatedCheckedState.forEach((checked, index) => {
-        if (checked) {
-          cars.forEach((car) => {
-            if (car.car_type == types[index]) {
+      console.log(updatedCheckedState);
+
+      cars.forEach((car) => {
+        updatedCheckedState.forEach((checked, index) => {
+          if (checked) {
+            if (car.car_type === types[index]) {
               filteredCars.push(car);
             }
-          });
-        }
+          }
+        });
       });
+      console.log(checkedState);
+
       setItemsPerPage(filteredCars.slice(0, 6));
       setPagination(filteredCars.length);
-
+      setAllFilteredCars(filteredCars);
+      setActivePage(1);
     }
   };
 
+  const handleTransmisionFilterChange = (id) => {
+    if (id === 0) {
+      setTransmissionType({
+        manual: !transmissionType.manual,
+        automatic: transmissionType.automatic,
+      });
+      allFilteredCars.filter((car) => car.transmission_type !== "Automatic");
+      console.log(allFilteredCars);
+    } else {
+      setTransmissionType({
+        automatic: !transmissionType.automatic,
+        manual: transmissionType.manual,
+      });
+    }
+  };
+
+  const h = () => {
+    console.log(transmissionType);
+  };
   return (
     <div className="cars-layout">
-      <Container
-        style={{ borderRadius: "10px" }}
-        className="mt-4 bg-primary"
-      >
-        <Form style={{padding:"20px"}}>
+      <Container style={{ borderRadius: "10px" }} className="mt-4 bg-primary">
+        <Form style={{ padding: "20px" }}>
           <Row>
             <Col>
               <Form.Control placeholder="Enter City" />
@@ -195,8 +214,22 @@ const Cars = () => {
               {transmitionTypeShown ? (
                 <div className="car-type">
                   <div className="car-checkbox">
-                    <Form.Check type="checkbox" label="Transmission" />
-                    <Form.Check type="checkbox" label="Manual" />
+                    <Form.Check
+                      key={0}
+                      checked={!transmissionType.manual}
+                      onChange={() => handleTransmisionFilterChange(0)}
+                      value={transmissionType.manual}
+                      type="checkbox"
+                      label="Manual"
+                    />
+                    <Form.Check
+                      key={1}
+                      onChange={() => handleTransmisionFilterChange(1)}
+                      checked={!transmissionType.automatic}
+                      value={transmissionType.automatic}
+                      type="checkbox"
+                      label="Automatic"
+                    />
                   </div>
                 </div>
               ) : (
