@@ -4,10 +4,14 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch} from 'react-redux'
 import { login } from "../../state/actions/loginActions";
 import { setUser } from "../../state/actions/userActions";
+import { userJoined, userJoinedAck, userLeft, messageReceived } from "../../state/actions/chatActions";
+import Singleton from "../../chat/socket";
+import MessageType from "../../chat/SendMessage/MessageType";
 import axios from "axios";
 import "./Login.css"
 
 const Login = () => {
+
   const [data, setData] = useState({ email: "", password: "" });
 	const [error, setError] = useState("");
 
@@ -27,6 +31,7 @@ const Login = () => {
       dispatch(login(res.token))
       dispatch(setUser(res.user))
 			navigate("/dashboard");
+      registerSocket(res.user)
      
 		} catch (error) {
 			if (
@@ -39,6 +44,54 @@ const Login = () => {
 			}
 		}
 	};
+
+  const registerSocket = (user) => {
+
+    let socket = Singleton.getInstance();
+
+    socket.onmessage = (response) => {
+
+      let message = JSON.parse(response.data);
+      let users;
+      switch (message.type) {
+        case MessageType.TEXT_MESSAGE:
+          dispatch(messageReceived(message));
+          break;
+        case MessageType.USER_JOINED:
+          console.log("User Joined")
+
+          users = JSON.parse(message.data);
+          dispatch(userJoined(users));
+          break;
+        case MessageType.USER_LEFT:
+          users = JSON.parse(message.data);
+          dispatch(userLeft(users));
+          break;
+        case MessageType.USER_JOINED_ACK:
+          console.log("User Joined ack")
+
+          let thisUser = message.user;
+          dispatch(userJoinedAck(thisUser));
+          break;
+        default:
+      }
+    }
+
+    socket.onopen = () => {
+      sendJoinedMessage(socket, user);
+    }
+
+    window.onbeforeunload = () => {
+      let messageDto = JSON.stringify({ user: user.firstName, type: MessageType.USER_LEFT });
+      this.socket.send(messageDto);
+    }
+  }
+
+  const sendJoinedMessage =(socket, user) =>{
+    console.log("aaaaaaaaa")
+    let messageDto = JSON.stringify({ user: user.firstName, type: MessageType.USER_JOINED });
+    socket.send(messageDto);
+  }
 
   const [show, setShow] = useState(false);
 

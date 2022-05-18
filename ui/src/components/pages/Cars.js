@@ -34,7 +34,7 @@ const Cars = () => {
     .then((res) => {
       const cars = res.data;
       dispatch(setCars(cars))
-      setItemsPerPage(cars)
+      setItemsPerPage(cars.slice(0,6))
     });
   };
   
@@ -213,7 +213,7 @@ const Cars = () => {
               )}
             </Container>
           </Col>
-          <Col md={10}>
+          <Col md={7}>
             <Row>
               {itemsPerPage.map((car, index) => (
                 <CarCard car={car} key={index} />
@@ -230,6 +230,11 @@ const Cars = () => {
                 ))}
               </Pagination>
             </Row>
+          </Col>
+          <Col className="border mt-2 h-100" md={3}>
+          <Container className="mt-4">
+              <h3>Chat</h3>
+            </Container>
           </Col>
         </Row>
       </Container>
