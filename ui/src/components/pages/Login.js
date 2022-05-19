@@ -58,8 +58,6 @@ const Login = () => {
           dispatch(messageReceived(message));
           break;
         case MessageType.USER_JOINED:
-          console.log("User Joined")
-
           users = JSON.parse(message.data);
           dispatch(userJoined(users));
           break;
@@ -68,8 +66,6 @@ const Login = () => {
           dispatch(userLeft(users));
           break;
         case MessageType.USER_JOINED_ACK:
-          console.log("User Joined ack")
-
           let thisUser = message.user;
           dispatch(userJoinedAck(thisUser));
           break;

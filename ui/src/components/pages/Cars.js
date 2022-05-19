@@ -5,10 +5,13 @@ import {
   Form,
   Button,
   Pagination,
+  ListGroup,
+  ListGroupItem
 } from "react-bootstrap";
 import {
   FaAngleDown,
   FaAngleLeft,
+  FaCircle
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -21,6 +24,7 @@ const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
+  const onlineUsers = useSelector((state)=>state.usersOnline)
   const dispatch = useDispatch();
   
   const fetchCars = async () => {
@@ -234,6 +238,11 @@ const Cars = () => {
           <Col className="border mt-2 h-100" md={3}>
           <Container className="mt-4">
               <h3>Chat</h3>
+              <ListGroup variant="flush">
+                {onlineUsers.map((user, index) => (
+                  <ListGroup.Item key={index}><FaCircle color="royalblue"></FaCircle> {user.name}</ListGroup.Item>
+                ))}
+            </ListGroup>
             </Container>
           </Col>
         </Row>
