@@ -69,7 +69,12 @@ const Cars = () => {
   // sets particular Items per page based on the number clicked
   const setActive = (page) => {
     setActivePage(page);
-    setItemsPerPage(allFilteredCars.slice(page * 6 - 6, page * 6));
+
+    if (allFilteredCars.length === 0) {
+      setItemsPerPage(cars.slice((page - 1) * 6, page * 6));
+    } else {
+      setItemsPerPage(allFilteredCars.slice(page * 6 - 6, page * 6));
+    }
   };
 
   // Get unique car types
