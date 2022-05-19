@@ -84,7 +84,6 @@ const Login = () => {
   }
 
   const sendJoinedMessage =(socket, user) =>{
-    console.log("aaaaaaaaa")
     let messageDto = JSON.stringify({ user: user.firstName, type: MessageType.USER_JOINED });
     socket.send(messageDto);
   }
