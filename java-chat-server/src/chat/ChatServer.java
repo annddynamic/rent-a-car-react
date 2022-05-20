@@ -119,4 +119,22 @@ public class ChatServer extends WebSocketServer {
         broadcastUserActivityMessage(MessageType.USER_LEFT);
     }
 
+    private void acknowledgeUserJoined(User user, WebSocket conn) throws JsonProcessingException {
+        Message message = new Message();
+        message.setType(MessageType.USER_JOINED_ACK);
+        message.setUser(user);
+        conn.send(new ObjectMapper().writeValueAsString(message));
+    }
+
+    private void broadcastUserActivityMessage(MessageType messageType) throws JsonProcessingException {
+
+        Message newMessage = new Message();
+
+        ObjectMapper mapper = new ObjectMapper();
+        String data = mapper.writeValueAsString(users.values());
+        newMessage.setData(data);
+        newMessage.setType(messageType);
+        broadcastMessage(newMessage);
+    }
+
 }
