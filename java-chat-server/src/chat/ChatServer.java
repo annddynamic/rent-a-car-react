@@ -88,4 +88,23 @@ public class ChatServer extends WebSocketServer {
         System.out.println("ERROR from " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
     }
 
+    private void broadcastMessage(Message msg) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            String messageJson = mapper.writeValueAsString(msg);
+            if (msg.getTo()!=null){
+                Set<WebSocket> peersSockets = getPeers(users, msg.getTo());
+                for (WebSocket sock : peersSockets) {
+                    sock.send(messageJson);
+                }
+                return;
+            }
+            for (WebSocket sock : conns) {
+                sock.send(messageJson);
+            }
+        } catch (JsonProcessingException e) {
+            logger.error("Cannot convert message to json.");
+        }
+    }
+
 }
