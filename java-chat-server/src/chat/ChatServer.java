@@ -29,5 +29,63 @@ public class ChatServer extends WebSocketServer {
         users = new HashMap<>();
     }
 
+    @Override
+    public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
+        conns.add(webSocket);
+//        System.out.println(Arrays.asList(conns));
+
+        System.out.println("Funksioni onOpen " + conns);
+        logger.info("Connection established from: " + webSocket.getRemoteSocketAddress().getHostString());
+        System.out.println("New connection from " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
+    }
+
+    @Override
+    public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+        conns.remove(conn);
+        // When connection is closed, remove the user.
+        try {
+            removeUser(conn);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+
+        logger.info("Connection closed to: " + conn.getRemoteSocketAddress().getHostString());
+        System.out.println("Closed connection to " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
+    }
+
+    @Override
+    public void onMessage(WebSocket conn, String message) {
+        ObjectMapper mapper = new ObjectMapper();
+        try {
+            Message msg = mapper.readValue(message, Message.class);
+
+            switch (msg.getType()) {
+                case USER_JOINED:
+                    addUser(new User(msg.getUser().getName()), conn);
+                    break;
+                case USER_LEFT:
+                    removeUser(conn);
+                    break;
+                case TEXT_MESSAGE:
+                    broadcastMessage(msg);
+            }
+
+            System.out.println("Message from user: " + msg.getUser() + ", text: " + msg.getData() + ", type:" + msg.getType());
+            logger.info("Message from user: " + msg.getUser() + ", text: " + msg.getData());
+        } catch (IOException e) {
+            logger.error("Wrong message format.");
+            // return error message to user
+        }
+    }
+
+    @Override
+    public void onError(WebSocket conn, Exception ex) {
+
+        if (conn != null) {
+            conns.remove(conn);
+        }
+        assert conn != null;
+        System.out.println("ERROR from " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
+    }
 
 }
