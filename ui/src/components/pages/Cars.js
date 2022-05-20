@@ -278,7 +278,7 @@ const Cars = () => {
               )}
             </Container>
           </Col>
-          <Col md={7}>
+          <Col md={10}>
             <Row>
               {cars.slice(0,6).map((car, index) => (
                 <CarCard car={car} key={index} />
@@ -295,9 +295,6 @@ const Cars = () => {
                 ))}
               </Pagination>
             </Row>
-          </Col>
-          <Col className="border mt-2 h-100" md={3}>
-            <OnlineUsers/>
           </Col>
         </Row>
       </Container>
