@@ -107,4 +107,16 @@ public class ChatServer extends WebSocketServer {
         }
     }
 
+    private void addUser(User user, WebSocket conn) throws JsonProcessingException {
+        users.put(conn, user);
+        System.out.println("Emri: "+ user.getName()+ "Id: "+ user.getId());
+        acknowledgeUserJoined(user, conn);
+        broadcastUserActivityMessage(MessageType.USER_JOINED);
+    }
+
+    private void removeUser(WebSocket conn) throws JsonProcessingException {
+        users.remove(conn);
+        broadcastUserActivityMessage(MessageType.USER_LEFT);
+    }
+
 }
