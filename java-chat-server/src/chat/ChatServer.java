@@ -137,4 +137,19 @@ public class ChatServer extends WebSocketServer {
         broadcastMessage(newMessage);
     }
 
+    public static Set<WebSocket>  getPeers(HashMap<WebSocket, User> hmap, User[] users) {
+        Set<WebSocket> peerSockets= new HashSet<>();
+        for (Map.Entry<WebSocket, User> entry : hmap.entrySet()) {
+            for (User user : users) {
+                if(Objects.equals(user.getId(), entry.getValue().getId())) {
+                    peerSockets.add(entry.getKey());
+                }
+            }
+        }
+        return  peerSockets;
+    }
+
+    public static void main(String[] args) {
+
+    }
 }
