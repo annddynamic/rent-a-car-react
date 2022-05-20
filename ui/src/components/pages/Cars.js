@@ -11,7 +11,6 @@ import {
 import {
   FaAngleDown,
   FaAngleLeft,
-  FaCircle
 } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,12 +18,13 @@ import axios from "axios";
 import { setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
 import CarCard from "../CarCard";
+import OnlineUsers from "../../chat/OnlineUsers";
 
 const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
-  const onlineUsers = useSelector((state)=>state.usersOnline)
+
   const dispatch = useDispatch();
   
   const fetchCars = async () => {
@@ -297,14 +297,7 @@ const Cars = () => {
             </Row>
           </Col>
           <Col className="border mt-2 h-100" md={3}>
-          <Container className="mt-4">
-              <h3>Chat</h3>
-              <ListGroup variant="flush">
-                {onlineUsers.map((user, index) => (
-                  <ListGroup.Item key={index}><FaCircle color="royalblue"></FaCircle> {user.name}</ListGroup.Item>
-                ))}
-            </ListGroup>
-            </Container>
+            <OnlineUsers/>
           </Col>
         </Row>
       </Container>
