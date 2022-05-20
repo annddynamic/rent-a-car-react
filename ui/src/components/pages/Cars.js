@@ -94,7 +94,10 @@ const Cars = () => {
   // Get unique car types
   const types = [...new Set(cars.map((car) => car.car_type))];
 
-
+  // Fill all car type checkboxes with false
+  const [checkedState, setCheckedState] = useState(
+    new Array(types.length).fill(false)
+  );
   const handleOnChange = (position) => {
     console.log(position);
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -282,7 +285,7 @@ const Cars = () => {
           </Col>
           <Col md={7}>
             <Row>
-              {itemsPerPage.map((car, index) => (
+              {cars.slice(0,6).map((car, index) => (
                 <CarCard car={car} key={index} />
               ))}
               <Pagination>
