@@ -98,6 +98,7 @@ const Cars = () => {
   const [checkedState, setCheckedState] = useState(
     new Array(types.length).fill(false)
   );
+
   const handleOnChange = (position) => {
     console.log(position);
     const updatedCheckedState = checkedState.map((item, index) =>
@@ -145,12 +146,6 @@ const Cars = () => {
         manual: transmissionType.manual,
       });
     }
-    setChecked(updatedList);
-
-    var res = cars.filter(car => updatedList.includes(car.car_type));
-    cars = res
-    setItemsPerPage(res.slice(0,6))
-    setPagination(res.length)
   };
 
   const h = () => {
