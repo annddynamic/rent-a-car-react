@@ -150,6 +150,7 @@ public class ChatServer extends WebSocketServer {
     }
 
     public static void main(String[] args) {
-
+        int port = 9000;
+        new ChatServer(port).start();
     }
 }
