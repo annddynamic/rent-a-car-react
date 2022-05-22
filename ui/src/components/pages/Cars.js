@@ -47,7 +47,7 @@ const Cars = () => {
   },[]);
   
   // set the first initial items displayed per page (6)
-  // const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
+  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
 
   const [carsTypeShown, setCarsTypeShown] = useState(true);
 
@@ -66,31 +66,31 @@ const Cars = () => {
   const [active, setActivePage] = useState(1);
 
   // formula for calculating number of pages based on the cars in array
-  // let items = [];
-  // for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
-  //   items.push(number);
-  // }
+  let items = [];
+  for (let number = 1; number <= Math.ceil(cars.length / 6); number++) {
+    items.push(number);
+  }
 
-  // const [pageNumber, setPageNumber] = useState(items);
+  const [pageNumber, setPageNumber] = useState(items);
 
-  // const setPagination = (size) => {
-  //   let items = [];
-  //   for (let number = 1; number <= Math.ceil(size / 6); number++) {
-  //     items.push(number);
-  //   }
-  //   setPageNumber(items);
-  // };
+  const setPagination = (size) => {
+    let items = [];
+    for (let number = 1; number <= Math.ceil(size / 6); number++) {
+      items.push(number);
+    }
+    setPageNumber(items);
+  };
 
   // // sets particular Items per page based on the number clicked
-  // const setActive = (page) => {
-  //   setActivePage(page);
+  const setActive = (page) => {
+    setActivePage(page);
 
-  //   if (allFilteredCars.length === 0) {
-  //     setItemsPerPage(cars.slice((page - 1) * 6, page * 6));
-  //   } else {
-  //     setItemsPerPage(allFilteredCars.slice(page * 6 - 6, page * 6));
-  //   }
-  // };
+    if (allFilteredCars.length === 0) {
+      setItemsPerPage(cars.slice((page - 1) * 6, page * 6));
+    } else {
+      setItemsPerPage(allFilteredCars.slice(page * 6 - 6, page * 6));
+    }
+  };
 
   // Get unique car types
   console.log(cars)
@@ -103,56 +103,56 @@ const Cars = () => {
 
   const handleOnChange = (position) => {
     console.log(position);
-    // const updatedCheckedState = checkedState.map((item, index) =>
-    //   index === position ? !item : item
-    // );
-    // setCheckedState(updatedCheckedState);
-    // let checker = (arr) => arr.every((v) => v === false);
+    const updatedCheckedState = checkedState.map((item, index) =>
+      index === position ? !item : item
+    );
+    setCheckedState(updatedCheckedState);
+    let checker = (arr) => arr.every((v) => v === false);
 
-    // if (checker(updatedCheckedState)) {
-    //   setItemsPerPage(cars.slice(0, 6));
-    //   setPagination(cars.length);
-    // } else {
-    //   let filteredCars = [];
-    //   console.log(updatedCheckedState);
+    if (checker(updatedCheckedState)) {
+      setItemsPerPage(cars.slice(0, 6));
+      setPagination(cars.length);
+    } else {
+      let filteredCars = [];
+      console.log(updatedCheckedState);
 
-    //   cars.forEach((car) => {
-    //     updatedCheckedState.forEach((checked, index) => {
-    //       if (checked) {
-    //         if (car.car_type === types[index]) {
-    //           filteredCars.push(car);
-    //         }
-    //       }
-    //     });
-    //   });
-    //   console.log(checkedState);
+      cars.forEach((car) => {
+        updatedCheckedState.forEach((checked, index) => {
+          if (checked) {
+            if (car.car_type === types[index]) {
+              filteredCars.push(car);
+            }
+          }
+        });
+      });
+      console.log(checkedState);
 
-    //   setItemsPerPage(filteredCars.slice(0, 6));
-    //   setPagination(filteredCars.length);
-    //   setAllFilteredCars(filteredCars);
-    //   setActivePage(1);
-    // }
+      setItemsPerPage(filteredCars.slice(0, 6));
+      setPagination(filteredCars.length);
+      setAllFilteredCars(filteredCars);
+      setActivePage(1);
+    }
   };
 
   const handleTransmisionFilterChange = (id) => {
-    // if (id === 0) {
-    //   setTransmissionType({
-    //     manual: !transmissionType.manual,
-    //     automatic: transmissionType.automatic,
-    //   });
-    //   allFilteredCars.filter((car) => car.transmission_type !== "Automatic");
-    //   console.log(allFilteredCars);
-    // } else {
-    //   setTransmissionType({
-    //     automatic: !transmissionType.automatic,
-    //     manual: transmissionType.manual,
-    //   });
-    // }
+    if (id === 0) {
+      setTransmissionType({
+        manual: !transmissionType.manual,
+        automatic: transmissionType.automatic,
+      });
+      allFilteredCars.filter((car) => car.transmission_type !== "Automatic");
+      console.log(allFilteredCars);
+    } else {
+      setTransmissionType({
+        automatic: !transmissionType.automatic,
+        manual: transmissionType.manual,
+      });
+    }
   };
 
-  // const h = () => {
-  //   console.log(transmissionType);
-  // };
+  const h = () => {
+    console.log(transmissionType);
+  };
   return (
     <div className="cars-layout">
       <Container style={{ borderRadius: "10px" }} className="mt-4 bg-primary">
