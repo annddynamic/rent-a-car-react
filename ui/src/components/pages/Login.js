@@ -55,7 +55,12 @@ const Login = () => {
       let users;
       switch (message.type) {
         case MessageType.TEXT_MESSAGE:
-          dispatch(messageReceived(message));
+          const b = {
+            
+            name:message.user.name,
+            data:message.data
+          }
+          dispatch(messageReceived(b));
           break;
         case MessageType.USER_JOINED:
           users = JSON.parse(message.data);
