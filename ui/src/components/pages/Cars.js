@@ -61,7 +61,6 @@ const Cars = () => {
     manual: true,
     automatic: true,
   });
-  console.log(cars)
   // active page, page 1
   const [active, setActivePage] = useState(1);
 
@@ -93,7 +92,6 @@ const Cars = () => {
   };
 
   // Get unique car types
-  console.log(cars)
   const types = [...new Set(cars.map((car) => car.car_type))];
 
   // Fill all car type checkboxes with false
