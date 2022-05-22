@@ -25,7 +25,8 @@ app.use("/api/register", userRoutes);
 app.use("/api/login", authRoutes);
 
 // protected routes
-app.use("/api/cars", middleware, carsRoutes);
+//qitu e kom hek middleware 
+app.use("/api/cars",  carsRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));
