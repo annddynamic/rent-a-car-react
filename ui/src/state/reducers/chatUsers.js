@@ -2,7 +2,7 @@ const chatUsers = (state =[], action)=>{
     switch(action.type){
         case 'APPENDTOCHAT':
             return [...state, action.payload]
-        case 'REMOVEFROMCHAT': 
+        case 'REMOVEFROMCHAT':
             return state.filter(user => 
                 user !== action.payload )
         default:
