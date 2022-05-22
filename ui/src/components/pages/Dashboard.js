@@ -2,12 +2,13 @@ import {Container, Col, Row, Nav, Navbar} from 'react-bootstrap'
 import { useSelector } from 'react-redux'
 import './Dashboard.css'
 import pic from '../../images/babloki.jpg'
+import CarCard from "../CarCard";
 import OnlineUsers from '../../chat/OnlineUsers'
 
 const Dashboard = () => {
   
   const user = useSelector(state => state.user)
-
+  const cars = useSelector(state => state.cars)
   return (
     <div>
         <Row>
@@ -37,6 +38,13 @@ const Dashboard = () => {
             </Navbar>
           </Col>
         </Row>
+        <Col md={10}>
+            <Row>
+              {cars.filter((car) => (car.rentedBy === user._id)).map((car, index) => (
+                <CarCard car={car} key={index} />
+               ))}
+            </Row>
+          </Col>
     </div>
   )
 }

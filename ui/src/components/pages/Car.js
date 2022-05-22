@@ -15,7 +15,7 @@ import axios from "axios";
 const Car = () => {
   let { id } = useParams();
   const cars = useSelector((state) => state.cars);
-
+  const userId = useSelector((state) => state.user._id);
   const [car, setCar] = useState(cars.filter(car => car._id === id));
 
   // const [from, setFrom] = useState('');
@@ -39,13 +39,19 @@ const Car = () => {
     //today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var dateFromInput = new Date(data.from);
     var dateToInput = new Date(data.to);
+    function dateDifference() {
+      const _MS_PER_DAY = 1000 * 60 * 60 * 24;
+  
+      return Math.floor((dateToInput - dateFromInput) / _MS_PER_DAY);
+    }
+    const daysOfBooking = dateDifference();
     if(date.getTime() > dateFromInput.getTime() || dateToInput.getTime() < dateFromInput.getTime()){
-      console.log('Dta eshte me e madhe se sot!');
+      console.log(`Dta eshte me e madhe se sot! ${daysOfBooking * car[0].price_for_24h} ${daysOfBooking}`);
       return;
     }
     const url = `http://localhost:8080/api/cars/${id}`;
     axios
-      .patch(url, {rented: true,start_day_booking: data.from, finish_day_booking: data.to},{
+      .patch(url, {rented: true,start_day_booking: data.from, finish_day_booking: data.to, rentedBy: userId},{
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -53,8 +59,6 @@ const Car = () => {
       .then((res) => {
         console.log(res);
       });
-      
-    console.log(data);
   }
 
   return (
@@ -97,6 +101,12 @@ const Car = () => {
               </Button>
             </div>
           </Col>
+        </Row>
+        <Row>
+          <Col>
+              <div className="d-grid gap-2">
+              </div>
+            </Col>
         </Row>
       </Form>
       

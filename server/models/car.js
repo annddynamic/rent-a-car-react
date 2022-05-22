@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 const Joi = require("joi");
 const passwordComplexity = require("joi-password-complexity");
+const { User, validate } = require("../models/user");
 
 const carSchema = new mongoose.Schema({
 	car_model: { type: String, required: true },
@@ -18,7 +19,12 @@ const carSchema = new mongoose.Schema({
     start_day_booking: { type: Date, default: null},
     finish_day_booking: { type: Date, default: null},
     miles: { type: Number, required: true },
-    rented: { type: Boolean,  default: false}
+    rented: { type: Boolean,  default: false},
+    rentedBy: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        default: null
+    }
     
 });
 
