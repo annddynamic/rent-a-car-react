@@ -24,6 +24,7 @@ const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
+  const user = useSelector((state) => state.user)
 
   const dispatch = useDispatch();
   
@@ -280,7 +281,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.map((car, index) => (
+              {cars.filter((car) => (car.rented === false)).map((car, index) => (
                 <CarCard car={car} key={index} />
                ))}
             </Row>
