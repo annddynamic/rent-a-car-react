@@ -48,6 +48,7 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route path="/company-dashboard" element={<CompanyDashboard />} />
       </Routes>
     </Layout>
   );
