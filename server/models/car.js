@@ -17,7 +17,8 @@ const carSchema = new mongoose.Schema({
     air_conditioning: { type: Boolean, required: true },
     start_day_booking: { type: Date, default: null},
     finish_day_booking: { type: Date, default: null},
-    miles: { type: Number, required: true }
+    miles: { type: Number, required: true },
+    rented: { type: Boolean,  default: false}
     
 });
 

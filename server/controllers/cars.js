@@ -1,8 +1,18 @@
 const Car = require("../models/car");
 
 exports.get_all = async (req, res) => {
+	const carsArr = Car.map((car) => {
+		var finishDate = new Date(finish_day_booking);
+		var date = new Date(),
+		today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		//today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		if(finish_day_booking.getDate() > finishDate.getDate()){
+			car.rented = false;
+		}
+	});
+
 	try {
-		const cars = await Car.find();
+		const cars = await Car.find({rented: false});
         res.json(cars);
 
 	} catch (error) {
@@ -26,7 +36,8 @@ exports.add_car = async (req, res) => {
 		air_conditioning: req.body.air_conditioning,
 		start_day_booking: req.body.start_day_booking,
 		finish_day_booking: req.body.finish_day_booking,
-		miles: req.body.miles
+		miles: req.body.miles,
+		rented: req.body.rented
 	});
 	try{
 		const savedCar = await car.save();
@@ -68,3 +79,4 @@ exports.update_by_id = async(req,res) =>{
 		res.json({ message: error });
 	}
 }
+
