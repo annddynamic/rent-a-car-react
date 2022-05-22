@@ -1,18 +1,19 @@
 const Car = require("../models/car");
 
 exports.get_all = async (req, res) => {
-	const carsArr = Car.map((car) => {
-		var finishDate = new Date(finish_day_booking);
-		var date = new Date(),
-		today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-		//today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
-		if(finish_day_booking.getDate() > finishDate.getDate()){
-			car.rented = false;
-		}
-	});
+
 
 	try {
-		const cars = await Car.find({rented: false});
+		const cars = await Car.find();
+		// const carsArr = cars.map((car) => {
+		// 	var finishDate = new Date(finish_day_booking);
+		// 	var date = new Date(),
+		// 	today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+		// 	//today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
+		// 	if(finish_day_booking.getDate() > finishDate.getDate()){
+		// 		car.rented = false;
+		// 	}
+		// });
         res.json(cars);
 
 	} catch (error) {

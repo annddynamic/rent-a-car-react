@@ -3,10 +3,7 @@ import {
   Row,
   Col,
   Form,
-  Button,
-  Pagination,
-  ListGroup,
-  ListGroupItem
+  Button
 } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
@@ -21,8 +18,8 @@ const Car = () => {
 
   const [car, setCar] = useState(cars.filter(car => car._id === id));
 
-  const [from, setFrom] = useState('');
-  const [to, setTo] = useState('');
+  // const [from, setFrom] = useState('');
+  // const [to, setTo] = useState('');
   
   const [data, setData] = useState({ from: "", to: "" });
 
