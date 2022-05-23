@@ -39,19 +39,23 @@ const Car = () => {
     //today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var dateFromInput = new Date(data.from);
     var dateToInput = new Date(data.to);
+
     function dateDifference() {
       const _MS_PER_DAY = 1000 * 60 * 60 * 24;
   
       return Math.floor((dateToInput - dateFromInput) / _MS_PER_DAY);
     }
-    const daysOfBooking = dateDifference();
+
+    const pricePerRent = dateDifference() * car[0].price_for_24h;
+
     if(date.getTime() > dateFromInput.getTime() || dateToInput.getTime() < dateFromInput.getTime()){
-      console.log(`Dta eshte me e madhe se sot! ${daysOfBooking * car[0].price_for_24h} ${daysOfBooking}`);
+      console.log(`Dta eshte me e madhe se sot!  ${pricePerRent}`);
       return;
     }
+
     const url = `http://localhost:8080/api/cars/${id}`;
     axios
-      .patch(url, {rented: true,start_day_booking: data.from, finish_day_booking: data.to, rentedBy: userId},{
+      .patch(url, {rented: true,start_day_booking: data.from, finish_day_booking: data.to, rentedBy: userId },{
         headers: {
           Authorization: `Bearer ${token}`,
         }
@@ -105,6 +109,7 @@ const Car = () => {
         <Row>
           <Col>
               <div className="d-grid gap-2">
+                <p> Price: {car[0].price_per_rent}</p>
               </div>
             </Col>
         </Row>

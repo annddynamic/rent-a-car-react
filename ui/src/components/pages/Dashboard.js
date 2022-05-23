@@ -1,4 +1,5 @@
 import {Container, Col, Row, Nav, Navbar} from 'react-bootstrap'
+import { useState, useEffect } from "react";
 import { useSelector } from 'react-redux'
 import './Dashboard.css'
 import pic from '../../images/babloki.jpg'
@@ -9,6 +10,8 @@ const Dashboard = () => {
   
   const user = useSelector(state => state.user)
   const cars = useSelector(state => state.cars)
+  const [carsByMe, setCarsByMe] = useState(cars.filter((car) => (car.rentedBy === user._id)));
+  
   return (
     <div>
         <Row>
