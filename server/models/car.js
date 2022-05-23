@@ -25,7 +25,12 @@ const carSchema = new mongoose.Schema({
         ref: 'users',
         default: null
     },
-    price_per_rent: {type: Number, default: 0}
+    price_per_rent: {type: Number, default: 0},
+    company:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'users',
+        default: null
+    }
     
 });
 

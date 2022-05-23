@@ -33,6 +33,8 @@ exports.add_car = async (req, res) => {
     finish_day_booking: req.body.finish_day_booking,
     miles: req.body.miles,
     rented: req.body.rented,
+    rentedBy: req.body.rentedBy,
+    company: req.body.company
   });
   try {
     const savedCar = await car.save();
