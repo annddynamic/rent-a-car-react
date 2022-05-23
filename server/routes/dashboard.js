@@ -1,5 +1,8 @@
-// const CarsController = require('../controllers/cars')
-// const router = require("express").Router();
+const CarsController = require('../controllers/dashboard');
+const router = require("express").Router();
 
-// //GET ALL CARS
-// router.get("/", CarsController.get_by_id);
+//GET ALL CARS
+router.get("/:carId", CarsController.get_by_id);
+
+
+module.exports = router;

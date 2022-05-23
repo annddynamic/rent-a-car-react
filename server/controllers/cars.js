@@ -5,25 +5,16 @@ exports.get_all = async (req, res) => {
 	  
 	var date = new Date(),
 		today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
+
     const cars = await Car.updateMany({finish_day_booking : { $lt : today.getTime() }},  {$set: {rented: false, finish_day_booking: null, start_day_booking:null, rentedBy: null} });
-  	const cars1 = await Car.find();
-    // const carsArr = cars.map(async (car) => {
-    //   var finishDate = new Date(car.finish_day_booking);
-    //   var date = new Date(),
-    //     today = new Date(date.getFullYear(), date.getMonth(), date.getDate());
-    //   if (car.finish_day_booking.getDate() > finishDate.getDate()) {
-    //     car.rented = false;
-    //   }
-    // });
-    // console.log(carsArr);
-    //updateRentedValue(cars);
+
+    const cars1 = await Car.find();
+
     res.json(cars1);
   } catch (error) {
     res.json({ message: error });
   }
 };
-
-
 
 exports.add_car = async (req, res) => {
   const car = new Car({
@@ -54,6 +45,7 @@ exports.add_car = async (req, res) => {
 exports.get_by_id = async (req, res) => {
   try {
     const specificCar = await Car.findById(req.params.carId);
+    console.log(specificCar);
     res.json(specificCar);
   } catch (error) {
     res.json({ message: error });
@@ -68,7 +60,6 @@ exports.delete_by_id = async (req, res) => {
     res.json({ message: error });
   }
 };
-
 
 exports.update_by_id = async (req, res) => {
   try {
