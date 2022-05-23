@@ -1,6 +1,7 @@
 import {Container, Col, Row, Nav, Navbar} from 'react-bootstrap'
 import { useState, useEffect } from "react";
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import axios from "axios";
 import './Dashboard.css'
 import pic from '../../images/babloki.jpg'
 import CarCard from "../CarCard";
@@ -10,8 +11,8 @@ const Dashboard = () => {
   
   const user = useSelector(state => state.user)
   const cars = useSelector(state => state.cars)
-  const [carsByMe, setCarsByMe] = useState(cars.filter((car) => (car.rentedBy === user._id)));
-  
+  const token = useSelector((state)=>state.isLogged.token)
+
   return (
     <div>
         <Row>
@@ -43,8 +44,8 @@ const Dashboard = () => {
         </Row>
         <Col md={10}>
             <Row>
-              {cars.filter((car) => (car.rentedBy === user._id)).map((car, index) => (
-                <CarCard car={car} key={index} />
+              {cars.filter((car) => (car.rentedBy === user._id || car.company === user._id)).map((car, index) => (
+                <CarCard  car={car} key={index} />
                ))}
             </Row>
           </Col>
