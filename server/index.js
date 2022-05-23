@@ -29,7 +29,7 @@ app.use("/api/login", authRoutes);
 // protected routes
 //qitu e kom hek middleware 
 app.use("/api/cars",  carsRoutes);
-//app.use("/", dashboardRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));
