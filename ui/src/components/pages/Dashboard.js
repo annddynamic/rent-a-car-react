@@ -1,6 +1,8 @@
-import  { useState } from 'react'
-import {Container, Col, Row} from 'react-bootstrap'
+import {Container, Col, Row, Nav, Navbar} from 'react-bootstrap'
 import { useSelector } from 'react-redux'
+import './Dashboard.css'
+import pic from '../../images/babloki.jpg'
+import OnlineUsers from '../../chat/OnlineUsers'
 
 const Dashboard = () => {
   
@@ -8,12 +10,33 @@ const Dashboard = () => {
 
   return (
     <div>
-        <Container className='text-center'>
-            <h1>Info</h1>
-            <p>{user.firstName}</p>
-            <p>{user.lastName}</p>
-            <p>{user.email}</p>
-        </Container>
+        <Row>
+          <Col className='text-center border-1' md={6}>
+              <div>
+                <img src={pic} style={{height:"26vh",width:"26vh", borderRadius:"50%"}} alt="" />
+              </div>
+          </Col>
+          <Col md={6}>
+              <h2>{user.firstName} {user.lastName}</h2>     
+              <h3 className='text-primary'>Web developer</h3>
+              <p className='text-secondary'>Lorem ipsum dolor sit amet.</p>
+          </Col>
+        </Row>
+        <Row>
+          <Col className='text-center border-1' md={4}>
+              <h1>Work links</h1>     
+          </Col>
+          <Col md={5}>
+            <Navbar bg="light" variant="light">
+              <Navbar.Brand href="#home">Navbar</Navbar.Brand>
+              <Nav className="me-auto">
+                <Nav.Link href="#home">Home</Nav.Link>
+                <Nav.Link href="#features">Features</Nav.Link>
+                <Nav.Link href="#pricing">Pricing</Nav.Link>
+              </Nav>
+            </Navbar>
+          </Col>
+        </Row>
     </div>
   )
 }

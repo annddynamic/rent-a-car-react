@@ -4,6 +4,8 @@ import { FaCar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { logout } from "../../state/actions/loginActions";
+import {unsetCars} from "../../state/actions/carsActions"
+import {unsetUser} from "../../state/actions/userActions"
 import "./NavigationBar.css";
 
 const NavigationBar = () => {
@@ -28,6 +30,8 @@ const NavigationBar = () => {
   
   const logOut = () => {
     dispatch(logout())
+    dispatch(unsetCars())
+    dispatch(unsetUser())
   };
 
   return (

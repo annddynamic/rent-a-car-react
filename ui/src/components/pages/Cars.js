@@ -1,18 +1,32 @@
-import { Container, Row, Col, Form, Button, Pagination } from "react-bootstrap";
-import { FaAngleDown, FaAngleLeft } from "react-icons/fa";
+import {
+  Container,
+  Row,
+  Col,
+  Form,
+  Button,
+  Pagination,
+  ListGroup,
+  ListGroupItem
+} from "react-bootstrap";
+import {
+  FaAngleDown,
+  FaAngleLeft,
+} from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
 import CarCard from "../CarCard";
+import OnlineUsers from "../../chat/OnlineUsers";
 
 const Cars = () => {
   // get cars from state (redux)
-  const cars = useSelector((state) => state.cars);
-  const token = useSelector((state) => state.isLogged.token);
-  const dispatch = useDispatch();
+  const cars = useSelector((state) => state.cars)
+  const token = useSelector((state)=>state.isLogged.token)
 
+  const dispatch = useDispatch();
+  
   const fetchCars = async () => {
     const url = "http://localhost:8080/api/cars";
     axios
@@ -26,13 +40,13 @@ const Cars = () => {
         dispatch(setCars(cars));
       });
   };
-
+  
   useEffect(() => {
-    fetchCars();
-  }, []);
-
+    fetchCars()
+  },[]);
+  
   // set the first initial items displayed per page (6)
-  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0, 6));
+  const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
 
   const [carsTypeShown, setCarsTypeShown] = useState(true);
 
@@ -195,8 +209,7 @@ const Cars = () => {
                       <Form.Check
                         key={index}
                         value={type}
-                        checked={checkedState[index]}
-                        onChange={() => handleOnChange(index)}
+                        onChange={handleOnChange}
                         type="checkbox"
                         label={type}
                       />
@@ -267,7 +280,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {itemsPerPage.map((car, index) => (
+              {cars.slice(0,6).map((car, index) => (
                 <CarCard car={car} key={index} />
               ))}
               <Pagination>
