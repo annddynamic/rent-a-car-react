@@ -25,3 +25,10 @@ export function messageReceived(message) {
         payload: message
     }
 }
+
+export function sendMessage(message){
+    return{
+        type:'SEND_MESSAGE',
+        payload:message
+    }
+}

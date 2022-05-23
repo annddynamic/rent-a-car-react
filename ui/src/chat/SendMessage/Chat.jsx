@@ -1,10 +1,11 @@
 import React from "react";
 import { Accordion, Form, Button, Row, Col } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useState } from "react";
 import Singleton from "../socket";
 import MessageType from "./MessageType";
 import { FaCommentsDollar } from "react-icons/fa";
+import { sendMessage } from "../../state/actions/chatActions";
 
 const Chat = () => {
   const usersToChat = useSelector((state) => state.usersToChat);
@@ -17,9 +18,12 @@ const Chat = () => {
     setData({ ...data, [input.name]: input.value });
   };
 
+  const dispatch = useDispatch()
+
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data.text);
+
     let user = {
       id: sender._id,
       name: sender.firstName,
@@ -32,13 +36,17 @@ const Chat = () => {
       type: MessageType.TEXT_MESSAGE,
     };
 
-    console.log(message);
-    const socket = Singleton.getInstance();
-    let messageDto = JSON.stringify(message);
-    socket.send(messageDto);
-    setData((data) => ({
-      text: "",
-    }));
+    const ch1 = {sender:"me", message:data.text}
+  
+
+    dispatch(sendMessage(ch1))
+
+    // const socket = Singleton.getInstance();
+    // let messageDto = JSON.stringify(message);
+    // socket.send(messageDto);
+    // setData((data) => ({
+    //   text: "",
+    // }));
   };
   const style = {
     display: "block",
