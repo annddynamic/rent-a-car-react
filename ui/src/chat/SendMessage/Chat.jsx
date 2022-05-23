@@ -1,5 +1,5 @@
 import React from "react";
-import { Accordion, Form, Button, Row, Col } from "react-bootstrap";
+import { Accordion, Form, Button, Row, Col, Container } from "react-bootstrap";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import Singleton from "../socket";
@@ -59,9 +59,113 @@ const Chat = () => {
     float: "right",
   };
 
+  const tempMeessage = [
+    {
+      id: 1,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 2,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 3,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 4,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 5,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 1,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 2,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 3,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 4,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 5,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 1,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 2,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 3,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 4,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 5,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 1,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 2,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 3,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 4,
+      text: "Hello",
+      name: "John",
+    },
+    {
+      id: 5,
+      text: "Hello",
+      name: "John",
+    },
+  ];
+
   const sentMessageStyle =
-    "d-flex border rounded-pill flex-row justify-content-end border-success mb-2  ";
-  const receivedMessageStyle = "border border rounded-pill ";
+    "d-flex border rounded-pill flex-row justify-content-end border-success mb-2 w-50 text-success";
+  const receivedMessageStyle =
+    "border border-info rounded-pill w-50   mb-2  text-info ";
   console.log(messages);
   return (
     <Accordion>
@@ -72,28 +176,40 @@ const Chat = () => {
           ))}
         </Accordion.Header>
         <Accordion.Body>
-         
-
-          <div className="d-flex flex-column justify-content-between">
-            
-          {messages.map((message) => (
-              <div className={sentMessageStyle}>
-                <div> {message.user.name} : {message.data}</div>
-              </div>
-            ))}
-            
-            
+          <div
+            className="d-flex flex-column justify-content-between overflow-auto "
+            style={{ height: "200px" }}
+          >
             {/* {messages.map((message) => (
               <div className={sentMessageStyle}>
-                <div> {message.user.name} : {message.data}</div>
+                <div>
+                  {" "}
+                  {message.user.name} : {message.data}
+                </div>
               </div>
             ))} */}
 
-            <div className={receivedMessageStyle}>
-              <div className=" border border-info "> akdlfjldasn</div>
-            </div>
-
-            
+            <Container className="">
+              {tempMeessage.map((message) => (
+                <Row
+                  className={
+                    message.id === 1
+                      ? "justify-content-end"
+                      : "justify-content-start"
+                  }
+                >
+                  <div
+                    className={
+                      message.id === 1 ? sentMessageStyle : receivedMessageStyle
+                    }
+                  >
+                    <div className="  ">
+                      {message.name + ": " + message.text}{" "}
+                    </div>{" "}
+                  </div>
+                </Row>
+              ))}
+            </Container>
           </div>
 
           <Form onSubmit={handleSubmit}>
