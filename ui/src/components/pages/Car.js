@@ -74,47 +74,50 @@ const Car = () => {
       <p>{car[0].car_type}</p>
       <p>{car[0].prod_year}</p>
       <p>{id}</p>
-      <Form style={{ padding: "20px" }} onSubmit={bookCar}>
-        <Row>
-          <Col>
-            <Form.Group controlId="dob">
-              <Form.Control
-                type="date"
-                name="from"
-                value={data.from}
-                onChange={handleChange}
-                placeholder="Date of Birth"
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <Form.Group controlId="dob">
-              <Form.Control
-                type="date"
-                name="to"
-                value={data.to}
-                onChange={handleChange}
-                placeholder="Date of Birth"
-              />
-            </Form.Group>
-          </Col>
-          <Col>
-            <div className="d-grid gap-2">
-              <Button variant="light" type="submit">
-                Book
-              </Button>
-            </div>
-          </Col>
-        </Row>
-        <Row>
-          <Col>
-              <div className="d-grid gap-2">
-                <p> Price: {car[0].price_per_rent}</p>
-              </div>
-            </Col>
-        </Row>
-      </Form>
-      
+      {!(car[0].rented || car[0].company === userId) ? (
+         <Form style={{ padding: "20px" }} onSubmit={bookCar}>
+         <Row>
+           <Col>
+             <Form.Group controlId="dob">
+               <Form.Control
+                 type="date"
+                 name="from"
+                 value={data.from}
+                 onChange={handleChange}
+                 placeholder="Date of Birth"
+               />
+             </Form.Group>
+           </Col>
+           <Col>
+             <Form.Group controlId="dob">
+               <Form.Control
+                 type="date"
+                 name="to"
+                 value={data.to}
+                 onChange={handleChange}
+                 placeholder="Date of Birth"
+               />
+             </Form.Group>
+           </Col>
+           <Col>
+             <div className="d-grid gap-2">
+               <Button variant="light" type="submit">
+                 Book
+               </Button>
+             </div>
+           </Col>
+         </Row>
+         <Row>
+           <Col>
+               <div className="d-grid gap-2">
+                 <p> Price: {car[0].price_per_rent}</p>
+               </div>
+             </Col>
+         </Row>
+       </Form>
+      ) : (
+            ""
+      )}
       <h1>
         Back
         <Link style={{ color: "black", textDecoration: "none" }} to="/cars">

@@ -56,7 +56,7 @@ const Cars = () => {
 
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
 
-  const [allFilteredCars, setAllFilteredCars] = useState([]);
+  const [allFilteredCars, setAllFilteredCars] = useState(cars);
 
   const [transmissionType, setTransmissionType] = useState({
     manual: true,
@@ -107,10 +107,11 @@ const Cars = () => {
     );
     setCheckedState(updatedCheckedState);
     let checker = (arr) => arr.every((v) => v === false);
-
+    
     if (checker(updatedCheckedState)) {
       setItemsPerPage(cars.slice(0, 6));
       setPagination(cars.length);
+      setAllFilteredCars(cars)
     } else {
       let filteredCars = [];
       console.log(updatedCheckedState);
@@ -125,7 +126,7 @@ const Cars = () => {
         });
       });
       console.log(checkedState);
-
+      
       setItemsPerPage(filteredCars.slice(0, 6));
       setPagination(filteredCars.length);
       setAllFilteredCars(filteredCars);
@@ -136,6 +137,7 @@ const Cars = () => {
   const handleTransmisionFilterChange = (id) => {
     if (id === 0) {
       setTransmissionType({
+        
         manual: !transmissionType.manual,
         automatic: transmissionType.automatic,
       });
@@ -210,7 +212,7 @@ const Cars = () => {
                       <Form.Check
                         key={index}
                         value={type}
-                        onChange={handleOnChange}
+                        onChange={e => handleOnChange(index)}
                         type="checkbox"
                         label={type}
                       />
@@ -282,7 +284,11 @@ const Cars = () => {
           <Col md={10}>
             <Row>
               {cars.filter((car) => (car.rented === false)).map((car, index) => (
-                <CarCard car={car} key={index} />
+                  allFilteredCars.map(filteredCar=> 
+                      filteredCar._id === car._id ? 
+                       <CarCard car={car} key={index} />: ""
+
+                    )
                ))}
             </Row>
           </Col>
