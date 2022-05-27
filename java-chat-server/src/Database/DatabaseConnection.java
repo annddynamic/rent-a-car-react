@@ -1,10 +1,8 @@
 package Database;
 import User.User;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+
 public class DatabaseConnection {
 
     private static DatabaseConnection connObject;
@@ -36,15 +34,24 @@ public class DatabaseConnection {
     }
 
     public void addUserDatabase(User user) throws SQLException {
-        // the mysql insert statement
-        System.out.println(user);
-        String query = " insert into users (id, name) values (?, ?)";
-        PreparedStatement preparedStmt = this.conn.prepareStatement(query);
-        preparedStmt.setString (1, user.getId());
-        preparedStmt.setString (2,user.getName());
+        ResultSet rs = selectFromDatabase("select * from users where id = '"+ user.getId()+"'");
+        if (!rs.next()){
+            try {
+                String query = " insert into users (id, name) values (?, ?)";
+                PreparedStatement preparedStmt = this.conn.prepareStatement(query);
+                preparedStmt.setString (1, user.getId());
+                preparedStmt.setString (2,user.getName());
 
-        // execute the preparedstatement
-        preparedStmt.execute();
-        this.conn.close();
+                // execute the preparedstatement
+                preparedStmt.execute();
+            }catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private ResultSet selectFromDatabase(String query) throws SQLException{
+        Statement stmt = this.conn.createStatement();
+        return  stmt.executeQuery(query);
     }
 }

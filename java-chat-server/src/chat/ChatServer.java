@@ -62,7 +62,6 @@ public class ChatServer extends WebSocketServer {
             switch (msg.getType()) {
                 case USER_JOINED:
                     addUser(new User(msg.getUser().getName(), msg.getUser().getId()), conn);
-                    System.out.println(msg);
                     break;
                 case USER_LEFT:
                     removeUser(conn);
@@ -146,7 +145,7 @@ public class ChatServer extends WebSocketServer {
         return  peerSockets;
     }
 
-    public static void main(String[] args) throws SQLException {
+    public static void main(String[] args)  {
         new ChatServer(9000).start();
 //        DatabaseConnection conn = DatabaseConnection.getInstance();
 //
