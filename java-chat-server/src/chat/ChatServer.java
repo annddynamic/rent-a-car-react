@@ -35,7 +35,6 @@ public class ChatServer extends WebSocketServer {
     @Override
     public void onOpen(WebSocket webSocket, ClientHandshake clientHandshake) {
         conns.add(webSocket);
-        System.out.println("Funksioni onOpen " + conns);
         System.out.println("New connection from " + webSocket.getRemoteSocketAddress().getAddress().getHostAddress());
     }
 
@@ -45,7 +44,7 @@ public class ChatServer extends WebSocketServer {
         // When connection is closed, remove the user.
         try {
             removeUser(conn);
-        } catch (JsonProcessingException e) {
+        } catch (JsonProcessingException | SQLException e) {
             e.printStackTrace();
         }
 
@@ -84,35 +83,38 @@ public class ChatServer extends WebSocketServer {
         System.out.println("ERROR from " + conn.getRemoteSocketAddress().getAddress().getHostAddress());
     }
 
-    private void broadcastMessage(Message msg) {
+    private void broadcastMessage(Message msg) throws JsonProcessingException, SQLException {
         ObjectMapper mapper = new ObjectMapper();
-        try {
-            String messageJson = mapper.writeValueAsString(msg);
-            if (msg.getTo()!=null){
-                Set<WebSocket> peersSockets = getPeers(users, msg.getTo());
-                for (WebSocket sock : peersSockets) {
-                    sock.send(messageJson);
-                }
-                return;
-            }
-            for (WebSocket sock : conns) {
+        if (msg.getType() == MessageType.TEXT_MESSAGE){
+            DatabaseConnection databaseConnection = DatabaseConnection.getInstance();
+            databaseConnection.addMessageDatabase(msg.getUser().getId(), msg.getTo()[0].getId(), msg.getData());
+        }
+        String messageJson = mapper.writeValueAsString(msg);
+        if (msg.getTo()!=null){
+            Set<WebSocket> peersSockets = getPeers(users, msg.getTo());
+            for (WebSocket sock : peersSockets) {
                 sock.send(messageJson);
             }
-        } catch (JsonProcessingException e) {
-            e.printStackTrace();
+            return;
         }
+        for (WebSocket sock : conns) {
+            sock.send(messageJson);
+        }
+
     }
 
     private void addUser(User user, WebSocket conn) throws JsonProcessingException, SQLException {
         users.put(conn, user);
         System.out.println("Emri: "+ user.getName()+ "Id: "+ user.getId());
+        System.out.println(user);
         acknowledgeUserJoined(user, conn);
         broadcastUserActivityMessage(MessageType.USER_JOINED);
+        System.out.println("aaaaaa");
         DatabaseConnection dbConnection = DatabaseConnection.getInstance();
         dbConnection.addUserDatabase(user);
     }
 
-    private void removeUser(WebSocket conn) throws JsonProcessingException {
+    private void removeUser(WebSocket conn) throws JsonProcessingException, SQLException {
         users.remove(conn);
         broadcastUserActivityMessage(MessageType.USER_LEFT);
     }
@@ -124,7 +126,7 @@ public class ChatServer extends WebSocketServer {
         conn.send(new ObjectMapper().writeValueAsString(message));
     }
 
-    private void broadcastUserActivityMessage(MessageType messageType) throws JsonProcessingException {
+    private void broadcastUserActivityMessage(MessageType messageType) throws JsonProcessingException, SQLException {
         Message newMessage = new Message();
         ObjectMapper mapper = new ObjectMapper();
         String data = mapper.writeValueAsString(users.values());
@@ -147,15 +149,6 @@ public class ChatServer extends WebSocketServer {
 
     public static void main(String[] args)  {
         new ChatServer(9000).start();
-//        DatabaseConnection conn = DatabaseConnection.getInstance();
 //
-////        Statement stmt = con.createStatement();
-//        String QUERY = "SELECT * FROM chat";
-//        ResultSet rs = stmt.executeQuery(QUERY);
-//        while(rs.next()) {
-//            //Display values
-//            System.out.print("Sender: " + rs.getInt("sender_id"));
-//            System.out.print("Receiver: " + rs.getInt("receiver_id"));
-//        }
     }
 }

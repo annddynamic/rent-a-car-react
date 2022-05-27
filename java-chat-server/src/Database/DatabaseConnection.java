@@ -34,24 +34,32 @@ public class DatabaseConnection {
     }
 
     public void addUserDatabase(User user) throws SQLException {
+        System.out.println("aaaaaa");
         ResultSet rs = selectFromDatabase("select * from users where id = '"+ user.getId()+"'");
         if (!rs.next()){
-            try {
-                String query = " insert into users (id, name) values (?, ?)";
-                PreparedStatement preparedStmt = this.conn.prepareStatement(query);
-                preparedStmt.setString (1, user.getId());
-                preparedStmt.setString (2,user.getName());
-
-                // execute the preparedstatement
-                preparedStmt.execute();
-            }catch (SQLException e){
-                e.printStackTrace();
-            }
+            String query = " insert into users (id, name) values (?, ?)";
+            PreparedStatement preparedStmt = this.conn.prepareStatement(query);
+            preparedStmt.setString (1, user.getId());
+            preparedStmt.setString (2,user.getName());
+            // execute the preparedstatement
+            preparedStmt.execute();
         }
+    }
+
+    public void addMessageDatabase(String senderId, String receiverId, String message) throws SQLException{
+        String query = "insert into message (sender_id, receiver_id, message) values (?, ?, ?)";
+        PreparedStatement preparedStmt = this.conn.prepareStatement(query);
+        preparedStmt.setString (1, senderId);
+        preparedStmt.setString (2,receiverId);
+        preparedStmt.setString (3,message);
+        // execute the preparedstatement
+        preparedStmt.execute();
     }
 
     private ResultSet selectFromDatabase(String query) throws SQLException{
         Statement stmt = this.conn.createStatement();
         return  stmt.executeQuery(query);
     }
+
+
 }
