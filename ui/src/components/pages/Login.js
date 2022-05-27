@@ -89,7 +89,7 @@ const Login = () => {
   }
 
   const sendJoinedMessage =(socket, user) =>{
-    let messageDto = JSON.stringify({ user: user.firstName, type: MessageType.USER_JOINED });
+    let messageDto = JSON.stringify({ user: {name: user.firstName, id: user._id}, type: MessageType.USER_JOINED });
     socket.send(messageDto);
   }
 
