@@ -34,7 +34,6 @@ public class DatabaseConnection {
     }
 
     public void addUserDatabase(User user) throws SQLException {
-        System.out.println("aaaaaa");
         ResultSet rs = selectFromDatabase("select * from users where id = '"+ user.getId()+"'");
         if (!rs.next()){
             String query = " insert into users (id, name) values (?, ?)";

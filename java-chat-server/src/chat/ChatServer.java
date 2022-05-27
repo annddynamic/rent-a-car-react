@@ -1,7 +1,9 @@
 package chat;
 
+import api.HttpServe;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sun.net.httpserver.HttpServer;
 import message.Message;
 import message.MessageType;
 import User.User;
@@ -11,13 +13,10 @@ import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
 import Database.DatabaseConnection;
 
-import javax.xml.crypto.Data;
-import java.io.Console;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
+import api.HttpServe;
 import java.util.*;
 
 public class ChatServer extends WebSocketServer {
@@ -106,10 +105,8 @@ public class ChatServer extends WebSocketServer {
     private void addUser(User user, WebSocket conn) throws JsonProcessingException, SQLException {
         users.put(conn, user);
         System.out.println("Emri: "+ user.getName()+ "Id: "+ user.getId());
-        System.out.println(user);
         acknowledgeUserJoined(user, conn);
         broadcastUserActivityMessage(MessageType.USER_JOINED);
-        System.out.println("aaaaaa");
         DatabaseConnection dbConnection = DatabaseConnection.getInstance();
         dbConnection.addUserDatabase(user);
     }
@@ -148,7 +145,8 @@ public class ChatServer extends WebSocketServer {
     }
 
     public static void main(String[] args)  {
-        new ChatServer(9000).start();
+//        new ChatServer(9000).start();
+        new HttpServe(9090);
 //
     }
 }
