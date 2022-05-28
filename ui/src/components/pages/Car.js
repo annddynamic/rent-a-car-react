@@ -3,7 +3,8 @@ import {
   Row,
   Col,
   Form,
-  Button
+  Button,
+  Table
 } from "react-bootstrap";
 
 import { useParams, Link } from "react-router-dom";
@@ -11,6 +12,7 @@ import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { FaArrowCircleLeft } from "react-icons/fa";
 import axios from "axios";
+import pic from '../../images/babloki.jpg'
 
 const Car = () => {
   let { id } = useParams();
@@ -53,7 +55,7 @@ const Car = () => {
       setData({ errorMessage: "Data e rezervimit duhet te jete me e madhe se sot!" });
       return;
     }
-    if(dateToInput.getTime() < dateFromInput.getTime()){
+    if(date.getTime() < dateFromInput.getTime() || dateToInput.getTime() < dateFromInput.getTime()){
       setData({ errorMessage: "Data e dorezimit duhet te jete me e madhe se data e rezervimit!" });
       return;
     }
@@ -78,13 +80,48 @@ const Car = () => {
 
   return (
     <Container className="text-center">
-      <h1>
-        {car[0].car_model} {car[0].car_series}
-      </h1> 
-      <p>{car[0].country}</p>
-      <p>{car[0].car_type}</p>
-      <p>{car[0].prod_year}</p>
-      <p>{id}</p>
+      <Row>
+      <Col className="col-md-6">
+      <div>
+        <img src={pic} style={{height:"45vh",width:"45vh", borderRadius:"50%"}} alt="" />
+      </div>
+      </Col>
+      <Col>
+      <Table className="thead-dark">
+      <tbody>
+        <tr>
+          <th>Modeli: </th>
+          <td>{car[0].car_model}</td>
+        </tr>
+        <tr>
+          <th>Seria: </th>
+          <td>{car[0].car_series}</td>
+        </tr>
+        <tr>
+          <th>Shteti: </th>
+          <td>{car[0].country}</td>
+        </tr>
+        <tr>
+          <th>Tipi i vetures: </th>
+          <td>{car[0].car_type}</td>
+        </tr>
+        <tr>
+          <th>Viti i prodhimit: </th>
+          <td>{car[0].prod_year}</td>
+        </tr>
+        <tr>
+          <th>Cmimi: </th>
+          <td>{car[0].price_per_rent}	&euro;</td>
+        </tr>
+
+        <tr style={{display:"none"}}>
+          <th>Ide: </th>
+          <td>{id}</td>
+        </tr>
+      </tbody>
+      </Table>
+      </Col>
+      </Row>
       {!(car[0].rented || car[0].company === userId) ? (
          <Form style={{ padding: "20px" }} onSubmit={bookCar}>
          <Row>
@@ -95,7 +132,7 @@ const Car = () => {
                  name="from"
                  value={data.from}
                  onChange={handleChange}
-                 placeholder="Date of Birth"
+                //  placeholder="Date of Birth"
                />
              </Form.Group>
            </Col>
@@ -106,7 +143,7 @@ const Car = () => {
                  name="to"
                  value={data.to}
                  onChange={handleChange}
-                 placeholder="Date of Birth"
+                //  placeholder="Date of Birth"
                />
              </Form.Group>
            </Col>
