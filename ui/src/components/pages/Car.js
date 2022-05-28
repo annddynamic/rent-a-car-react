@@ -49,7 +49,7 @@ const Car = () => {
     const pricePerRent = dateDifference() * car[0].price_for_24h;
 
     if(date.getTime() > dateFromInput.getTime() || dateToInput.getTime() < dateFromInput.getTime()){
-      console.log(`Dta eshte me e madhe se sot!  ${pricePerRent}`);
+      console.log(`Data eshte me e madhe se sot!  ${pricePerRent}`);
       return;
     }
 
