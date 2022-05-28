@@ -56,12 +56,17 @@ public class DatabaseConnection {
     }
 
     public ResultSet getMessagesDatabase(String senderId, String receiverId) throws SQLException{
-        Statement stmt = this.conn.createStatement();
 
-        String query = "select * from message where " +
-                "sender_id = '"+senderId+"' and receiver_id = '"+receiverId+"' or " +
-                "sender_id = '"+receiverId+"' and receiver_id = '"+senderId+"'";
-        return  stmt.executeQuery(query);
+        String query =  "select * from message where " +
+                        "sender_id = ? and receiver_id = ? or "+
+                        "sender_id = ? and receiver_id = ?";
+        PreparedStatement preparedStmt = this.conn.prepareStatement(query);
+        preparedStmt.setString (1, senderId);
+        preparedStmt.setString (2,receiverId);
+        preparedStmt.setString (3,receiverId);
+        preparedStmt.setString (4,senderId);
+        // execute the preparedstatement
+        return  preparedStmt.executeQuery();
     }
 
     private ResultSet selectFromDatabase(String query) throws SQLException{

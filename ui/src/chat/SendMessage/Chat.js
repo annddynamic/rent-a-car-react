@@ -78,7 +78,7 @@ const Chat = () => {
     <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header className="mb-2">
-            <span>{usersToChat.id !== sender._id ? usersToChat.name + "  " : ""} </span>
+            <span>{usersToChat.name + "  "} </span>
         </Accordion.Header>
         <Accordion.Body>
           <div
