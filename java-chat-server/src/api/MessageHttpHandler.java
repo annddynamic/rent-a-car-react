@@ -21,8 +21,8 @@ public class MessageHttpHandler  implements HttpHandler {
         // leximi i tipit te kerkeses / GET|POST|PUT|DELETE
         try {
             String method = exchange.getRequestMethod();
-            if (method.equals("GET")) {
-                System.out.println("UserHttpHandler get");
+            if (method.equals("POST")) {
+                System.out.println("UserHttpHandler POST");
                 this.handleGetRequest(exchange);
             }
         }catch (Exception e){
@@ -37,15 +37,15 @@ public class MessageHttpHandler  implements HttpHandler {
         DatabaseConnection dbConn =DatabaseConnection.getInstance();
         JSONArray response = jsonProc.convert(dbConn.getMessagesDatabase(responseJson.sender_id, responseJson.receiver_id));
 
+
         byte[] bs = response.toString().getBytes("UTF-8");
         exchange.sendResponseHeaders(200, bs.length);
         exchange.getResponseHeaders().set("Content-Type", "application/json");
         OutputStream os = exchange.getResponseBody();
         os.write(bs);
 
-        OutputStream out = exchange.getResponseBody();
-        out.flush();
-        out.close();
+        os.flush();
+        os.close();
     }
 }
 
