@@ -43,6 +43,14 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route 
+          path="/dashboard/:id"
+          element={
+            <ProtectedRoute loggedIn={isLogged}>
+              <Car />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Layout>
   );

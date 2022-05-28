@@ -24,6 +24,7 @@ const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
+  const user = useSelector((state) => state.user)
 
   const dispatch = useDispatch();
   
@@ -36,7 +37,8 @@ const Cars = () => {
         },
       })
       .then((res) => {
-        const cars = res.data;
+        let cars = res.data;
+        console.log(cars)
         dispatch(setCars(cars));
       });
   };
@@ -54,13 +56,12 @@ const Cars = () => {
 
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
 
-  const [allFilteredCars, setAllFilteredCars] = useState([]);
+  const [allFilteredCars, setAllFilteredCars] = useState(cars);
 
   const [transmissionType, setTransmissionType] = useState({
     manual: true,
     automatic: true,
   });
-
   // active page, page 1
   const [active, setActivePage] = useState(1);
 
@@ -80,7 +81,7 @@ const Cars = () => {
     setPageNumber(items);
   };
 
-  // sets particular Items per page based on the number clicked
+  // // sets particular Items per page based on the number clicked
   const setActive = (page) => {
     setActivePage(page);
 
@@ -106,10 +107,11 @@ const Cars = () => {
     );
     setCheckedState(updatedCheckedState);
     let checker = (arr) => arr.every((v) => v === false);
-
+    
     if (checker(updatedCheckedState)) {
       setItemsPerPage(cars.slice(0, 6));
       setPagination(cars.length);
+      setAllFilteredCars(cars)
     } else {
       let filteredCars = [];
       console.log(updatedCheckedState);
@@ -124,7 +126,7 @@ const Cars = () => {
         });
       });
       console.log(checkedState);
-
+      
       setItemsPerPage(filteredCars.slice(0, 6));
       setPagination(filteredCars.length);
       setAllFilteredCars(filteredCars);
@@ -135,6 +137,7 @@ const Cars = () => {
   const handleTransmisionFilterChange = (id) => {
     if (id === 0) {
       setTransmissionType({
+        
         manual: !transmissionType.manual,
         automatic: transmissionType.automatic,
       });
@@ -209,7 +212,7 @@ const Cars = () => {
                       <Form.Check
                         key={index}
                         value={type}
-                        onChange={handleOnChange}
+                        onChange={e => handleOnChange(index)}
                         type="checkbox"
                         label={type}
                       />
@@ -280,20 +283,13 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.slice(0,6).map((car, index) => (
-                <CarCard car={car} key={index} />
-              ))}
-              <Pagination>
-                {pageNumber.map((item) => (
-                  <Pagination.Item
-                    onClick={() => setActive(item)}
-                    active={item === active}
-                    key={item}
-                  >
-                    {item}
-                  </Pagination.Item>
-                ))}
-              </Pagination>
+              {cars.filter((car) => (car.rented === false)).map((car, index) => (
+                  allFilteredCars.map(filteredCar=> 
+                      filteredCar._id === car._id ? 
+                       <CarCard car={car} key={index} />: ""
+
+                    )
+               ))}
             </Row>
           </Col>
         </Row>
