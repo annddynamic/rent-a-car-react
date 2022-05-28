@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Accordion, Form, Button, Row, Col, Container } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
@@ -8,9 +8,10 @@ import { messageReceived } from "../../state/actions/chatActions";
 
 const Chat = () => {
 
+ 
+  const messages = useSelector((state) => state.message);
   const usersToChat = useSelector((state) => state.usersToChat);
   const sender = useSelector((state) => state.user);
-  const messages = useSelector((state) => state.message);
   const dispatch = useDispatch()
   const [data, setData] = useState({ text: "" });
 
@@ -77,7 +78,7 @@ const Chat = () => {
     <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header className="mb-2">
-            <span>{usersToChat.name + "  "} </span>
+            <span>{usersToChat.id !== sender._id ? usersToChat.name + "  " : ""} </span>
         </Accordion.Header>
         <Accordion.Body>
           <div

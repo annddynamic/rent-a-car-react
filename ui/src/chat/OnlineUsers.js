@@ -18,7 +18,7 @@ const OnlineUsers = () => {
 
   const chatUsers = (user, position) => {
     dispatch(appendUserToChat(user))
-
+    console.log(sender._id, user.id);
     const url = "http://localhost:9090/messages";
     axios.post(url, {
       sender_id   :sender._id,
