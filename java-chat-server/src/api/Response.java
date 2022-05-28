@@ -2,15 +2,15 @@ package api;
 
 public class Response {
 
-    public int sender_id;
-    public int receiver_id;
-    public Response(int senderID, int receiverID) {
-        this.sender_id = senderID;
-        this.receiver_id = receiverID;
+    public String sender_id;
+    public String  receiver_id;
+    public Response() {
+        new Response("", "");
     }
 
-    public Response() {
-        new Response(0, 0);
+    public Response(String senderID, String receiverID) {
+        this.sender_id = senderID;
+        this.receiver_id = receiverID;
     }
 
 }

@@ -1,11 +1,18 @@
 package api;
 
+import Database.DatabaseConnection;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
+import javax.xml.crypto.Data;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
+import java.sql.SQLException;
 
 public class MessageHttpHandler  implements HttpHandler {
 
@@ -18,28 +25,27 @@ public class MessageHttpHandler  implements HttpHandler {
                 System.out.println("UserHttpHandler get");
                 this.handleGetRequest(exchange);
             }
-        }catch (IOException e){
+        }catch (Exception e){
             e.printStackTrace();
         }
     }
 
-    private void handleGetRequest(HttpExchange exchange) throws IOException {
+    private void handleGetRequest(HttpExchange exchange) throws Exception {
         BufferedReader httpInput = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
+        JSONProcessor jsonProc = new JSONProcessor<Response>(Response.class);
+        Response responseJson = (Response) jsonProc.deserialize(httpInput);
+        DatabaseConnection dbConn =DatabaseConnection.getInstance();
+        JSONArray response = jsonProc.convert(dbConn.getMessagesDatabase(responseJson.sender_id, responseJson.receiver_id));
 
-        JSONProcessor responseJsonProcessor = new JSONProcessor<Response>(Response.class);
-        Response responseJson = (Response) responseJsonProcessor.deserialize(httpInput);
+        byte[] bs = response.toString().getBytes("UTF-8");
+        exchange.sendResponseHeaders(200, bs.length);
+        exchange.getResponseHeaders().set("Content-Type", "application/json");
+        OutputStream os = exchange.getResponseBody();
+        os.write(bs);
 
-        System.out.println(responseJson.sender_id);
-
-//
-//        OutputStream out = exchange.getResponseBody();
-//
-//        //Statusi: 200, 201,
-//        exchange.getResponseHeaders().set("Content-Type", "application/json");
-//        exchange.sendResponseHeaders(200, userJsonString.length());
-//        out.write(userJsonString.getBytes());
-//        out.flush();
-//        out.close();
+        OutputStream out = exchange.getResponseBody();
+        out.flush();
+        out.close();
     }
 }
 

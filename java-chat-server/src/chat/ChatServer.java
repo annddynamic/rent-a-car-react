@@ -145,8 +145,7 @@ public class ChatServer extends WebSocketServer {
     }
 
     public static void main(String[] args)  {
-//        new ChatServer(9000).start();
+        new ChatServer(9000).start();
         new HttpServe(9090);
-//
     }
 }

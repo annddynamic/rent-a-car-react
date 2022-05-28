@@ -1,10 +1,11 @@
 package api;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileWriter;
-import java.util.Scanner;
-import java.util.stream.Collectors;
+import java.sql.ResultSet;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import java.sql.ResultSet;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -48,5 +49,22 @@ public class JSONProcessor<T> {
             System.err.println(e.getMessage());
             return null;
         }
+    }
+
+    public  JSONArray convert(ResultSet resultSet) throws Exception {
+
+        JSONArray jsonArray = new JSONArray();
+
+        while (resultSet.next()) {
+
+            int columns = resultSet.getMetaData().getColumnCount();
+            JSONObject obj = new JSONObject();
+
+            for (int i = 0; i < columns; i++)
+                obj.put(resultSet.getMetaData().getColumnLabel(i + 1).toLowerCase(), resultSet.getObject(i + 1));
+
+            jsonArray.put(obj);
+        }
+        return jsonArray;
     }
 }
