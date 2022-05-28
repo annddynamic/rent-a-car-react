@@ -1,16 +1,17 @@
 import React from "react";
 import { Accordion, Form, Button, Row, Col, Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Singleton from "../socket";
 import MessageType from "./MessageType";
+import { messageReceived } from "../../state/actions/chatActions";
 
 const Chat = () => {
 
   const usersToChat = useSelector((state) => state.usersToChat);
   const sender = useSelector((state) => state.user);
   const messages = useSelector((state) => state.message);
-
+  const dispatch = useDispatch()
   const [data, setData] = useState({ text: "" });
 
   const handleChange = ({ currentTarget: input }) => {
@@ -34,6 +35,15 @@ const Chat = () => {
     const socket = Singleton.getInstance();
     let messageDto = JSON.stringify(message);
     socket.send(messageDto);
+
+    const stateMssg = {
+      receiver_id : usersToChat.id,
+      message : data.text,
+      sender_id : sender._id
+    }
+
+    dispatch(messageReceived(stateMssg))
+
     setData((data) => ({
       text: "",
     }));
@@ -89,7 +99,6 @@ const Chat = () => {
                       message.receiver_id === sender._id ?  receivedMessageStyle : sentMessageStyle
                     }
                   >
-                    <span></span>
                     <div className="  ">
                       {(message.receiver_id === sender._id ?  usersToChat.name : sender.firstName) +  ": " + message.message}{" "}
                     </div>{" "}
