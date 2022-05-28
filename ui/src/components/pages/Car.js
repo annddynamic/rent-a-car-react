@@ -21,7 +21,7 @@ const Car = () => {
   // const [from, setFrom] = useState('');
   // const [to, setTo] = useState('');
   
-  const [data, setData] = useState({ from: "", to: "" });
+  const [data, setData] = useState({ from: "", to: "", errorMessage: "" });
 
   const handleChange = ({ currentTarget: input }) => {
     setData({ ...data, [input.name]: input.value });
@@ -48,8 +48,13 @@ const Car = () => {
 
     const pricePerRent = dateDifference() * car[0].price_for_24h;
 
-    if(date.getTime() > dateFromInput.getTime() || dateToInput.getTime() < dateFromInput.getTime()){
+    if(date.getTime() > dateFromInput.getTime()){
       console.log(`Data eshte me e madhe se sot!  ${pricePerRent}`);
+      setData({ errorMessage: "Data e rezervimit duhet te jete me e madhe se sot!" });
+      return;
+    }
+    if(dateToInput.getTime() < dateFromInput.getTime()){
+      setData({ errorMessage: "Data e dorezimit duhet te jete me e madhe se data e rezervimit!" });
       return;
     }
 
@@ -64,6 +69,12 @@ const Car = () => {
         console.log(res);
       });
   }
+
+  //Validation message
+  const ShowValidation = ({message}) =>
+  <div>
+      <p className="text-danger" style={{float:"left"}} >{message}</p> 
+  </div>
 
   return (
     <Container className="text-center">
@@ -114,6 +125,7 @@ const Car = () => {
                </div>
              </Col>
          </Row>
+         <Row><ShowValidation message={data.errorMessage} /></Row>
        </Form>
       ) : (
             ""
