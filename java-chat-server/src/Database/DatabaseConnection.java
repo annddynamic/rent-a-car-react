@@ -58,8 +58,8 @@ public class DatabaseConnection {
     public ResultSet getMessagesDatabase(String senderId, String receiverId) throws SQLException{
         Statement stmt = this.conn.createStatement();
         String query = "select * from message where " +
-                       "sender_id = '"+senderId+"' or receiver_id = '"+senderId+"'"+
-                       "or sender_id = '"+receiverId+"' or receiver_id = '"+receiverId+"'";
+                "sender_id = '"+senderId+"' or receiver_id = '"+senderId+"'"+
+                "or sender_id = '"+receiverId+"' or receiver_id = '"+receiverId+"'";
         return  stmt.executeQuery(query);
     }
 
