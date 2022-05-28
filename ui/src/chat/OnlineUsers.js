@@ -8,14 +8,31 @@ import {
 } from "../state/actions/chatUsersActions";
 import { useDispatch } from "react-redux";
 import Chat from "./SendMessage/Chat";
+import axios from "axios";
+import { setChat } from "../state/actions/chatActions";
 const OnlineUsers = () => {
 
   const dispatch = useDispatch();
   const onlineUsers = useSelector((state) => state.usersOnline);
-  
+  const sender = useSelector((state) => state.user);
+
   const chatUsers = (user, position) => {
     dispatch(appendUserToChat(user))
+
+    const url = "http://localhost:9090/messages";
+    axios.post(url, {
+      sender_id   :sender._id,
+      receiver_id :user.id
+    })
+    .then((response) => {
+      console.log(response.data);
+      dispatch(setChat(response.data))
+    })
+    .catch( (error)=> {
+      console.log(error);
+    });
   };
+
 
   return (
     <div>

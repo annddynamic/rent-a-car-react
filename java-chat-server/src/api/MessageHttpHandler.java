@@ -3,6 +3,7 @@ package api;
 import Database.DatabaseConnection;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+import com.sun.net.httpserver.HttpsExchange;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -20,7 +21,16 @@ public class MessageHttpHandler  implements HttpHandler {
     public void handle(HttpExchange exchange){
         // leximi i tipit te kerkeses / GET|POST|PUT|DELETE
         try {
+
+            exchange.getResponseHeaders().add("Access-Control-Allow-Origin", "*");
             String method = exchange.getRequestMethod();
+            if (method.equalsIgnoreCase("OPTIONS")) {
+                exchange.getResponseHeaders().add("Access-Control-Allow-Methods", "GET, OPTIONS");
+                exchange.getResponseHeaders().add("Access-Control-Allow-Headers", "Content-Type,Authorization");
+                exchange.sendResponseHeaders(204, -1);
+                return;
+            }
+
             if (method.equals("POST")) {
                 System.out.println("UserHttpHandler POST");
                 this.handleGetRequest(exchange);
