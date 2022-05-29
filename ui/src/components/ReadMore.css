@@ -1,0 +1,16 @@
+  .text{
+    width: 100%;
+  }
+    
+  .read-or-hide{
+    color: rgb(155, 154, 154);
+    cursor: pointer;
+  }
+
+  .card-header{
+    background-color:rgb(107, 230, 107)
+  }
+
+  .card-body{
+    background-color:rgb(229, 239, 229)
+  }

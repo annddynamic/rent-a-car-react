@@ -1,0 +1,13 @@
+h3{
+    text-align: center;
+}
+p{
+    width:80%;
+    margin-left: 10%;
+}
+hr{
+    width:80%;
+    margin-left: 10%;
+    color:darkblue;
+    height:8px !important;
+}

@@ -74,7 +74,7 @@ const NavigationBar = () => {
               Register
             </Nav.Link>
             <Nav.Link as={NavLink} style={{ color: navbar ? "black" : "#f4f4f4" }} to="/FAQ">
-              FAQ
+              FAQs
             </Nav.Link>
             <Nav.Link as={NavLink} style={{ color: navbar ? "black" : "#f4f4f4" }} to="/about">
               About Us
@@ -88,8 +88,8 @@ const NavigationBar = () => {
             <Nav.Link as={NavLink} style={{ color: "black" }} to="/cars">
               Cars
             </Nav.Link>
-            <Nav.Link as={NavLink} style={{ color: navbar ? "black" : "#f4f4f4" }} to="/FAQ">
-              FAQ
+            <Nav.Link as={NavLink} style={{ color: "black" }} to="/FAQ">
+              FAQs
             </Nav.Link>
             <Nav.Link as={NavLink} style={{ color: "black" }} to="/about">
               About Us
