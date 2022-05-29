@@ -11,11 +11,12 @@ import Chat from "./SendMessage/Chat";
 import axios from "axios";
 import { setChat } from "../state/actions/chatActions";
 const OnlineUsers = () => {
+
   const dispatch = useDispatch();
   const onlineUsers = useSelector((state) => state.usersOnline);
   const sender = useSelector((state) => state.user);
 
-  const chatUsers = (user, position) => {
+  const chatUsers = (user) => {
     dispatch(appendUserToChat(user));
     console.log(sender._id, user.id);
     const url = "http://localhost:9090/messages";
@@ -25,7 +26,6 @@ const OnlineUsers = () => {
         receiver_id: user.id,
       })
       .then((response) => {
-        console.log(response.data);
         dispatch(setChat(response.data));
       })
       .catch((error) => {

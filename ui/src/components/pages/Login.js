@@ -55,7 +55,6 @@ const Login = () => {
       let users;
       switch (message.type) {
         case MessageType.TEXT_MESSAGE:
-          console.log(message)
           const stateMssg = {
             receiver_id : message.to[0].id,
             message : message.data,

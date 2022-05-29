@@ -7,12 +7,10 @@ import MessageType from "./MessageType";
 import { messageReceived } from "../../state/actions/chatActions";
 
 const Chat = () => {
-
- 
   const messages = useSelector((state) => state.message);
   const usersToChat = useSelector((state) => state.usersToChat);
   const sender = useSelector((state) => state.user);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   const [data, setData] = useState({ text: "" });
 
   const handleChange = ({ currentTarget: input }) => {
@@ -21,29 +19,24 @@ const Chat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    let user = {
-      id: sender._id,
-      name: sender.firstName,
-    };
+    const socket = Singleton.getInstance();
 
-    const message = {
-      user: user,
+    const messageDto = JSON.stringify({
+      user: { id: sender._id, name: sender.firstName },
       data: data.text,
       to: [usersToChat],
       type: MessageType.TEXT_MESSAGE,
-    };
+    });
 
-    const socket = Singleton.getInstance();
-    let messageDto = JSON.stringify(message);
     socket.send(messageDto);
 
     const stateMssg = {
-      receiver_id : usersToChat.id,
-      message : data.text,
-      sender_id : sender._id
-    }
+      receiver_id: usersToChat.id,
+      message: data.text,
+      sender_id: sender._id,
+    };
 
-    dispatch(messageReceived(stateMssg))
+    dispatch(messageReceived(stateMssg));
 
     setData((data) => ({
       text: "",
@@ -68,7 +61,6 @@ const Chat = () => {
     float: "right",
   };
 
-
   const sentMessageStyle =
     "d-flex border rounded-pill flex-row justify-content-end border-success mb-2 w-50 text-success";
   const receivedMessageStyle =
@@ -78,17 +70,17 @@ const Chat = () => {
     <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header className="mb-2">
-            <span>{usersToChat.name + "  "} </span>
+          <span>{usersToChat.name + "  "} </span>
         </Accordion.Header>
         <Accordion.Body>
           <div
             className="d-flex flex-column justify-content-between overflow-auto "
             style={{ height: "200px" }}
           >
-            
             <Container className="">
-            {messages.map((message, index) => (
-                <Row key={index}
+              {messages.map((message, index) => (
+                <Row
+                  key={index}
                   className={
                     message.sender_id === sender._id
                       ? "justify-content-end"
@@ -97,11 +89,17 @@ const Chat = () => {
                 >
                   <div
                     className={
-                      message.receiver_id === sender._id ?  receivedMessageStyle : sentMessageStyle
+                      message.receiver_id === sender._id
+                        ? receivedMessageStyle
+                        : sentMessageStyle
                     }
                   >
                     <div className="  ">
-                      {(message.receiver_id === sender._id ?  usersToChat.name : sender.firstName) +  ": " + message.message}{" "}
+                      {(message.receiver_id === sender._id
+                        ? usersToChat.name
+                        : sender.firstName) +
+                        ": " +
+                        message.message}{" "}
                     </div>{" "}
                   </div>
                 </Row>
