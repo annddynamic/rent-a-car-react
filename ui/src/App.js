@@ -44,7 +44,14 @@ const App = () => {
             </ProtectedRoute>
           }
         />
-        <Route path="/company-dashboard" element={<CompanyDashboard />} />
+        <Route
+          path="/company-dashboard"
+          element={
+            <ProtectedRoute loggedIn={isLogged}>
+              <CompanyDashboard />
+            </ProtectedRoute>
+          }
+        />
       </Routes>
     </Layout>
   );

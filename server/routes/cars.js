@@ -1,4 +1,4 @@
-const CarsController = require('../controllers/cars')
+const CarsController = require("../controllers/cars");
 const router = require("express").Router();
 
 // 		**** ALL ROUTES ARE PROTECTED*****

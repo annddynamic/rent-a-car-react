@@ -1,5 +1,6 @@
 import { Container, Form, Button, Row, Col, Alert } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 
 export default function AddCarForm() {
   const initialStateValues = {
@@ -45,49 +46,76 @@ export default function AddCarForm() {
     event.preventDefault();
     setFormErrors(validate(newCar));
     setIsSubmit(true);
+
+    //try catch block
+    // try {
+    //   console.log(newCar);
+    //   axios.post("http://localhost:8080/api", newCar);
+    // } catch (error) {
+    //   console.log(error);
+    // }
+
     console.log(newCar);
   };
 
   const validate = (values) => {
     let errors = {};
-    if (!values.car_model) {
-      errors.car_model = "Car model is required";
+    if (!values.car_model || values.car_model.trim() === "") {
+      errors.car_model = "Car model is not valid";
     }
-    if (!values.car_series) {
-      errors.car_series = "Car series is required";
+    if (!values.car_series || values.car_series.trim() === "") {
+      errors.car_series = "Car series is not valid";
     }
-    if (!values.car_type) {
-      errors.car_type = "Car type is required";
+    if (!values.car_type || values.car_type.trim() === "Choose...") {
+      errors.car_type = "Car type is not valid";
     }
-    if (!values.prod_year) {
-      errors.prod_year = "Production year is required";
+    if (
+      !values.prod_year ||
+      Number.isInteger(parseInt(values.prod_year)) === false
+    ) {
+      errors.prod_year = "Production year isn't valid";
     }
-    if (!values.price_for_24h) {
-      errors.price_for_24h = "Price for 24h is required";
+    if (
+      !values.price_for_24h ||
+      Number.isInteger(parseInt(values.price_for_24h)) === false
+    ) {
+      errors.price_for_24h = "Price for 24h is not valid";
     }
-    if (!values.country) {
-      errors.country = "Country is required";
+    if (!values.country || values.country.trim() === "") {
+      errors.country = "Country is not valid";
     }
-    if (!values.seats) {
-      errors.seats = "Seats is required";
+    if (!values.seats || Number.isInteger(parseInt(values.seats)) === false) {
+      errors.seats = "Seats is not valid";
     }
-    if (!values.transmission) {
-      errors.transmission = "Transmission is required";
+    if (!values.transmission || values.transmission.trim() === "Choose...") {
+      errors.transmission = "Transmission is not valid";
     }
-    if (!values.max_speed) {
-      errors.max_speed = "Max speed is required";
+    if (
+      !values.max_speed ||
+      Number.isInteger(parseInt(parseInt(values.max_speed))) === false
+    ) {
+      errors.max_speed = "Max speed is not valid";
     }
-    if (!values.doors) {
-      errors.doors = "Doors is required";
+    if (!values.doors || Number.isInteger(parseInt(values.doors)) === false) {
+      errors.doors = "Doors is not valid";
     }
-    if (!values.air_conditioning) {
-      errors.air_conditioning = "Air conditioning is required";
+    if (
+      !values.air_conditioning ||
+      values.air_conditioning.trim() === "Choose..."
+    ) {
+      errors.air_conditioning = "Air conditioning is not valid";
     }
 
-    if (!values.miles) {
-      errors.miles = "Miles is required";
+    if (!values.miles || Number.isInteger(parseInt(values.miles)) === false) {
+      errors.miles = "Miles is not valid";
     }
     return errors;
+  };
+  const handleClearForm = (event) => {
+    event.preventDefault();
+    setNewCar(initialStateValues);
+    setFormErrors({});
+    setIsSubmit(false);
   };
 
   return (
@@ -234,10 +262,15 @@ export default function AddCarForm() {
               <p className="text-danger">{formErrors.price_for_24h}</p>
             </Form.Group>
           </Row>
+          <div className="d-flex flex-row justify-content-between">
+            <Button variant="danger" onClick={handleClearForm}>
+              Clear
+            </Button>
 
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+            <Button variant="primary" type="submit">
+              Submit
+            </Button>
+          </div>
         </Form>
       </Container>
     </div>
