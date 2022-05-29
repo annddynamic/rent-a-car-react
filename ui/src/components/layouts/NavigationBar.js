@@ -1,5 +1,5 @@
-import { Navbar, Container, Nav } from "react-bootstrap";
-import { NavLink, Link } from "react-router-dom";
+import { Navbar, Container, Nav, Row, Dropdown } from "react-bootstrap";
+import { NavLink, Link, } from "react-router-dom";
 import { FaCar } from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -81,6 +81,7 @@ const NavigationBar = () => {
             </Nav.Link>
           </Nav>
         ) : (
+          <Container>
           <Nav className="me-auto">
             <Nav.Link as={NavLink} style={{ color: "black" }} to="/dashboard">
               Dashboard
@@ -94,6 +95,15 @@ const NavigationBar = () => {
             <Nav.Link as={NavLink} style={{ color: "black" }} to="/about">
               About Us
             </Nav.Link>
+            <Dropdown className="nav-link">
+              <Dropdown.Toggle style={{all:"unset", color:"black"}}  id="dropdown-basic">
+                My Details
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item href="/ChangeDetails">Change Details</Dropdown.Item>
+                <Dropdown.Item href="/ChangePassword">Change Password</Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <Nav.Link
               onClick={logOut}
               as={NavLink}
@@ -103,6 +113,7 @@ const NavigationBar = () => {
               Log out
             </Nav.Link>
           </Nav>
+          </Container>
         )}
       </Container>
     </Navbar>
