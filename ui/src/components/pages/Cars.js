@@ -6,47 +6,43 @@ import {
   Button,
   Pagination,
   ListGroup,
-  ListGroupItem
+  ListGroupItem,
+  Card 
 } from "react-bootstrap";
-import {
-  FaAngleDown,
-  FaAngleLeft,
-} from "react-icons/fa";
+import { FaCheckCircle,FaCity,FaShoppingBag, FaSnowflake,FaTimesCircle,FaTools,FaUserAlt,} from "react-icons/fa";
+import {FaAngleDown, FaAngleLeft,} from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setCars } from "../../state/actions/carsActions";
+import { getList, setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
-import CarCard from "../CarCard";
-import OnlineUsers from "../../chat/OnlineUsers";
+import {Link} from 'react-router-dom'
+import sample1 from "../../images/sample1.jpeg";
 
 const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
   const user = useSelector((state) => state.user)
+  const [list, setList] = useState([]);
 
   const dispatch = useDispatch();
   
+  
   const fetchCars = async () => {
     const url = "http://localhost:8080/api/cars";
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    axios(url)
       .then((res) => {
+        setList(res.data);
         let cars = res.data;
-        console.log(cars)
         dispatch(setCars(cars));
       });
+    
   };
-  
+ 
   useEffect(() => {
-    fetchCars()
-  },[]);
-  
+    fetchCars();
+ },[]);
   // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
 
@@ -154,6 +150,67 @@ const Cars = () => {
   const h = () => {
     console.log(transmissionType);
   };
+  
+function DisplayCars({cars}){
+  return (
+    cars.filter((car) => (car.rented === false)).map((car, index) => (
+    <Col key={index.toString()} className="mt-2" md={6}>
+    <Card style={{ cursor: "pointer", textDecoration:"none", color:"black" }} as={Link} to={`${car._id}` } >
+      <Card.Img variant="top" src={sample1} />
+      <Card.Body>
+        <Card.Title>
+          {car.car_model} {car.car_series}
+        </Card.Title>
+        <Card.Text className="icons">
+          <FaUserAlt />
+          <span>
+            <FaShoppingBag />
+          </span>
+          <span>
+            <FaCity />
+          </span>
+          <span>
+            <FaTools />
+          </span>
+          <span>
+            <FaSnowflake />
+          </span>
+        </Card.Text>
+        <Card.Text>
+          Transsmision: {car.transmission}
+          <FaCheckCircle color="royalblue" />
+        </Card.Text>
+        <Card.Text>
+          Air conditioning:
+          {car.air_conditioning ? (
+            <FaCheckCircle color="royalblue" />
+          ) : (
+            <FaTimesCircle color="royalblue" />
+          )}
+        </Card.Text>
+        <Card.Text>
+          <span style={{ color: "grey" }}>{car.car_type}</span>
+        </Card.Text>
+      </Card.Body>
+      <ListGroup className="list-group-flush">
+        <Card.Body>
+          <Container>
+            <Row>
+              <Col>
+                <h3>${car.price_for_24h}</h3>
+              </Col>
+              <Col className="float-right">
+                <Button>Book now!</Button>
+              </Col>
+            </Row>
+          </Container>
+        </Card.Body>
+      </ListGroup>
+    </Card>
+  </Col>
+    ))
+  )
+}
   return (
     <div className="cars-layout">
       <Container style={{ borderRadius: "10px" }} className="mt-4 bg-primary">
@@ -283,13 +340,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.filter((car) => (car.rented === false)).map((car, index) => (
-                  allFilteredCars.map(filteredCar=> 
-                      filteredCar._id === car._id ? 
-                       <CarCard car={car} key={index} />: ""
-
-                    )
-               ))}
+              {<DisplayCars cars={list}/>} 
             </Row>
           </Col>
         </Row>

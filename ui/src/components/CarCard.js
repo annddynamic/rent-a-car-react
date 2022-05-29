@@ -13,7 +13,6 @@ import {Link} from 'react-router-dom'
 import sample1 from "../images/sample1.jpeg";
 
 const CarCard = ({ car }) => {
-
   return (
     <Col className="mt-2" md={6}>
       <Card style={{ cursor: "pointer", textDecoration:"none", color:"black" }} as={Link} to={`${car._id}` } >
