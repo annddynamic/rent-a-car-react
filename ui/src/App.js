@@ -5,9 +5,10 @@ import Register from "./components/pages/Register";
 import Dashboard from "./components/pages/Dashboard";
 import Cars from "./components/pages/Cars";
 import { Routes, Route } from "react-router-dom";
-import { useSelector} from "react-redux";
+import { useSelector } from "react-redux";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
 import Car from "./components/pages/Car";
+import CompanyDashboard from "./components/pages/RentCompanyPages/CompanyDashboard";
 
 const App = () => {
   const isLogged = useSelector((state) => state.isLogged.loggedIn);
