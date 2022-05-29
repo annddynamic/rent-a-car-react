@@ -73,6 +73,9 @@ const NavigationBar = () => {
             >
               Register
             </Nav.Link>
+            <Nav.Link as={NavLink} style={{ color: navbar ? "black" : "#f4f4f4" }} to="/about">
+              About Us
+            </Nav.Link>
           </Nav>
         ) : (
           <Nav className="me-auto">
@@ -81,6 +84,9 @@ const NavigationBar = () => {
             </Nav.Link>
             <Nav.Link as={NavLink} style={{ color: "black" }} to="/cars">
               Cars
+            </Nav.Link>
+            <Nav.Link as={NavLink} style={{ color: "black" }} to="/about">
+              About Us
             </Nav.Link>
             <Nav.Link
               onClick={logOut}

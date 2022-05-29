@@ -98,7 +98,9 @@ const Car = () => {
 
   const CalculateTotalPrice = (dateTo, dateFrom, price24H) => {
     if(!(dateTo != null && dateFrom != null && price24H != null))
+    {
       return 0;
+    }
       let dateFromInput = new Date(dateFrom);
       let dateToInput = new Date(dateTo);
       if(DateDifference(dateToInput, dateFromInput) < 0){

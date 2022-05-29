@@ -4,6 +4,7 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Dashboard from "./components/pages/Dashboard";
 import Cars from "./components/pages/Cars";
+import About from "./components/pages/About";
 import { Routes, Route } from "react-router-dom";
 import { useSelector} from "react-redux";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
@@ -18,6 +19,7 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
         <Route
           path="/dashboard"
