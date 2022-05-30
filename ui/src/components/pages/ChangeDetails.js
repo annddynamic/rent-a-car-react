@@ -65,7 +65,7 @@ const UserDetails = () => {
           <Form.Label>Password</Form.Label>
           <Form.Control type="password" name = "password"  onChange={handleChange} placeholder="Enter Password" />
         </Form.Group>
-        <Link to="/UserDetails" className='btn btn-secondary col-md-2'><FaArrowCircleLeft /> Back </Link>
+        <Link to="/Dashboard" className='btn btn-secondary col-md-2'><FaArrowCircleLeft /> Back </Link>
         <Button variant="primary" type="submit" className='col-md-4' style={{float:"right"}}>
           Save Changes
         </Button>

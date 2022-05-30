@@ -83,7 +83,7 @@ const ChangePassword = () => {
                 <FormLabel><ShowValidation message={data.errorMessage === '' ? data.errorMessageMatch : data.errorMessage} /></FormLabel>
             </Col>
         </Row>
-        <Link to="/UserDetails" className='btn btn-secondary col-md-2'><FaArrowCircleLeft /> Back </Link>
+        <Link to="/Dashboard" className='btn btn-secondary col-md-2'><FaArrowCircleLeft /> Back </Link>
         <Button variant="primary" type="submit" className='col-md-4' style={{float:"right"}}>
           Change Password
         </Button>
