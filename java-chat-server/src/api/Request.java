@@ -1,14 +1,14 @@
 package api;
 
-public class Response {
+public class Request {
 
     public String sender_id;
     public String  receiver_id;
-    public Response() {
-        new Response("", "");
+    public Request() {
+        new Request("", "");
     }
 
-    public Response(String senderID, String receiverID) {
+    public Request(String senderID, String receiverID) {
         this.sender_id = senderID;
         this.receiver_id = receiverID;
     }

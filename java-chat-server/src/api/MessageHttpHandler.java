@@ -3,17 +3,11 @@ package api;
 import Database.DatabaseConnection;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpsExchange;
 import org.json.JSONArray;
-import org.json.JSONObject;
 
-import javax.xml.crypto.Data;
 import java.io.BufferedReader;
-import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.nio.charset.StandardCharsets;
-import java.sql.SQLException;
 
 public class MessageHttpHandler  implements HttpHandler {
 
@@ -42,10 +36,10 @@ public class MessageHttpHandler  implements HttpHandler {
 
     private void handleGetRequest(HttpExchange exchange) throws Exception {
         BufferedReader httpInput = new BufferedReader(new InputStreamReader(exchange.getRequestBody(), "UTF-8"));
-        JSONProcessor jsonProc = new JSONProcessor<Response>(Response.class);
-        Response responseJson = (Response) jsonProc.deserialize(httpInput);
+        JSONProcessor jsonProc = new JSONProcessor<Request>(Request.class);
+        Request requestObject = (Request) jsonProc.deserialize(httpInput);
         DatabaseConnection dbConn =DatabaseConnection.getInstance();
-        JSONArray response = jsonProc.convert(dbConn.getMessagesDatabase(responseJson.sender_id, responseJson.receiver_id));
+        JSONArray response = jsonProc.convert(dbConn.getMessagesDatabase(requestObject.sender_id, requestObject.receiver_id));
 
 
         byte[] bs = response.toString().getBytes("UTF-8");
