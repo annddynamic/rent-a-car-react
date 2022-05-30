@@ -4,9 +4,7 @@ import {
   Col,
   Form,
   Button,
-  Pagination,
   ListGroup,
-  ListGroupItem,
   Card 
 } from "react-bootstrap";
 import { FaCheckCircle,FaCity,FaShoppingBag, FaSnowflake,FaTimesCircle,FaTools,FaUserAlt,} from "react-icons/fa";
@@ -97,7 +95,7 @@ const Cars = () => {
   );
 
   const handleOnChange = (position) => {
-    console.log(position);
+    // console.log(position);
     const updatedCheckedState = checkedState.map((item, index) =>
       index === position ? !item : item
     );
@@ -110,7 +108,7 @@ const Cars = () => {
       setAllFilteredCars(cars)
     } else {
       let filteredCars = [];
-      console.log(updatedCheckedState);
+      // console.log(updatedCheckedState);
 
       cars.forEach((car) => {
         updatedCheckedState.forEach((checked, index) => {
@@ -138,7 +136,7 @@ const Cars = () => {
         automatic: transmissionType.automatic,
       });
       allFilteredCars.filter((car) => car.transmission_type !== "Automatic");
-      console.log(allFilteredCars);
+      // console.log(allFilteredCars);
     } else {
       setTransmissionType({
         automatic: !transmissionType.automatic,
@@ -148,7 +146,7 @@ const Cars = () => {
   };
 
   const h = () => {
-    console.log(transmissionType);
+    // console.log(transmissionType);
   };
   
 function DisplayCars({cars}){

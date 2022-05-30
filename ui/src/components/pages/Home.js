@@ -1,5 +1,5 @@
 import React from "react";
-import { Container, Row, Col, Button } from "react-bootstrap";
+import { Container, Row, Col} from "react-bootstrap";
 import shtoperica from "../../images/jeep.jpg";
 import {logout} from '../../state/actions/loginActions'
 import { useEffect } from "react";

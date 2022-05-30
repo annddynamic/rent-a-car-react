@@ -8,13 +8,13 @@ import {
   FormLabel
 } from "react-bootstrap";
 
-import { useParams, Link } from "react-router-dom";
+import { useParams} from "react-router-dom";
 import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { FaArrowCircleLeft, FaWeight } from "react-icons/fa";
+import { FaArrowCircleLeft } from "react-icons/fa";
 import axios from "axios";
 import pic from '../../images/babloki.jpg'
-import {Routes, Route, useNavigate} from 'react-router-dom';
+import {useNavigate} from 'react-router-dom';
 import "./Car.css"
 
 const Car = () => {
@@ -23,9 +23,6 @@ const Car = () => {
   const userId = useSelector((state) => state.user._id);
   const [car, setCar] = useState(cars.filter(car => car._id === id));
   const navigate = useNavigate();
-
-  // const [from, setFrom] = useState('');
-  // const [to, setTo] = useState('');
   
   const [data, setData] = useState({ from: "", to: "", errorMessage: "", formHidden: true, totalPrice: 0 });
 
@@ -44,7 +41,6 @@ const Car = () => {
     e.preventDefault();
     var today = new Date(),
     date = new Date(today.getFullYear(), today.getMonth(), today.getDate());
-    //today.getFullYear() + '-' + (today.getMonth() + 1) + '-' + today.getDate();
     var dateFromInput = new Date(data.from);
     var dateToInput = new Date(data.to);
 

@@ -33,16 +33,6 @@ const Dashboard = () => {
           <Col className='text-center border-1' md={4}>
               <h1>My Cars</h1>     
           </Col>
-          {/* <Col md={5}>
-            <Navbar bg="light" variant="light">
-              <Navbar.Brand href="#home">Navbar</Navbar.Brand>
-                <Nav className="me-auto">
-                  <Nav.Link href="#">Home</Nav.Link>
-                  <Nav.Link href="#features">Features</Nav.Link>
-                  <Nav.Link href="#pricing">Pricing</Nav.Link>
-                </Nav>
-            </Navbar>
-          </Col> */}
         </Row>
         <Col md={10}>
             <Row>

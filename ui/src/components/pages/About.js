@@ -1,11 +1,5 @@
-import {Container, Col, Row, Nav, Navbar} from 'react-bootstrap'
-import { useState, useEffect } from "react";
-import { useSelector, useDispatch } from 'react-redux'
-import axios from "axios";
 import './Dashboard.css'
 import './About.css'
-import CarCard from "../CarCard";
-import OnlineUsers from '../../chat/OnlineUsers'
 import Slideshow from '../Slideshow'
 
 const About = () => {

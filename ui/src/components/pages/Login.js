@@ -25,7 +25,6 @@ const Login = () => {
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-
 			const url = "http://localhost:8080/api/login";
 			const { data: res } = await axios.post(url, data);
       dispatch(login(res.token))
