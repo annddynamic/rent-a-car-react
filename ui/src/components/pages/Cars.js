@@ -6,45 +6,43 @@ import {
   Button,
   Pagination,
   ListGroup,
-  ListGroupItem
+  ListGroupItem,
+  Card 
 } from "react-bootstrap";
-import {
-  FaAngleDown,
-  FaAngleLeft,
-} from "react-icons/fa";
+import { FaCheckCircle,FaCity,FaShoppingBag, FaSnowflake,FaTimesCircle,FaTools,FaUserAlt,} from "react-icons/fa";
+import {FaAngleDown, FaAngleLeft,} from "react-icons/fa";
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { setCars } from "../../state/actions/carsActions";
+import { getList, setCars } from "../../state/actions/carsActions";
 import "./Cars.css";
-import CarCard from "../CarCard";
-import OnlineUsers from "../../chat/OnlineUsers";
+import {Link} from 'react-router-dom'
+import sample1 from "../../images/sample1.jpeg";
 
 const Cars = () => {
   // get cars from state (redux)
   const cars = useSelector((state) => state.cars)
   const token = useSelector((state)=>state.isLogged.token)
+  const user = useSelector((state) => state.user)
+  const [list, setList] = useState([]);
 
   const dispatch = useDispatch();
   
+  
   const fetchCars = async () => {
     const url = "http://localhost:8080/api/cars";
-    axios
-      .get(url, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+    axios(url)
       .then((res) => {
-        const cars = res.data;
+        setList(res.data);
+        let cars = res.data;
         dispatch(setCars(cars));
       });
+    
   };
-  
+ 
   useEffect(() => {
-    fetchCars()
-  },[]);
-  
+    fetchCars();
+ },[]);
   // set the first initial items displayed per page (6)
   const [itemsPerPage, setItemsPerPage] = useState(cars.slice(0,6));
 
@@ -54,13 +52,12 @@ const Cars = () => {
 
   const [userReviewTypeShown, setuserReviewTypeShown] = useState(true);
 
-  const [allFilteredCars, setAllFilteredCars] = useState([]);
+  const [allFilteredCars, setAllFilteredCars] = useState(cars);
 
   const [transmissionType, setTransmissionType] = useState({
     manual: true,
     automatic: true,
   });
-
   // active page, page 1
   const [active, setActivePage] = useState(1);
 
@@ -80,7 +77,7 @@ const Cars = () => {
     setPageNumber(items);
   };
 
-  // sets particular Items per page based on the number clicked
+  // // sets particular Items per page based on the number clicked
   const setActive = (page) => {
     setActivePage(page);
 
@@ -106,10 +103,11 @@ const Cars = () => {
     );
     setCheckedState(updatedCheckedState);
     let checker = (arr) => arr.every((v) => v === false);
-
+    
     if (checker(updatedCheckedState)) {
       setItemsPerPage(cars.slice(0, 6));
       setPagination(cars.length);
+      setAllFilteredCars(cars)
     } else {
       let filteredCars = [];
       console.log(updatedCheckedState);
@@ -124,7 +122,7 @@ const Cars = () => {
         });
       });
       console.log(checkedState);
-
+      
       setItemsPerPage(filteredCars.slice(0, 6));
       setPagination(filteredCars.length);
       setAllFilteredCars(filteredCars);
@@ -135,6 +133,7 @@ const Cars = () => {
   const handleTransmisionFilterChange = (id) => {
     if (id === 0) {
       setTransmissionType({
+        
         manual: !transmissionType.manual,
         automatic: transmissionType.automatic,
       });
@@ -151,6 +150,67 @@ const Cars = () => {
   const h = () => {
     console.log(transmissionType);
   };
+  
+function DisplayCars({cars}){
+  return (
+    cars.filter((car) => (car.rented === false)).map((car, index) => (
+    <Col key={index.toString()} className="mt-2" md={6}>
+    <Card style={{ cursor: "pointer", textDecoration:"none", color:"black" }} as={Link} to={`${car._id}` } >
+      <Card.Img variant="top" src={sample1} />
+      <Card.Body>
+        <Card.Title>
+          {car.car_model} {car.car_series}
+        </Card.Title>
+        <Card.Text className="icons">
+          <FaUserAlt />
+          <span>
+            <FaShoppingBag />
+          </span>
+          <span>
+            <FaCity />
+          </span>
+          <span>
+            <FaTools />
+          </span>
+          <span>
+            <FaSnowflake />
+          </span>
+        </Card.Text>
+        <Card.Text>
+          Transsmision: {car.transmission}
+          <FaCheckCircle color="royalblue" />
+        </Card.Text>
+        <Card.Text>
+          Air conditioning:
+          {car.air_conditioning ? (
+            <FaCheckCircle color="royalblue" />
+          ) : (
+            <FaTimesCircle color="royalblue" />
+          )}
+        </Card.Text>
+        <Card.Text>
+          <span style={{ color: "grey" }}>{car.car_type}</span>
+        </Card.Text>
+      </Card.Body>
+      <ListGroup className="list-group-flush">
+        <Card.Body>
+          <Container>
+            <Row>
+              <Col>
+                <h3>${car.price_for_24h}</h3>
+              </Col>
+              <Col className="float-right">
+                <Button>Book now!</Button>
+              </Col>
+            </Row>
+          </Container>
+        </Card.Body>
+      </ListGroup>
+    </Card>
+  </Col>
+    ))
+  )
+}
   return (
     <div className="cars-layout">
       <Container style={{ borderRadius: "10px" }} className="mt-4 bg-primary">
@@ -209,7 +269,7 @@ const Cars = () => {
                       <Form.Check
                         key={index}
                         value={type}
-                        onChange={handleOnChange}
+                        onChange={e => handleOnChange(index)}
                         type="checkbox"
                         label={type}
                       />
@@ -280,20 +340,7 @@ const Cars = () => {
           </Col>
           <Col md={10}>
             <Row>
-              {cars.slice(0,6).map((car, index) => (
-                <CarCard car={car} key={index} />
-              ))}
-              <Pagination>
-                {pageNumber.map((item) => (
-                  <Pagination.Item
-                    onClick={() => setActive(item)}
-                    active={item === active}
-                    key={item}
-                  >
-                    {item}
-                  </Pagination.Item>
-                ))}
-              </Pagination>
+              {<DisplayCars cars={list}/>} 
             </Row>
           </Col>
         </Row>

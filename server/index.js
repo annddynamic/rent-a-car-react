@@ -6,9 +6,11 @@ const connection = require("./configs/db");
 const userRoutes = require("./routes/users");
 const authRoutes = require("./routes/auth");
 const carsRoutes = require("./routes/cars");
+const dashboardRoutes = require("./routes/dashboard");
 const middleware = require("./routes/validate")
 
-var bodyParser = require('body-parser')
+var bodyParser = require('body-parser');
+const { application } = require("express");
 
 // database connection
 connection();
@@ -25,7 +27,9 @@ app.use("/api/register", userRoutes);
 app.use("/api/login", authRoutes);
 
 // protected routes
-app.use("/api/cars", middleware, carsRoutes);
+//qitu e kom hek middleware 
+app.use("/api/cars",  carsRoutes);
+app.use("/dashboard", dashboardRoutes);
 
 const port = process.env.PORT || 8080;
 app.listen(port, console.log(`Listening on port ${port}...`));

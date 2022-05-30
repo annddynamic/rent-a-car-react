@@ -5,7 +5,7 @@ const CarsReducer = (state =[], action)=>{
         case 'UNSETCARS':
             return state=[]
         default:
-            return state
+            return state=[]
     }
 }
 

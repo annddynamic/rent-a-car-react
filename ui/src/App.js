@@ -4,6 +4,10 @@ import Login from "./components/pages/Login";
 import Register from "./components/pages/Register";
 import Dashboard from "./components/pages/Dashboard";
 import Cars from "./components/pages/Cars";
+import About from "./components/pages/About";
+import FAQ from "./components/pages/FAQ";
+import ChangeDetails from "./components/pages/ChangeDetails";
+import ChangePassword from "./components/pages/ChangePassword";
 import { Routes, Route } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProtectedRoute from "./components/utils/ProtectedRoutes";
@@ -19,6 +23,8 @@ const App = () => {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/FAQ" element={<FAQ />} />
         <Route path="*" element={<p>There's nothing here: 404!</p>} />
         <Route
           path="/dashboard"
@@ -49,6 +55,30 @@ const App = () => {
           element={
             <ProtectedRoute loggedIn={isLogged}>
               <CompanyDashboard />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/dashboard/:id"
+          element={
+            <ProtectedRoute loggedIn={isLogged}>
+              <Car />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/ChangeDetails"
+          element={
+            <ProtectedRoute loggedIn={isLogged}>
+              <ChangeDetails />
+            </ProtectedRoute>
+          }
+        />
+        <Route 
+          path="/ChangePassword"
+          element={
+            <ProtectedRoute loggedIn={isLogged}>
+              <ChangePassword />
             </ProtectedRoute>
           }
         />

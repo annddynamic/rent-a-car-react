@@ -25,3 +25,10 @@ export function messageReceived(message) {
         payload: message
     }
 }
+
+export function setChat(chat) {
+    return {
+        type: 'SETCHAT',
+        payload: chat
+    }
+}

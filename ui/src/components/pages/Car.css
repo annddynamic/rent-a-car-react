@@ -1,0 +1,25 @@
+#carDetails{
+    font-family: Arial, Helvetica, sans-serif;
+    border-collapse: collapse;
+    width:100%;
+    border:1px solid #ddd;
+    margin-left:2px
+}
+#carDetails tr:nth-child(even){
+    background-color: #f2f2f2;
+}
+
+#carDetails tr:hover {
+    background-color: #ddd;
+}
+
+#orderBtn{
+    float:right;
+    width:25%;
+}
+
+#backBtn{
+    float:left;
+    align-items: center;
+    vertical-align: center;
+}

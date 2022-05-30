@@ -8,9 +8,12 @@ public class User implements Serializable {
     private String id;
     private String name;
 
-    public User(String name) {
+    public User(){
+
+    }
+    public User(String name, String id) {
         this.name = name;
-        id = UUID.randomUUID().toString();
+        this.id = id;
     }
 
     public String getName() {

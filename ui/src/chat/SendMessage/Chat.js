@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Accordion, Form, Button, Row, Col, Container } from "react-bootstrap";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
 import Singleton from "../socket";
 import MessageType from "./MessageType";
-import { FaCommentsDollar } from "react-icons/fa";
+import { messageReceived } from "../../state/actions/chatActions";
 
 const Chat = () => {
+  const messages = useSelector((state) => state.message);
   const usersToChat = useSelector((state) => state.usersToChat);
   const sender = useSelector((state) => state.user);
-  const messages = useSelector((state) => state.message);
-
+  const dispatch = useDispatch();
   const [data, setData] = useState({ text: "" });
 
   const handleChange = ({ currentTarget: input }) => {
@@ -19,23 +19,25 @@ const Chat = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(data.text);
-    let user = {
-      id: sender._id,
-      name: sender.firstName,
-    };
-
-    const message = {
-      user: user,
-      data: data.text,
-      to: usersToChat,
-      type: MessageType.TEXT_MESSAGE,
-    };
-
-    console.log(message);
     const socket = Singleton.getInstance();
-    let messageDto = JSON.stringify(message);
+
+    const messageDto = JSON.stringify({
+      user: { id: sender._id, name: sender.firstName },
+      data: data.text,
+      to: [usersToChat],
+      type: MessageType.TEXT_MESSAGE,
+    });
+
     socket.send(messageDto);
+
+    const stateMssg = {
+      receiver_id: usersToChat.id,
+      message: data.text,
+      sender_id: sender._id,
+    };
+
+    dispatch(messageReceived(stateMssg));
+
     setData((data) => ({
       text: "",
     }));
@@ -59,152 +61,45 @@ const Chat = () => {
     float: "right",
   };
 
-  const tempMeessage = [
-    {
-      id: 1,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 2,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 3,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 4,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 5,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 1,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 2,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 3,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 4,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 5,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 1,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 2,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 3,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 4,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 5,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 1,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 2,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 3,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 4,
-      text: "Hello",
-      name: "John",
-    },
-    {
-      id: 5,
-      text: "Hello",
-      name: "John",
-    },
-  ];
-
   const sentMessageStyle =
     "d-flex border rounded-pill flex-row justify-content-end border-success mb-2 w-50 text-success";
   const receivedMessageStyle =
     "border border-info rounded-pill w-50   mb-2  text-info ";
-  console.log(messages);
+  // console.log(messages);
   return (
     <Accordion>
       <Accordion.Item eventKey="0">
         <Accordion.Header className="mb-2">
-          {usersToChat.map((user, index) => (
-            <span>{user.name + ",  "} </span>
-          ))}
+          <span>{usersToChat.name + "  "} </span>
         </Accordion.Header>
         <Accordion.Body>
           <div
             className="d-flex flex-column justify-content-between overflow-auto "
             style={{ height: "200px" }}
           >
-            {/* {messages.map((message) => (
-              <div className={sentMessageStyle}>
-                <div>
-                  {" "}
-                  {message.user.name} : {message.data}
-                </div>
-              </div>
-            ))} */}
-
             <Container className="">
-              {tempMeessage.map((message) => (
+              {messages.map((message, index) => (
                 <Row
+                  key={index}
                   className={
-                    message.id === 1
+                    message.sender_id === sender._id
                       ? "justify-content-end"
                       : "justify-content-start"
                   }
                 >
                   <div
                     className={
-                      message.id === 1 ? sentMessageStyle : receivedMessageStyle
+                      message.receiver_id === sender._id
+                        ? receivedMessageStyle
+                        : sentMessageStyle
                     }
                   >
                     <div className="  ">
-                      {message.name + ": " + message.text}{" "}
+                      {(message.receiver_id === sender._id
+                        ? usersToChat.name
+                        : sender.firstName) +
+                        ": " +
+                        message.message}{" "}
                     </div>{" "}
                   </div>
                 </Row>
