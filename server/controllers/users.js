@@ -69,7 +69,7 @@ exports.change_details = async (req, res) => {
 		if (error){
 			return res.status(400).send({ message: error.details[0].message });
 		}
-		var emailInUse = await User.findOne({ email:body["email"] }) != null;
+		var emailInUse = await User.findOne({ "email":body["email"], "_id": { $ne: id }}) != null;
 		if(emailInUse){
 			return res.status(400).send({ message: "This email is already in use!" });
 		}
