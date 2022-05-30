@@ -16,14 +16,14 @@ const Dashboard = () => {
   return (
     <div>
         <Row>
-          <Col className='text-center border-1' md={6}>
+          <Col className='text-center border-1' md={4}>
               <div>
                 <img src={pic} style={{height:"26vh",width:"26vh", borderRadius:"50%"}} alt="" />
               </div>
           </Col>
-          <Col md={6}>
-              <h2>{user.firstName} {user.lastName}</h2>     
-              <h3 className='text-primary'>Web developer</h3>
+          <Col md={7}>
+              <h2>You are logged in as: {user.firstName} {user.lastName}</h2>     
+              <h3 className='text-primary'>Job Title: Web developer</h3>
               <p className='text-secondary'>Lorem ipsum dolor sit amet.</p>
           </Col>
         </Row>

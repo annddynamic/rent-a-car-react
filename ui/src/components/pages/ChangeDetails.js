@@ -1,13 +1,14 @@
 import {useState} from 'react'
-import { Container, Form, Button, Row, Col, Alert, } from 'react-bootstrap'
+import { Container, Form, Button, Alert } from 'react-bootstrap'
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux'
-import { FaArrowCircleLeft, FaWeight } from "react-icons/fa";
+import { useSelector } from 'react-redux'
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 const UserDetails = () => {
   const user = useSelector(state => state.user)
   const [data, setData] = useState({
+    id: user._id,
 		firstName: "",
 		lastName: "",
 		email: "",
@@ -23,10 +24,9 @@ const UserDetails = () => {
   const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
-			const url = "http://localhost:8080/api/change-details";
+			const url = "http://localhost:8080/api/user/change-details";
 			const { data: res } = await axios.post(url, data);
-			navigate("/login");
-			console.log(res.message);
+			navigate("/dashboard");
 		} catch (error) {
 			if (
 				error.response &&
@@ -51,19 +51,19 @@ const UserDetails = () => {
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicFirstName">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" name="firstName" value = {user.firstName} onChange={handleChange} placeholder="Enter new name" />
+          <Form.Control type="text" name="firstName"  onChange={handleChange} placeholder="Enter new name" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicLastName">
           <Form.Label>Last Name</Form.Label>
-          <Form.Control type="text" name="lastName" value = {user.lastName} onChange={handleChange} placeholder="Enter new last name" />
+          <Form.Control type="text" name="lastName" onChange={handleChange} placeholder="Enter new last name" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" name="email" value= {user.email} onChange={handleChange} placeholder="Enter new email" />
+          <Form.Control type="email" name="email" onChange={handleChange} placeholder="Enter new email" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
-          <Form.Control type="password" name = "password" value={data.password} onChange={handleChange} placeholder="Enter Password" />
+          <Form.Control type="password" name = "password"  onChange={handleChange} placeholder="Enter Password" />
         </Form.Group>
         <Link to="/UserDetails" className='btn btn-secondary col-md-2'><FaArrowCircleLeft /> Back </Link>
         <Button variant="primary" type="submit" className='col-md-4' style={{float:"right"}}>

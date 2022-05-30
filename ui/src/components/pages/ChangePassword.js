@@ -2,14 +2,15 @@ import {useState} from 'react'
 import { Container, Form, Button, Row, Col, Alert, FormLabel } from 'react-bootstrap'
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
-import { useSelector, useDispatch } from 'react-redux'
-import { FaArrowCircleLeft, FaWeight } from "react-icons/fa";
+import { useSelector } from 'react-redux'
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 const ChangePassword = () => {
 
   const user = useSelector(state => state.user)
   
   const [data, setData] = useState({
+        email:user.email,
         currentPassword: "",
         newPassword: "",
         confirmNewPassword:"",
@@ -33,10 +34,9 @@ const ChangePassword = () => {
             return false;
         }
 		try {
-			const url = "http://localhost:8080/api/change-password";
+			const url = "http://localhost:8080/api/user/change-password";
 			const { data: res } = await axios.post(url, data);
-			navigate("/UserDetails");
-			console.log(res.message);
+			navigate("/dashboard");
 		} catch (error) {
 			if (
 				error.response &&
@@ -50,41 +50,6 @@ const ChangePassword = () => {
 	};
 
   const [show, setShow] = useState(false);
-
-//   const Validate = () => {
-//     console.log(data)
-//     if(!(data.currentPassword === data.newPassword) || (data.currentPassword === '' && data.newPassword === ''))
-//     {
-//         setData({...data, errorMessage: "" });
-//         return;
-//     }
-//     if((data.currentPassword === data.newPassword))
-//     {
-//         setData({...data, errorMessage: "Your new password can't be the same as your old password!" });
-//         return;
-//     }
-//     if(data.newPassword === data.confirmNewPassword)
-//     {
-//         setData({...data, errorMessageMatch: "" });
-//         return;
-//     }
-//     if(data.newPassword !== data.confirmNewPassword)
-//     {
-//         setData({...data, errorMessageMatch: "Please confirm your new password correctly!" });
-//         return;
-//     }
-//   }
-
-//   //function to check if new password and confirmed password match
-//   const IsMatch = () => {
-//     if(data.newPassword === data.confirmNewPassword)
-//     {
-//         setData({...data, errorMessageMatch: "" });
-//         return;
-//     }
-//     setData({...data, errorMessageMatch: "Please confirm your new password correctly!" });
-//     return;
-//   }
 
   //method to display validation message
   const ShowValidation = ({message}) =>
