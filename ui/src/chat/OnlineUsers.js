@@ -10,6 +10,7 @@ import { useDispatch } from "react-redux";
 import Chat from "./SendMessage/Chat";
 import axios from "axios";
 import { setChat } from "../state/actions/chatActions";
+import VideoChat from "../video-chat/VideoChat";
 const OnlineUsers = () => {
 
   const dispatch = useDispatch();
@@ -55,6 +56,7 @@ const OnlineUsers = () => {
         </ListGroup>
       </Container>
       <Chat users={onlineUsers} />
+      <VideoChat/>
     </div>
   );
 };
