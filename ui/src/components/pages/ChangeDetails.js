@@ -9,9 +9,9 @@ const UserDetails = () => {
   const user = useSelector(state => state.user)
   const [data, setData] = useState({
     id: user._id,
-		firstName: "",
-		lastName: "",
-		email: "",
+		firstName: user.firstName,
+		lastName: user.lastName,
+		email: user.email,
 		password: "",
 	});
 	const [error, setError] = useState("");
@@ -51,15 +51,15 @@ const UserDetails = () => {
         <Form onSubmit={handleSubmit}>
         <Form.Group className="mb-3" controlId="formBasicFirstName">
           <Form.Label>Name</Form.Label>
-          <Form.Control type="text" name="firstName"  onChange={handleChange} placeholder="Enter new name" />
+          <Form.Control type="text" name="firstName" value={data.firstName} onChange={handleChange} placeholder="Enter new name" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicLastName">
           <Form.Label>Last Name</Form.Label>
-          <Form.Control type="text" name="lastName" onChange={handleChange} placeholder="Enter new last name" />
+          <Form.Control type="text" name="lastName" value={data.lastName} onChange={handleChange} placeholder="Enter new last name" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Email address</Form.Label>
-          <Form.Control type="email" name="email" onChange={handleChange} placeholder="Enter new email" />
+          <Form.Control type="email" name="email" value={data.email} onChange={handleChange} placeholder="Enter new email" />
         </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Password</Form.Label>
