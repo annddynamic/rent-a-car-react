@@ -21,10 +21,11 @@ const Dashboard = () => {
                 <img src={pic} style={{height:"26vh",width:"26vh", borderRadius:"50%"}} alt="" />
               </div>
           </Col>
-          <Col md={7}>
-              <h2>You are logged in as: {user.firstName} {user.lastName}</h2>     
+          <Col md={8}>
+              <br></br>
+              <h2 className='text-center' style={{display:"inline-block !important"}}>Welcome back {user.firstName} {user.lastName}</h2>     
               <h3 className='text-primary'>Job Title: Web developer</h3>
-              <p className='text-secondary'>Lorem ipsum dolor sit amet.</p>
+              <p className='text-secondary text-center'>Lorem ipsum dolor sit amet.</p>
           </Col>
         </Row>
         <br />

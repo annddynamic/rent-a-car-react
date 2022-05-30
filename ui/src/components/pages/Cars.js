@@ -249,7 +249,7 @@ function DisplayCars({cars}){
       </Container>
       <Container className="mt-4">
         <Row>
-          <Col className="border mt-2 h-100" md={2}>
+          <Col style={{display:"table",margin:"0 auto"}} className="border mt-2 h-100" md={3}>
             <Container className="mt-4">
               <h3>Filters</h3>
               <p
@@ -338,7 +338,7 @@ function DisplayCars({cars}){
               )}
             </Container>
           </Col>
-          <Col md={10}>
+          <Col md={9}>
             <Row>
               {<DisplayCars cars={list}/>} 
             </Row>
